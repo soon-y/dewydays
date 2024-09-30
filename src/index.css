@@ -1,0 +1,140 @@
+:root {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  font-family: "Varela Round", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+#root {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: rgba(153, 192, 247, 0.0);
+}
+
+.wrapper {
+  position: relative;
+  width: auto;
+  height: inherit;
+  margin: 0 20px 0 40px;
+}
+
+.setting {
+  margin-top: 20px;
+  float: right;
+  top: 20px;
+  right: 10px;
+  width: 60px;
+  height: auto;
+  display: grid;
+  grid-template-columns: auto;
+  gap: 20px;
+  justify-items: center;
+}
+
+.setWater {
+  position: absolute;
+  bottom: 0px;
+  height: 70px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 0px 60px 60px;
+  gap: 20px;
+  margin-bottom: 30px;
+  align-items: center;
+}
+
+.bubble {
+  position: relative;
+  display: block;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  /* background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 80%); */
+  background: radial-gradient(circle at 70% 25%,
+      rgba(255, 255, 255, 0.8) 1px,
+      rgba(255, 255, 255, 0.2) 8%,
+      rgba(226, 226, 226, 0.2) 60%,
+      rgba(255, 255, 255, 0.5) 100%);
+}
+
+.btn {
+  position: relative;
+  top: 50%;
+  transform: translate(0%, -50%);
+  font-size: 26px;
+  color: rgba(255, 255, 255, 0.8);
+  filter: drop-shadow(0px 0px 4px rgba(101, 101, 101, 0.6));
+}
+
+button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.bg {
+  background-color: #8fdfff;
+  width: 100%;
+  min-height: 100%;
+  position: absolute;
+  top: 0;
+}
+
+.close {
+  float: right;
+  margin-top: 20px;
+  margin-right: 20px;
+}
+
+.center {
+  text-align: center;
+}
+
+.head {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.stroke {
+  -webkit-text-stroke-width: 10px;
+  -webkit-text-stroke-color: rgb(87, 191, 238);
+}
+
+h1 {
+  font-family: "Cherry Bomb One", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  color: white;
+}
+
+p {
+  font-family: "Varela Round", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.content {
+  position: absolute;
+  top: 80px;
+  text-align: left;
+  margin: 5%;
+  width: 90%;
+}
+
+.margin-bottom {
+  margin-bottom: 40px;
+}
