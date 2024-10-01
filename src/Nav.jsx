@@ -5,6 +5,7 @@ import { animated, useSpring } from '@react-spring/web'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronUp,faUser,faSun,faBell,faChartSimple } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
+import bubble from '/main/bubble.png'
 
 export default function Nav(){
 
@@ -35,30 +36,33 @@ export default function Nav(){
     <div className='setting'>
       
       <animated.div className='bubble' onClick={ checking }  style={ arrowSpring }>
-        <FontAwesomeIcon icon={faChevronUp} className='btn' /> 
+        <div className='bgBubble'>
+          
+        </div>
+        <FontAwesomeIcon icon={faChevronUp} className='navIcon' />
       </animated.div>
 
       <Link to='/profile'>
       <animated.div className='bubble' style={ checked ? popping : growing }>
-        <FontAwesomeIcon icon={faUser} className='btn' />
+        <FontAwesomeIcon icon={faUser} className='navIcon' />
       </animated.div>
       </Link>
 
       <Link to='/timeline'>
       <animated.div className='bubble' style={ checked ? popping : growing }>
-        <FontAwesomeIcon icon={faChartSimple} className='btn' />
+        <FontAwesomeIcon icon={faChartSimple} className='navIcon' />
       </animated.div>
       </Link>
 
       <Link to='/weather'>
       <animated.div className='bubble' style={ checked ? popping : growing }>
-        <FontAwesomeIcon icon={faSun} className='btn' />
+        <FontAwesomeIcon icon={faSun} className='navIcon' />
       </animated.div>
       </Link>
 
       <Link to='/alarm'>
       <animated.div className='bubble' style={ checked ? popping : growing }>
-        <FontAwesomeIcon icon={faBell} className='btn' />
+        <FontAwesomeIcon icon={faBell} className='navIcon' />
       </animated.div>
               </Link>
       </div>
