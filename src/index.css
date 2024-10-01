@@ -9,6 +9,18 @@
   font-style: normal;
 }
 
+/* main */
+#bg {
+  background-image: url("/main/bg.png");
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+
+  width: 100vw;
+  height: 100vh;
+}
+
 #root {
   position: fixed;
   top: 0;
@@ -54,21 +66,24 @@
 .bubble {
   position: relative;
   display: block;
-  width: 60px;
-  height: 60px;
+  width: 4rem;
+  height: 4rem;
   border-radius: 50%;
   text-align: center;
-  cursor: pointer;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  /* background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 80%); */
-  background: radial-gradient(circle at 70% 25%,
-      rgba(255, 255, 255, 0.8) 1px,
-      rgba(255, 255, 255, 0.2) 8%,
-      rgba(226, 226, 226, 0.2) 60%,
-      rgba(255, 255, 255, 0.5) 100%);
 }
 
-.btn {
+.bgBubble {
+  background-image: url("/main/bubble.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: contain;
+  width: 100%;
+  height: 100%;
+}
+
+.navIcon {
+  border: 1px soild black;
   position: relative;
   top: 50%;
   transform: translate(0%, -50%);
