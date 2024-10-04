@@ -1,16 +1,17 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import { animated, useSpring } from '@react-spring/web'
+import { animated, useSpring, useTrail } from '@react-spring/web'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronUp,faUser,faSun,faBell,faChartSimple } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
-import bubble from '/main/bubble.png'
 
 export default function Nav(){
 
   const [checked, setChecked] = useState(false);
   const [angle, setAngle] = useState(0);
+  const icons = [ faUser, faChartSimple, faSun, faBell]
+  const links = ['profile', 'timeline', 'weather', 'alarm']
 
   const checking = () => {
     setChecked(state => !state)
@@ -18,55 +19,46 @@ export default function Nav(){
   }
  
   const arrowSpring = useSpring({
-    transform: `rotate(${angle}deg) scale(${checked ? 1 : 1})`,
+    transform: `rotate(${angle}deg)`,
   })
 
-  const popping = useSpring({
-    opacity: checked? 0 : 1,
-    transform: `rotate(${checked ? 0 : 0}deg) scale(${checked ? 1.5 : 1})`,
-  })
-
-  const growing = useSpring({
-    opacity: checked? 0 : 1,
-    transform: `rotate(${checked ? 0 : 0}deg) scale(${checked ? 0 : 1})`,
-  })
+  const trail = useTrail(icons.length, {
+    tension: 300, friction: 160,
+    from: { opacity: 0, scale : checked ? 0 : 1 },
+    to:[{ opacity: checked? 1 : 0, scale : checked ? 1 : 1.5 },
+        { scale : checked ? 1 : 1.5},
+        { scale : checked ? 1 : 1.5},
+        { scale : checked ? 1 : 1.5},
+        { scale : checked ? 1 : 0},
+        { scale : checked ? 1 : 0},
+        { scale : checked ? 1 : 0},
+    ],
+  });
 
   return(
     <>
-    <div className='setting'>
-      
-      <animated.div className='bubble' onClick={ checking }  style={ arrowSpring }>
-        <div className='bgBubble'>
-          
-        </div>
+      { <div className='bubble' onClick={ checking } >
+        <animated.div style={ arrowSpring } className='navMenu' >
         <FontAwesomeIcon icon={faChevronUp} className='navIcon' />
-      </animated.div>
-
-      <Link to='/profile'>
-      <animated.div className='bubble' style={ checked ? popping : growing }>
-        <FontAwesomeIcon icon={faUser} className='navIcon' />
-      </animated.div>
-      </Link>
-
-      <Link to='/timeline'>
-      <animated.div className='bubble' style={ checked ? popping : growing }>
-        <FontAwesomeIcon icon={faChartSimple} className='navIcon' />
-      </animated.div>
-      </Link>
-
-      <Link to='/weather'>
-      <animated.div className='bubble' style={ checked ? popping : growing }>
-        <FontAwesomeIcon icon={faSun} className='navIcon' />
-      </animated.div>
-      </Link>
-
-      <Link to='/alarm'>
-      <animated.div className='bubble' style={ checked ? popping : growing }>
-        <FontAwesomeIcon icon={faBell} className='navIcon' />
-      </animated.div>
-              </Link>
+        </animated.div>
       </div>
-
+      }
+      <>
+      {trail.map(({ ...otherProps }, i) => (
+        <Link to={ "/" + links[i] }>
+        <animated.div
+          key ={ links[i] } 
+          className = 'bubble'
+          style={{ 
+            ...otherProps,
+            top: 3.4 + i * 3 + i * 0.4 + 'rem'
+          }}
+          >
+        <FontAwesomeIcon icon={ icons[i] } className='navIcon' />
+      </animated.div>
+      </Link>       
+      ))}
+      </>   
     </>
   )
 }
