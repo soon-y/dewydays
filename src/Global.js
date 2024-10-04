@@ -3,8 +3,8 @@ const GLOBAL = {
   backgroundNotSelect: '#b0e9ff',
   hover: '#56c5fd',
   fontFamily: "Varela Round",
-  fontMain: "Cherry Bomb One"
-
+  fontMain: "Cherry Bomb One",
+  iconGap: "0.8rem",
 };
 
 export { GLOBAL };

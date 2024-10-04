@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import ReactDOM from 'react-dom/client'
 import './index.css'
 import { animated, useSpring, useTrail } from '@react-spring/web'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronUp,faUser,faSun,faBell,faChartSimple } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
+import { GLOBAL } from './Global'
 
 export default function Nav(){
 
@@ -37,7 +37,7 @@ export default function Nav(){
 
   return(
     <>
-      { <div className='bubble' onClick={ checking } >
+      { <div className='bubble navPos' onClick={ checking } >
         <animated.div style={ arrowSpring } className='navMenu' >
         <FontAwesomeIcon icon={faChevronUp} className='navIcon' />
         </animated.div>
@@ -48,10 +48,10 @@ export default function Nav(){
         <Link to={ "/" + links[i] }>
         <animated.div
           key ={ links[i] } 
-          className = 'bubble'
+          className = 'bubble navPos'
           style={{ 
             ...otherProps,
-            top: 3.4 + i * 3 + i * 0.4 + 'rem'
+            top: 3.8 + i * 3 + i * GLOBAL.iconGap + 'rem'
           }}
           >
         <FontAwesomeIcon icon={ icons[i] } className='navIcon' />
