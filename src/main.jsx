@@ -16,13 +16,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 //  <React.StrictMode>
   <BrowserRouter>    
     <div id='bg'>
-      <div className='wrapper'> 
-        <Nav />
-    {/* <WaterControl /> */}
-    
+      <Nav />
+      <WaterControl />
     </div>
-
-      </div>
 
 
     <Routes>
