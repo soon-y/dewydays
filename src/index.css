@@ -54,6 +54,7 @@
 
 .navMenu {
   transform-origin: center 45%;
+  height: 3rem;
 }
 
 .navIcon {
