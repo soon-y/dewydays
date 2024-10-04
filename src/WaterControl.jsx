@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import { animated, useSpring, useSprings } from '@react-spring/web'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGlassWater,faPlus } from '@fortawesome/free-solid-svg-icons'
 import { Slider } from '@mui/material';
@@ -20,24 +19,6 @@ export default function WaterContorl(){
     setChecked(state => !state)
     setAngle(a => a + 180);
   }
- 
-  const arrowSpring = useSpring({
-    transform: `rotate(${angle}deg) scale(${checked ? 1 : 1})`,
-  })
-
-  const popping = useSpring({
-    opacity: checked? 0 : 1,
-    transform: `rotate(${checked ? 0 : 0}deg) scale(${checked ? 1.5 : 1})`,
-  })
-
-  const growing = useSpring({
-    opacity: checked? 0 : 1,
-    transform: `rotate(${checked ? 0 : 0}deg) scale(${checked ? 0 : 1})`,
-  })
-
-  const [springs, api] = useSpring(() => ({
-    opacity:1
-  }))
 
   const WaterSlider = styled(Slider)({
     color: 'rgba(255,255,255,0.8)',
@@ -89,7 +70,9 @@ export default function WaterContorl(){
 
   return(
     <>
-      <div className='setWater'>
+      <div className='setWater'
+        
+      >
         <WaterSlider
           aria-label="Temperature"
           defaultValue={30}
@@ -102,15 +85,19 @@ export default function WaterContorl(){
           marks={marks}
         />
 
-        <div />
+        <div className='bubble'
+        style={{
 
-        <div className='bubble'>
-          <FontAwesomeIcon icon={faPlus} className='btn' />
+        }}>
+          <FontAwesomeIcon icon={faPlus} className='navIcon' />
         </div>
         
         <Link to='/Cups'>
-        <div className='bubble'>
-          <FontAwesomeIcon icon={faGlassWater} className='btn' />
+        <div className='bubble'
+                style={{
+
+                }}>
+          <FontAwesomeIcon icon={faGlassWater} className='navIcon' />
         </div>
         </Link>
 
