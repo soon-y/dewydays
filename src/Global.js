@@ -4,7 +4,7 @@ const GLOBAL = {
   hover: '#56c5fd',
   fontFamily: "Varela Round",
   fontMain: "Cherry Bomb One",
-  iconGap: "0.8rem",
+  iconGap: 0.8,
 };
 
 export { GLOBAL };
