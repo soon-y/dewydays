@@ -15,26 +15,24 @@ export default function WaterContorl(){
   const [checked, setChecked] = useState(false);
   const [angle, setAngle] = useState(0);
 
-  const checking = () => {
-    setChecked(state => !state)
-    setAngle(a => a + 180);
-  }
 
   const WaterSlider = styled(Slider)({
     color: 'rgba(255,255,255,0.8)',
-    height: 8,
+    height: '0.2rem',
     '& .MuiSlider-markLabel': {
       color: 'rgba(255,255,255,1)',
-      fontSize: 20,
+      fontSize: '1rem',
+      right: '-3rem',
+      top: '1.8rem'
     },
     '& .MuiSlider-track': {
       border: 'none',
     },
     '& .MuiSlider-thumb': {
-      height: 24,
-      width: 24,
+      height: '1.4rem',
+      width: '1.4rem',
       backgroundColor: 'rgba(255,255,255,1)',
-      border: '2px solid currentColor',
+      border: 'none',
       boxShadow: '0px 0px 10px rgba(0,0,0,0.3)',
       '&::before': {
         display: 'none',
@@ -42,11 +40,11 @@ export default function WaterContorl(){
     },
     '& .MuiSlider-valueLabel': {
       lineHeight: 1.2,
-      fontSize: 20,
+      fontSize: '1rem',
       background: 'unset',
       padding: 0,
-      width: 60,
-      height: 60,
+      width: '2.4rem',
+      height: '2.4rem',
       borderRadius: '50% 50% 50% 0',
       backgroundColor: 'rgba(255,255,255,0.2)',
       transformOrigin: 'bottom left',
@@ -70,20 +68,19 @@ export default function WaterContorl(){
 
   return(
     <>
-      <div className='setWater'
-        
-      >
+      <div className='setWater'>
         <WaterSlider
           aria-label="Temperature"
-          defaultValue={30}
+          defaultValue={0}
           getAriaValueText={valuetext}
           valueLabelDisplay="auto"
           shiftStep={30}
           step={10}
           min={10}
-          max={110}
           marks={marks}
         />
+
+        <div className='empty'></div>
 
         <div className='bubble'
         style={{
