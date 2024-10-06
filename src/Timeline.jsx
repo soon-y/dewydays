@@ -94,8 +94,8 @@ export default function Timeline(){
       <h1 className='head'>{head}</h1>
       
       <Link to='/'>
-      <div className='bubble close'>
-        <FontAwesomeIcon icon={faXmark} className='btn' />
+      <div className='bubble navPos'>
+        <FontAwesomeIcon icon={faXmark} className='navIcon' />
       </div>
       </Link>
 

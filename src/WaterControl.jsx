@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import ReactDOM from 'react-dom/client'
+import { GLOBAL } from './Global'
 import './index.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGlassWater,faPlus } from '@fortawesome/free-solid-svg-icons'
@@ -9,12 +9,12 @@ import { Link } from 'react-router-dom'
 
 export default function WaterContorl(){
 
-  function valuetext(value) {
-    return `${value}°C`;
-  }
   const [checked, setChecked] = useState(false);
   const [angle, setAngle] = useState(0);
 
+  function valuetext(value) {
+  return `${value}°C`;
+}
 
   const WaterSlider = styled(Slider)({
     color: 'rgba(255,255,255,0.8)',
@@ -23,7 +23,8 @@ export default function WaterContorl(){
       color: 'rgba(255,255,255,1)',
       fontSize: '1rem',
       right: '-3rem',
-      top: '1.8rem'
+      top: '1.8rem',
+      fontFamily: GLOBAL.fontFamily,
     },
     '& .MuiSlider-track': {
       border: 'none',
@@ -39,6 +40,7 @@ export default function WaterContorl(){
       },
     },
     '& .MuiSlider-valueLabel': {
+      fontFamily: GLOBAL.fontFamily,
       lineHeight: 1.2,
       fontSize: '1rem',
       background: 'unset',
@@ -70,14 +72,13 @@ export default function WaterContorl(){
     <>
       <div className='setWater'>
         <WaterSlider
-          aria-label="Temperature"
-          defaultValue={0}
+          aria-label="Intake"
           getAriaValueText={valuetext}
           valueLabelDisplay="auto"
-          shiftStep={30}
           step={10}
-          min={10}
+          min={0}
           marks={marks}
+          defaultValue={ 0 }
         />
 
         <div className='empty'></div>

@@ -3,10 +3,16 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  font-family: "Varela Round", sans-serif;
+  font-family: "Nunito", sans-serif;
   font-weight: 400;
   font-style: normal;
+  --background: #8fdfff;
+  --backgroundNotSelect: #b0e9ff;
+  --hover: #56c5fd;
+  --fontFamily: "Nunito", sans-serif;
+  --fontMain: "Cherry Bomb One", system-ui;
+  --iconGap: 0.6rem;
+  --strokeColor: rgba(87, 190, 238, 1);
 }
 
 /* main */
@@ -28,7 +34,7 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background-color: rgba(153, 192, 247, 0.0);
+  background-color: var(--strokeColor);
 }
 
 /* Nav */
@@ -48,8 +54,8 @@
 .navPos {
   right: 0;
   position: fixed;
-  margin-right: 1rem;
-  margin-top: 1rem;
+  margin-right: var(--iconGap);
+  margin-top: var(--iconGap);
 }
 
 .navMenu {
@@ -60,10 +66,10 @@
 .navIcon {
   position: relative;
   top: 50%;
-  transform: translate(0%, -70%);
-  font-size: 1rem;
+  transform: translate(0%, -60%);
+  font-size: 1.2rem;
   color: rgba(255, 255, 255);
-  filter: drop-shadow(1px 1px 2px rgba(141, 157, 169, 1));
+  filter: drop-shadow(1px 1px 2px rgb(122, 158, 186));
 }
 
 /* Main - WaterContorl */
@@ -72,15 +78,15 @@
   bottom: 0;
   width: calc(100% - 3rem);
   display: grid;
-  grid-template-columns: auto 0.1rem 3rem 3rem;
-  gap: 0.8rem;
-  margin: 0 1rem 1rem 2rem;
+  grid-template-columns: auto 0.2rem 3rem 3rem;
+  gap: 0.5rem;
+  margin: 0 1rem 0.8rem 2rem;
   align-items: center;
 }
 
 /* Details */
 .bg {
-  background-color: #8fdfff;
+  background-color: var(--background);
   width: 100%;
   min-height: 100%;
   position: absolute;
@@ -93,37 +99,35 @@
 
 .head {
   position: absolute;
-  top: 10px;
+  top: var(--iconGap);
   left: 50%;
   transform: translateX(-50%);
 }
 
 .stroke {
-  -webkit-text-stroke-width: 1rem;
-  -webkit-text-stroke-color: rgb(87, 191, 238);
+  -webkit-text-stroke-width: var(--iconGap);
+  -webkit-text-stroke-color: var(--strokeColor);
 }
 
 h1 {
-  font-family: "Cherry Bomb One", system-ui;
-  font-weight: 400;
-  font-style: normal;
+  font-family: var(--fontMain);
   color: white;
+  margin: 0;
+  font-size: 2rem;
 }
 
 p {
-  font-family: "Varela Round", sans-serif;
+  font-family: var(--fontFamily);
   font-weight: 400;
   font-style: normal;
 }
 
 .content {
   position: absolute;
-  top: 80px;
-  text-align: left;
-  margin: 5%;
-  width: 90%;
+  top: 5.2rem;
+  width: 100vw;
 }
 
 .margin-bottom {
-  margin-bottom: 40px;
+  margin-bottom: 1rem;
 }

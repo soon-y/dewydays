@@ -45,13 +45,13 @@ export default function Nav(){
       }
       <>
       {trail.map(({ ...otherProps }, i) => (
-        <Link to={ "/" + links[i] }>
+        <Link key ={ links[i] } to={ "/" + links[i] }>
         <animated.div
           key ={ links[i] } 
           className = 'bubble navPos'
           style={{ 
             ...otherProps,
-            top: 3.8 + i * 3 + i * GLOBAL.iconGap + 'rem'
+            top: (3 + GLOBAL.iconGap) + i * 3 + i * GLOBAL.iconGap + 'rem'
           }}
           >
         <FontAwesomeIcon icon={ icons[i] } className='navIcon' />
