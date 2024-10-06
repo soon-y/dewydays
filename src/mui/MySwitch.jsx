@@ -12,7 +12,7 @@ export default function ActiveSwitch({ label, keyName }) {
   return<>
     <FormControlLabel sx={{ 
       color: 'white',
-      margin:0,
+      margin: 0,
     }}
       control={
         <MaterialUISwitch sx={{ m: 0 }}
@@ -39,7 +39,7 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 
     '&.Mui-checked': {
       color: '#7ED1FF',
-      transform: 'translateX(22px)',
+      transform: 'translateX(24px)',
       '& .MuiSwitch-thumb:before': {
         backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 448 512"><path fill="${encodeURIComponent(
           GLOBAL.strokeColor,
