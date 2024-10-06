@@ -8,7 +8,7 @@ import { GLOBAL } from './Global'
 
 export default function Nav(){
 
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(true);
   const [angle, setAngle] = useState(0);
   const icons = [ faUser, faChartSimple, faSun, faBell]
   const links = ['profile', 'timeline', 'weather', 'alarm']
