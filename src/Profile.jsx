@@ -14,7 +14,9 @@ export default function Profile(){
   const d = new Date();
   let year = d.getFullYear();
 
-  const [ result, setIntake ] = useState("Click the button!");
+  const [ result, setIntake ] = useState("0");
+
+
 
   const buttonClick = () =>
   { 
@@ -34,10 +36,7 @@ export default function Profile(){
     } 
   }
 
-
-
-
-//  const genderArray = ["Male", "Female", "Other", "nth"]
+  const [active, set] = localStorage();
 
   return(
     <div className='bg'>
@@ -45,20 +44,12 @@ export default function Profile(){
       <h1 className='head'>{head}</h1>
       
       <Link to='/'>
-      <div className='bubble close'>
-        <FontAwesomeIcon icon={faXmark} className='btn' />
+      <div className='bubble navPos'>
+        <FontAwesomeIcon icon={faXmark} className='navIcon' />
       </div>
       </Link>
 
-      <div className='content'>
-
-        {/* <div className='margin-bottom center'>
-          <MyToggle
-                  label={ "gender" }
-                  values = { genderArray }
-          />
-        </div> */}
-        
+      <div className='content'>       
         <div className='margin-bottom'>
           <NumInput
             label={ "weight" }
@@ -66,7 +57,7 @@ export default function Profile(){
             max={ 200 }
             placeholder={ "Weight" }
             unit = { "kg" }
-            keyName={ "weight" }
+            keyName={ "weight" }          
           />           
         </div>
 
@@ -81,7 +72,10 @@ export default function Profile(){
           />           
         </div>   
 
-        <div className='margin-bottom center'>
+        <div className='center' style={{
+          marginBottom: '0.5rem',
+          marginTop: '1.5rem',
+          }}>
             <ActiveSwitch 
               label={ "Activity Mode" }
               min={ 0 }
@@ -103,20 +97,36 @@ export default function Profile(){
           />           
         </div>
 
-        <div className='margin-bottom center'>
-          <h2 style={{
-              marginBottom: "0px"}}>
-                Today's goal&nbsp; 
-          <button onClick={ buttonClick }>
-            <FontAwesomeIcon icon={ faCalculator } />
-          </button>
-          </h2>
-            <h1 style={{
-              marginTop: "0px",
-              fontFamily: GLOBAL.fontMain,
-              color: 'white', }}>{ result } </h1>
+        <div 
+          className='center'
+          style={{
+            marginTop: '2rem',
+            color: 'white',
+          }}>
+          <h3>
+            Today's goal&nbsp; { result + "ml" }
+          </h3>
         </div>
       </div>
     </div>
   )
+}
+
+function localStorage() {
+  const [value, set] = useState(false);
+  useEffect(() => {
+    window.addEventListener('storage', (e) => set(e.newValue));
+    return () => {
+      window.removeEventListener('storage', (e) => set(e.newValue));
+      console.log("e.newValue")
+    };
+  }, [value]);
+
+  const update = (newValue) => {
+    window.localStorage.setItem("weight", newValue);
+    let event = new Event('storage');
+    event.newValue = newValue;
+    window.dispatchEvent(event);
+  };
+  return [value, update];
 }

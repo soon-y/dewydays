@@ -7,21 +7,22 @@ import { GLOBAL } from '../Global'
 import ActiveLocalStorage from '../ActiveLocalStorage';
 
 export default function ActiveSwitch({ label, keyName }) {
-  // const [value, set] = useState(true);
-
-  // useEffect(() => {
-  //   localStorage.setItem( keyName , JSON.stringify(value))
-  // }, [value]);
-
   const [value, set] = ActiveLocalStorage();
 
   return<>
-    <FormControlLabel sx={{ color: 'white' }}
+    <FormControlLabel sx={{ 
+      color: 'white',
+      margin:0,
+    }}
       control={
-        <MaterialUISwitch sx={{ m: 1 }}
+        <MaterialUISwitch sx={{ m: 0 }}
         onChange={(event, val) => set(val)} 
         />}
-      label= {<Typography sx={{ fontFamily: GLOBAL.fontFamily }}>
+      label= {<Typography sx={{ 
+        fontFamily: GLOBAL.fontFamily, 
+        fontWeight: 700,
+        marginRight: '0.8rem',
+        }}>
         { label } </Typography>}
       labelPlacement="start"
     />
@@ -33,23 +34,23 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   height: 34,
   padding: 7,
   '& .MuiSwitch-switchBase': {
-    margin: 1,
     padding: 0,
     transform: 'translateX(6px)',
+
     '&.Mui-checked': {
       color: '#7ED1FF',
       transform: 'translateX(22px)',
       '& .MuiSwitch-thumb:before': {
         backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 448 512"><path fill="${encodeURIComponent(
-          '#7ED1FF',
-        )}" d="M320 48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM125.7 175.5c9.9-9.9 23.4-15.5 37.5-15.5c1.9 0 3.8 .1 5.6 .3L137.6 254c-9.3 28 1.7 58.8 26.8 74.5l86.2 53.9-25.4 88.8c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l28.7-100.4c5.9-20.6-2.6-42.6-20.7-53.9L238 299l30.9-82.4 5.1 12.3C289 264.7 323.9 288 362.7 288l21.3 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-21.3 0c-12.9 0-24.6-7.8-29.5-19.7l-6.3-15c-14.6-35.1-44.1-61.9-80.5-73.1l-48.7-15c-11.1-3.4-22.7-5.2-34.4-5.2c-31 0-60.8 12.3-82.7 34.3L57.4 153.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l23.1-23.1zM91.2 352L32 352c-17.7 0-32 14.3-32 32s14.3 32 32 32l69.6 0c19 0 36.2-11.2 43.9-28.5L157 361.6l-9.5-6c-17.5-10.9-30.5-26.8-37.9-44.9L91.2 352z"/></svg>')`,        
+          GLOBAL.strokeColor,
+        )}" d="M349.4 44.6c5.9-13.7 1.5-29.7-10.6-38.5s-28.6-8-39.9 1.8l-256 224c-10 8.8-13.6 22.9-8.9 35.3S50.7 288 64 288l111.5 0L98.6 467.4c-5.9 13.7-1.5 29.7 10.6 38.5s28.6 8 39.9-1.8l256-224c10-8.8 13.6-22.9 8.9-35.3s-16.6-20.7-30-20.7l-111.5 0L349.4 44.6"/></svg>')`,        
       },
       '& + .MuiSwitch-track': {
         opacity: 1,
-        backgroundColor: '#D9E1E5',
+        backgroundColor: '#aab4be',
       },
       '& .MuiSwitch-thumb': {
-        backgroundColor: '#fff',},
+        backgroundColor: '#f7f7f7',},
     },
   },
   '& .MuiSwitch-thumb': {
@@ -66,13 +67,13 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'center',
       backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 448 512"><path fill="${encodeURIComponent(
-        '#fff',
-      )}" d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z"/></svg>')`,
+        '#eaeaea',
+      )}" d="M349.4 44.6c5.9-13.7 1.5-29.7-10.6-38.5s-28.6-8-39.9 1.8l-256 224c-10 8.8-13.6 22.9-8.9 35.3S50.7 288 64 288l111.5 0L98.6 467.4c-5.9 13.7-1.5 29.7 10.6 38.5s28.6 8 39.9-1.8l256-224c10-8.8 13.6-22.9 8.9-35.3s-16.6-20.7-30-20.7l-111.5 0L349.4 44.6"/></svg>')`,
     },
   },
   '& .MuiSwitch-track': {
     opacity: 1,
     backgroundColor: theme.palette.mode === 'dark' ? '#8796A5' : '#aab4be',
-    borderRadius: 20 / 2,
+    borderRadius: 20 / 1,
   },
 }));

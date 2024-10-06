@@ -23,9 +23,10 @@ export default function NumInput({ keyName, label, min, max, placeholder, unit }
       max={ max } 
       onChange={(event, val) => set(val)}
       placeholder= { placeholder }
-      endAdornment={<InputAdornment> {unit.length>2? unit : unit + nbsp + nbsp } </InputAdornment>} 
+      endAdornment={<InputAdornment> {unit.length>2? unit : unit + nbsp + nbsp + nbsp } </InputAdornment>} 
       disabled={ label == "exercise" ? !active : false }
       step={ label == "exercise" ? 5 : 1}
+      shiftMultiplier={5}
       />  
   </>
 
@@ -124,6 +125,7 @@ const StyledInput = styled('input')(
   
   &:disabled {
     color: ${grey[600]};
+    background: ${grey[200]};
   }
 `,
 );
@@ -137,7 +139,7 @@ const StyledButton = styled('button')(
   border: 1px solid;
   border-radius: 999px;
   border-color: ${theme.palette.mode === 'dark' ? grey[800] : grey[200]};
-  background: ${theme.palette.mode === 'dark' ? grey[900] : grey[50]};
+  background: ${theme.palette.mode === 'dark' ? grey[900] : grey[100]};
   color: ${theme.palette.mode === 'dark' ? grey[200] : grey[900]};
   width: 32px;
   height: 32px;
@@ -152,7 +154,7 @@ const StyledButton = styled('button')(
   &:hover {
     cursor: pointer;
     background: ${ GLOBAL.hover };
-    border-color: ${ GLOBAL.hover };
+    border-color: ${ grey[200] };
     color: ${grey[50]};
   }
 
@@ -168,9 +170,10 @@ const StyledButton = styled('button')(
 
 const InputAdornment = styled('div')(
   ({ theme }) => `
-  font-family: "Varela Round";
+  font-family: ${ GLOBAL.fontFamily };
   color: ${grey[600]};
-  margin: 8px;
+  margin-left: 0.2rem;
+  margin-right: 0.8rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
