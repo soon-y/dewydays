@@ -7,12 +7,33 @@
   font-weight: 400;
   font-style: normal;
   --background: #8fdfff;
-  --backgroundNotSelect: #b0e9ff;
+  --backgroundHell: #b0e9ff;
+  --backgroundDunkel: #5bcefc;
+  --backgroundDunkeler: #0898da;
   --hover: #56c5fd;
   --fontFamily: "Nunito", sans-serif;
   --fontMain: "Cherry Bomb One", system-ui;
   --iconGap: 0.6rem;
   --strokeColor: rgba(87, 190, 238, 1);
+}
+
+#root {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: scroll;
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+#root::-webkit-scrollbar {
+  display: none;
 }
 
 /* main */
@@ -22,19 +43,8 @@
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
-
   width: 100vw;
   height: 100vh;
-}
-
-#root {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  background-color: var(--strokeColor);
 }
 
 /* Nav */
@@ -53,7 +63,7 @@
 
 .navPos {
   right: 0;
-  position: fixed;
+  position: absolute;
   margin-right: var(--iconGap);
   margin-top: var(--iconGap);
 }
@@ -72,6 +82,10 @@
   filter: drop-shadow(1px 1px 2px rgb(122, 158, 186));
 }
 
+.close {
+  top: 0;
+}
+
 /* Main - WaterContorl */
 .setWater {
   position: absolute;
@@ -88,8 +102,9 @@
 .bg {
   background-color: var(--background);
   width: 100%;
+  height: auto;
   min-height: 100%;
-  position: absolute;
+  position: fixed;
   top: 0;
 }
 
@@ -102,11 +117,9 @@
   top: var(--iconGap);
   left: 50%;
   transform: translateX(-50%);
-}
-
-.stroke {
   -webkit-text-stroke-width: var(--iconGap);
   -webkit-text-stroke-color: var(--strokeColor);
+  paint-order: stroke fill;
 }
 
 h1 {
@@ -118,8 +131,9 @@ h1 {
 
 p {
   font-family: var(--fontFamily);
-  font-weight: 400;
+  font-weight: 500;
   font-style: normal;
+  margin: 0;
 }
 
 .content {
@@ -130,4 +144,87 @@ p {
 
 .margin-bottom {
   margin-bottom: 1rem;
+}
+
+.btn {
+  margin-top: 2rem;
+  background: url('./button.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  height: 3rem;
+}
+
+.btn button {
+  background: transparent;
+  border: none;
+  font-family: var(--fontMain);
+  color: white;
+  font-size: 1.8rem;
+  line-height: 2.2rem;
+}
+
+/* alarm */
+p.alarmText {
+  font-family: var(--fontMain);
+  margin-bottom: 0.4rem;
+  padding-top: 1.2rem;
+  font-size: 1.4rem;
+  color: white;
+  -webkit-text-stroke: 0.3rem var(--backgroundDunkeler);
+  paint-order: stroke fill;
+}
+
+.alarmComp {
+  padding-top: 1rem;
+}
+
+.alarmComp .time {
+  text-align: left;
+  font-family: var(--fontFamily);
+  font-weight: 400;
+  font-size: 2.4rem;
+  color: white;
+  border-top: 1px solid rgba(255, 255, 255, 0.425);
+}
+
+.alarmComp .tag {
+  text-align: left;
+  font-family: var(--fontFamily);
+  color: var(--backgroundDunkeler);
+  font-size: 0.8rem;
+}
+
+.alarmComp .tag span {
+  background-color: white;
+  border-radius: 0.4rem;
+  padding: 0.1rem 0.3rem;
+  margin-right: 0.4rem;
+}
+
+.plus {
+  color: var(--backgroundDunkeler);
+  background-color: var(--backgroundHell);
+  border-radius: 1rem;
+  font-size: 1.4rem;
+  padding: 1rem;
+  margin-right: 0.4rem;
+  border: 1px solid white;
+  position: fixed;
+  bottom: 1rem;
+  right: 1.4rem;
+  z-index: 1;
+  opacity: 0.8;
+}
+
+.alarmComp .minus {
+  color: #7e7e7e;
+  background-color: #dedede;
+  border-radius: 1rem;
+  padding: 0.4rem 0.5rem;
+  margin-right: 0.4rem;
+  border: 1px solid #b9b9b9;
+  position: relative;
+  float: right;
+  transform: translate(0%, -150%);
 }
