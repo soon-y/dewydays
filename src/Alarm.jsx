@@ -67,8 +67,8 @@ export default function Alarm(){
             onChange={(event,val) => setTab(val)}
             aria-label="tabs"
           >
-            <StyledTab disabled= {!active} index={0} label="Set Alarm periodically"/>
-            <StyledTab disabled= {!active} index={1} label="Add time manually"/>
+            <StyledTab disabled= {!active} index={0} label="Set Routines"/>
+            <StyledTab disabled= {!active} index={1} label="Set Alarms"/>
           </StyledTabs>
 
           <TabPanel value={value} index={0} dir={theme.direction} disabled= {!active}>
@@ -83,19 +83,19 @@ export default function Alarm(){
                 justifyContent: 'center',
               }}
             >
-            <CustomToggle value="monday" aria-label="days" onClick={ () => setSelMon(!selMon) } selected = { selMon }> Mon
+            <CustomToggle value="monday" aria-label="days" onClick={ () => setSelMon(!selMon) } selected = { selMon }> Mo
             </CustomToggle>
-            <CustomToggle value="tuesday" aria-label="days" onClick={ () => setSelTue(!selTue) } selected = { selTue }> Tue
+            <CustomToggle value="tuesday" aria-label="days" onClick={ () => setSelTue(!selTue) } selected = { selTue }> Tu
             </CustomToggle>
-            <CustomToggle value="wednesday" aria-label="days" onClick={ () => setSelWed(!selWed) } selected = { selWed }> Wed
+            <CustomToggle value="wednesday" aria-label="days" onClick={ () => setSelWed(!selWed) } selected = { selWed }> We
             </CustomToggle>
-            <CustomToggle value="thursday" aria-label="days" onClick={ () => setSelThu(!selThu) } selected = { selThu }> Thu
+            <CustomToggle value="thursday" aria-label="days" onClick={ () => setSelThu(!selThu) } selected = { selThu }> Th
             </CustomToggle>
-            <CustomToggle value="friday" aria-label="days" onClick={ () => setSelFri(!selFri) } selected = { selFri }> Fri
+            <CustomToggle value="friday" aria-label="days" onClick={ () => setSelFri(!selFri) } selected = { selFri }> Fr
             </CustomToggle>
-            <CustomToggle value="saturday" aria-label="days" onClick={ () => setSelSat(!selSat) } selected = { selSat }> Sat
+            <CustomToggle value="saturday" aria-label="days" onClick={ () => setSelSat(!selSat) } selected = { selSat }> Sa
             </CustomToggle>
-            <CustomToggle value="sunday" aria-label="days" onClick={ () => setSelSun(!selSun) } selected = { selSun }> Sun
+            <CustomToggle value="sunday" aria-label="days" onClick={ () => setSelSun(!selSun) } selected = { selSun }> Su
             </CustomToggle>
             </ToggleButtonGroup>
 
@@ -118,7 +118,7 @@ export default function Alarm(){
             min={ 0 }
             max={ 60*5 }
             placeholder={ "" }
-            unit = { "min" }
+            unit = { "mins" }
             keyName={ "alarm" }
             />   
 
@@ -143,19 +143,19 @@ export default function Alarm(){
                 paddingTop: '1rem',
               }}
             >
-            <CustomToggle value="monday" aria-label="days" onClick={ () => setSelMon(!selMon) } selected = { selMon }> Mon
+            <CustomToggle value="monday" aria-label="days" onClick={ () => setSelMon(!selMon) } selected = { selMon }> Mo
             </CustomToggle>
-            <CustomToggle value="tuesday" aria-label="days" onClick={ () => setSelTue(!selTue) } selected = { selTue }> Tue
+            <CustomToggle value="tuesday" aria-label="days" onClick={ () => setSelTue(!selTue) } selected = { selTue }> Tu
             </CustomToggle>
-            <CustomToggle value="wednesday" aria-label="days" onClick={ () => setSelWed(!selWed) } selected = { selWed }> Wed
+            <CustomToggle value="wednesday" aria-label="days" onClick={ () => setSelWed(!selWed) } selected = { selWed }> We
             </CustomToggle>
-            <CustomToggle value="thursday" aria-label="days" onClick={ () => setSelThu(!selThu) } selected = { selThu }> Thu
+            <CustomToggle value="thursday" aria-label="days" onClick={ () => setSelThu(!selThu) } selected = { selThu }> Th
             </CustomToggle>
-            <CustomToggle value="friday" aria-label="days" onClick={ () => setSelFri(!selFri) } selected = { selFri }> Fri
+            <CustomToggle value="friday" aria-label="days" onClick={ () => setSelFri(!selFri) } selected = { selFri }> Fr
             </CustomToggle>
-            <CustomToggle value="saturday" aria-label="days" onClick={ () => setSelSat(!selSat) } selected = { selSat }> Sat
+            <CustomToggle value="saturday" aria-label="days" onClick={ () => setSelSat(!selSat) } selected = { selSat }> Sa
             </CustomToggle>
-            <CustomToggle value="sunday" aria-label="days" onClick={ () => setSelSun(!selSun) } selected = { selSun }> Sun
+            <CustomToggle value="sunday" aria-label="days" onClick={ () => setSelSun(!selSun) } selected = { selSun }> Su
             </CustomToggle>
             </ToggleButtonGroup>
 
