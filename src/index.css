@@ -38,7 +38,7 @@
 
 /* main */
 #bg {
-  background-image: url("/main/bg.png");
+  background-image: url("/main/bg.jpg");
   background-position: center bottom;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -140,6 +140,7 @@ p {
   position: absolute;
   top: 5.2rem;
   width: 100vw;
+  padding-bottom: 2rem;
 }
 
 .margin-bottom {
@@ -164,7 +165,7 @@ p {
   line-height: 2.2rem;
 }
 
-/* alarm */
+/*****       alarm       *****/
 p.alarmText {
   font-family: var(--fontMain);
   margin-bottom: 0.4rem;
@@ -214,7 +215,7 @@ p.alarmText {
   bottom: 1rem;
   right: 1.4rem;
   z-index: 1;
-  opacity: 0.8;
+  opacity: 0.9;
 }
 
 .alarmComp .minus {
@@ -228,3 +229,56 @@ p.alarmText {
   float: right;
   transform: translate(0%, -150%);
 }
+
+/*****       weather       *****/
+.clock {
+  margin: auto;
+  width: calc(100vw - 2rem);
+  height: auto;
+  aspect-ratio: 1;
+  background-color: white;
+  border-radius: 50%;
+}
+
+.info p {
+  font-weight: 700;
+}
+
+.rotate {
+  rotate: 90deg;
+}
+
+.tick {
+  position: relative;
+  background-color: var(--background);
+  transform: translate(0%, 0%);
+}
+
+.bigTick {
+  width: 0.4rem;
+  height: 1rem;
+}
+
+.Uhr12 {
+  top: 0;
+  left: 50%;
+}
+
+.Uhr3 {
+  background-color: orange;
+  float: right;
+  top: 50%;
+}
+
+.Uhr6 {
+  top: 100%;
+  left: 50%;
+  background-color: rgb(155, 155, 22);
+}
+
+.Uhr9 {
+
+  background-color: green;
+}
+
+.smallTick {}
