@@ -282,3 +282,21 @@ p.alarmText {
 }
 
 .smallTick {}
+
+.weatherInfo {
+  color: white;
+  padding-top: 1rem;
+  margin: auto
+}
+
+.weatherInfo th {
+  text-align: right;
+}
+
+.weatherInfo td {
+  padding-left: 1rem;
+}
+
+.weekWeather {
+  display: grid;
+}
