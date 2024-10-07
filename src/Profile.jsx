@@ -39,12 +39,12 @@ export default function Profile(){
   const [active, set] = localStorage();
 
   return(
-    <div className='bg'>
-      <h1 className='head stroke'>{head}</h1>
+    <>
+    <div className='bg'></div>
       <h1 className='head'>{head}</h1>
       
       <Link to='/'>
-      <div className='bubble navPos'>
+      <div className='bubble navPos close'>
         <FontAwesomeIcon icon={faXmark} className='navIcon' />
       </div>
       </Link>
@@ -107,8 +107,14 @@ export default function Profile(){
             Today's goal&nbsp; { result + "ml" }
           </h3>
         </div>
+
+        <div className='btn center'>
+            <Link to='/'>
+              <button>save</button>
+            </Link>
+            </div>
       </div>
-    </div>
+    </>
   )
 }
 

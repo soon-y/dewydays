@@ -1,6 +1,8 @@
 const GLOBAL = {
   background: '#8fdfff',
-  backgroundNotSelect: '#b0e9ff',
+  backgroundHell: '#b0e9ff',
+  backgroundDunkel: '#5bcefc',
+  backgroundDunkeler: '#0898da',
   hover: '#56c5fd',
   fontFamily: "Nunito",
   fontMain: "Cherry Bomb One",

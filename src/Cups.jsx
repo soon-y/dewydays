@@ -5,10 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark} from '@fortawesome/free-solid-svg-icons'
 
 import { Link } from 'react-router-dom'
-//import '01.png' from 
-
-
-
 
 export default function Weather(){
   
@@ -18,7 +14,6 @@ export default function Weather(){
 
   return(
     <div className='bg'>
-      <h1 className='head stroke'>{head}</h1>
       <h1 className='head'>{head}</h1>
       
       <Link to='/'>

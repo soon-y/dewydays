@@ -20,7 +20,6 @@ export default function Weather(){
 
   return(
     <div className='bg'>
-      <h1 className='head stroke'>{head}</h1>
       <h1 className='head'>{head}</h1>
       
       <Link to='/'>

@@ -1,79 +1,85 @@
 import React, { useState } from 'react'
+import { GLOBAL } from './Global'
 import './index.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark, faPlus } from '@fortawesome/free-solid-svg-icons'
-import { Component } from 'react';
 import { Link } from 'react-router-dom'
 
 //https://react.dev/reference/react/Component
 
-class CompWater extends Component {
-  render() {
+const color = '#26B3FA'
+
+function CompWater({ amount, time }) {
     return <>
     <div style={{
-      marginLeft: '30px',
-      width: '8px',
-      height:'20px',
-      backgroundColor: '#26B3FA',
+      marginLeft: '2rem',
+      width: '0.4rem',
+      height:'1rem',
+      backgroundColor: color,
     }}></div>
 
     <div style={{
       width: "auto", 
-      height: '50px',
+      height: '3rem',
+      lineHeight: '3rem',
       display: 'block',
       background: 'white',
-      borderRadius: '50px',
-      border: '2px solid #26B3FA',
-      lineHeight: '300%',
-      padding: '0 20px',
-      color: '#18A0E5',
-      }}>{this.props.amount} ml
+      borderRadius: '2rem',
+      border: '0.16rem solid ' + color,
+      padding: '0 1rem',
+      color: color,
+      marginLeft: GLOBAL.iconGap + 'rem',
+      marginRight: GLOBAL.iconGap + 'rem',
+      }}>
+      <span style={{
+        fontWeight: '700',
+      }}>  
+      {amount} ml
+      </span>
       
       <span style={{
-        float: 'right', 
-      }}      
-        > 
-        {this.props.time}
+        float: 'right',
+      }}> 
+        {time}
         &nbsp;&nbsp;
-        <FontAwesomeIcon icon={faXmark}/>
+        <FontAwesomeIcon icon={ faXmark } style={{color: "#ccc"}}/>
         </span>
       </div>
       </>
-  }
+
 }
 
-class HeadComp extends Component {
-  render() {
+function HeadComp ({ date, total }) {
     return <div style={{
-      width: "50%", 
-      height: '40px',
+      width: "50vw", 
+      height: '2.4rem',
+      lineHeight: '2.4rem',
       display: 'block',
-      backgroundColor: '#26B3FA',
+      backgroundColor: color,
       color: '#fff',
       borderRadius: '10px',
-      lineHeight: '250%',
       padding: '0 20px',
-      marginTop: '20px'
+      marginLeft: GLOBAL.iconGap + 'rem',
+      marginRight: GLOBAL.iconGap + 'rem',
       }}>
 
       <span style={{
         float: 'left', 
-      }}      
-        > 
-        {this.props.total} &nbsp;&nbsp;
+        fontWeight: '800',
+      }}> 
+        {total} &nbsp;&nbsp;
         </span>
 
         <span style={{
         float: 'right', 
       }}      
         > 
-        {this.props.date} &nbsp;&nbsp;
+        {date} &nbsp;&nbsp;
         <FontAwesomeIcon icon={faPlus} />
         </span>
         
         
         </div>
-  }
 }
 
 export default function Timeline(){  
@@ -86,15 +92,15 @@ export default function Timeline(){
   let hr = d.getHours()
   let min = d.getMinutes()
 
-  const array = [300,200,100,500]
+  const array = [300,200,100,500,300,200,100,500,300,200,100,500,300,200,100,500,300,200,100,500,]
 
   return(
-    <div className='bg'>
-      <h1 className='head stroke'>{head}</h1>
+    <>
+    <div className='bg'></div>
       <h1 className='head'>{head}</h1>
       
       <Link to='/'>
-      <div className='bubble navPos'>
+      <div className='bubble navPos close' key="close">
         <FontAwesomeIcon icon={faXmark} className='navIcon' />
       </div>
       </Link>
@@ -108,7 +114,7 @@ export default function Timeline(){
           <CompWater key={array.id} amount={val} time={hr + ":" + min} />
         ))}
       </div>
-    </div>
+      </>
   )
 }
 
