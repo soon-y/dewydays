@@ -16,8 +16,6 @@ export default function Profile(){
 
   const [ result, setIntake ] = useState("0");
 
-
-
   const buttonClick = () =>
   { 
     let weight = localStorage.getItem('weight')
@@ -40,7 +38,7 @@ export default function Profile(){
 
   return(
     <>
-    <div className='bg'></div>
+    <div className='bg gradient'></div>
       <h1 className='head'>{head}</h1>
       
       <Link to='/'>
@@ -110,9 +108,9 @@ export default function Profile(){
 
         <div className='btn center'>
             <Link to='/'>
-              <button>save</button>
+              <button>SAVE</button>
             </Link>
-            </div>
+        </div>
       </div>
     </>
   )

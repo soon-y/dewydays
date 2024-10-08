@@ -7,15 +7,13 @@ import { Link } from 'react-router-dom'
 
 //https://react.dev/reference/react/Component
 
-const color = '#26B3FA'
-
 function CompWater({ amount, time }) {
     return <>
     <div style={{
-      marginLeft: '2rem',
+      marginLeft: '2.6rem',
       width: '0.4rem',
       height:'1rem',
-      backgroundColor: color,
+      backgroundColor: GLOBAL.backgroundDunkeler,
     }}></div>
 
     <div style={{
@@ -25,16 +23,16 @@ function CompWater({ amount, time }) {
       display: 'block',
       background: 'white',
       borderRadius: '2rem',
-      border: '0.16rem solid ' + color,
+      border: '0.16rem solid ' + GLOBAL.backgroundDunkeler,
       padding: '0 1rem',
-      color: color,
-      marginLeft: GLOBAL.iconGap + 'rem',
-      marginRight: GLOBAL.iconGap + 'rem',
+      color: GLOBAL.backgroundDunkeler,
+      marginLeft: '1rem',
+      marginRight: '1rem',
       }}>
       <span style={{
         fontWeight: '700',
       }}>  
-      {amount} ml
+      {amount}ml
       </span>
       
       <span style={{
@@ -55,12 +53,13 @@ function HeadComp ({ date, total }) {
       height: '2.4rem',
       lineHeight: '2.4rem',
       display: 'block',
-      backgroundColor: color,
+      backgroundColor: GLOBAL.backgroundDunkeler,
       color: '#fff',
       borderRadius: '10px',
       padding: '0 20px',
-      marginLeft: GLOBAL.iconGap + 'rem',
-      marginRight: GLOBAL.iconGap + 'rem',
+      marginLeft: '1rem',
+      marginRight: '1rem',
+      marginTop: '1.4rem',
       }}>
 
       <span style={{
@@ -86,17 +85,17 @@ export default function Timeline(){
   const head = "Timeline"
 
   const d = new Date()
-  let year = d.getFullYear()
-  let month = d.getMonth()+1
+  let year = d.getFullYear().toString()
+  let month = d.getMonth()
   let day = d.getDate()
   let hr = d.getHours()
   let min = d.getMinutes()
 
-  const array = [300,200,100,500,300,200,100,500,300,200,100,500,300,200,100,500,300,200,100,500,]
+  const array = [300,200,100,500,300,600,500,300,600]
 
   return(
     <>
-    <div className='bg'></div>
+    <div className='bg gradient'></div>
       <h1 className='head'>{head}</h1>
       
       <Link to='/'>
@@ -105,14 +104,22 @@ export default function Timeline(){
       </div>
       </Link>
 
-      <div className='content'>
+      <div className='content' style={{top:'3rem'}}>
       <HeadComp 
-        date={day +" "+ month +" "+ year} 
-        total={"1000 ml"}
+        date={day +" "+ GLOBAL.months[month] +" "+ year.slice(2,4)} 
+        total={"1000ml"}
         />
       {array.map((val) => (
           <CompWater key={array.id} amount={val} time={hr + ":" + min} />
         ))}
+
+      <HeadComp 
+        date={day +" "+ GLOBAL.months[month] +" "+ year.slice(2,4)} 
+        total={"1000ml"}
+        />
+      {array.map((val) => (
+          <CompWater key={array.id} amount={val} time={hr + ":" + min} />
+        ))} 
       </div>
       </>
   )
