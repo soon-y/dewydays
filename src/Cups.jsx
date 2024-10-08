@@ -13,7 +13,7 @@ export default function Weather(){
 
 
   return(
-    <div className='bg'>
+    <div className='bg gradient'>
       <h1 className='head'>{head}</h1>
       
       <Link to='/'>
@@ -25,12 +25,24 @@ export default function Weather(){
       <div className='content'>
 
 
-      <div className='margin-bottom center'>
+      <div className='cups'>
+        <img className='notSelected' src='/cups/01.png' />
+        <img className='notSelected' src='/cups/02.png' />
+        <img className='notSelected' src='/cups/03.png' />
+        <img className='notSelected' src='/cups/04.png' />
+      </div>
+
+      <div className='cupAmount'>
 
       </div>
 
 
-       
+
+      <div className='btn center'>
+            <Link to='/'>
+              <button>USE</button>
+            </Link>
+        </div>
       </div>
     </div>
   )
