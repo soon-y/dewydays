@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { GLOBAL } from './Global'
 import './index.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faXmark} from '@fortawesome/free-solid-svg-icons'
+import { faXmark,faCloud, faSun,faCloudBolt,faSnowflake,faCloudShowersHeavy,faCloudSun, } from '@fortawesome/free-solid-svg-icons'
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
@@ -24,25 +24,8 @@ export default function Weather(){
   let hour = d.getHours();
   let minute = d.getMinutes(); 
 
-  const months = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec',
-  ];
-  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
-
   return(
-    <div className='bg'>
+    <div className='bg gradient'>
       <h1 className='head'>{head}</h1>
       
       <Link to='/'>
@@ -56,19 +39,12 @@ export default function Weather(){
           color:'white',
           margin: '0 0 1rem 0',
         }}>
-        <p>{days[day]} {date} {months[month]} </p>
+        <p>{GLOBAL.days[day]} {date} {GLOBAL.months[month]} </p>
         <p>HAMBURG</p>
         </div>
 
         <div className='clock'>
-          <div className='tick bigTick Uhr12'></div>
-          <div className='tick bigTick rotate Uhr3'></div>
-          <div className='tick bigTick Uhr6'></div>
-          <div className='tick bigTick rotate Uhr9'></div>
-
-
-
-
+          <img className='pointer' src='/weather/pointer.png'/>
         </div>
 
         <table className='weatherInfo'>
@@ -90,7 +66,60 @@ export default function Weather(){
           </tr>
         </table>
 
-        <div className='weekWeather'>
+        <div className='weeklyWeather center'>
+          <div>
+            <div className='day'>Sun</div>
+            <div className='weatherIcon'>
+            <FontAwesomeIcon icon={faCloud} />
+            </div>
+            <span className='lowest'>11°</span>
+            <span className='highest'>18°</span>
+          </div>
+
+          <div>
+            <div className='day'>Mon</div>
+            <div className='weatherIcon'>
+            <FontAwesomeIcon icon={faCloudBolt} />
+            </div>
+            <span className='lowest'>11°</span>
+            <span className='highest'>18°</span>
+          </div>
+
+          <div>
+            <div className='day'>Tue</div>
+            <div className='weatherIcon'>
+            <FontAwesomeIcon icon={faCloudSun} />
+            </div>
+            <span className='lowest'>11°</span>
+            <span className='highest'>18°</span>
+          </div>
+
+          <div>
+            <div className='day'>Wed</div>
+            <div className='weatherIcon'>
+            <FontAwesomeIcon icon={faCloudShowersHeavy} />
+            </div>
+            <span className='lowest'>11°</span>
+            <span className='highest'>18°</span>
+          </div>
+
+          <div>
+            <div className='day'>Thu</div>
+            <div className='weatherIcon'>
+            <FontAwesomeIcon icon={faSnowflake} />
+            </div>
+            <span className='lowest'>11°</span>
+            <span className='highest'>18°</span>
+          </div>
+
+          <div>
+            <div className='day'>Fri</div>
+            <div className='weatherIcon'>
+            <FontAwesomeIcon icon={faSun} />
+            </div>
+            <span className='lowest'>11°</span>
+            <span className='highest'>18°</span>
+          </div>
           
         </div>
 

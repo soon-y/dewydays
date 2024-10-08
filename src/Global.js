@@ -8,6 +8,21 @@ const GLOBAL = {
   fontMain: "Cherry Bomb One",
   iconGap: 0.6,
   strokeColor: 'rgba(87, 190, 238, 1)',
+  months : [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ],
+  days : ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
 };
 
 export { GLOBAL };
