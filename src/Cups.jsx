@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { animated, useSpring } from '@react-spring/web'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -9,8 +10,11 @@ import { Link } from 'react-router-dom'
 export default function Weather(){
   
   const head = "Cups"
-  const [active, setActive] = useState(false);
-
+  const [cupNum, setCup] = useState(1);
+  const slideNum = [25, -25, -75, -125]
+  const slideCup = useSpring({
+    transform: `translateX(${slideNum[cupNum]}vw)`
+  })
 
   return(
     <div className='bg gradient'>
@@ -23,17 +27,17 @@ export default function Weather(){
       </Link>
 
       <div className='content'>
-
-
-      <div className='cups'>
-        <img className='notSelected' src='/cups/01.png' />
-        <img className='notSelected' src='/cups/02.png' />
-        <img className='notSelected' src='/cups/03.png' />
-        <img className='notSelected' src='/cups/04.png' />
-      </div>
+      <animated.div className='cups' style={ cupNum == 0? slideCup :  slideCup}>
+        <img className={cupNum == 0? 'selected' : 'notSelected'} src='/cups/00.png' onClick={() => setCup(0)} />
+        <img className={cupNum == 1? 'selected' : 'notSelected'} src='/cups/01.png' onClick={() => setCup(1)} />
+        <img className={cupNum == 2? 'selected' : 'notSelected'} src='/cups/02.png' onClick={() => setCup(2)} />
+        <img className={cupNum == 3? 'selected' : 'notSelected'} src='/cups/03.png' onClick={() => setCup(3)} />
+      </animated.div>
 
       <div className='cupAmount'>
-
+      <div id="scroller">
+ 		    <div id="scroller-block"></div>
+	    </div>
       </div>
 
 

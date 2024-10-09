@@ -167,7 +167,7 @@ p {
   font-family: var(--fontMain);
   color: white;
   font-size: 1.2rem;
-  line-height: 2.4rem;
+  line-height: 2.6rem;
 }
 
 /*****       alarm       *****/
@@ -307,5 +307,68 @@ p.alarmText {
 /*****       Cups       *****/
 .cups {
   width: 200vw;
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(4, 50vw);
+  position: relative;
+  transform: translateX(-25vw);
+}
+
+.cups img {
+  width: 50vw;
+}
+
+.notSelected {
+  filter: opacity(0.7) grayscale(1);
+  transition-duration: 500ms;
+}
+
+.selected {
+  filter: opacity(1) grayscale(0);
+  transition-duration: 500ms;
+}
+
+#scroller {
+  height: 40px;
+  /*position: fixed;*/
+  border: none;
+  background-color: #00000010;
+  border-radius: 30px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-snap-stop: always;
+}
+
+#scroller::-webkit-scrollbar {
+  display: none;
+}
+
+
+#scroller-block {
+  overflow: visible;
+  display: grid;
+}
+
+.numberInScroller {
+  text-align: center;
+  line-height: 22px;
+  height: 30px;
+  margin: 0px;
+  padding-top: 10px;
+  scroll-snap-align: center;
+}
+
+
+#selectedValueIndicator {
+  height: 40px;
+  border-radius: 30px;
+  background-color: transparent;
+  border: solid;
+  border-width: 1px;
+  border-color: #00000050;
+  z-index: +1;
+  position: relative;
+  margin-top: -40px;
+  pointer-events: none;
+  box-shadow: inset 0 0 10px #00000050;
 }
