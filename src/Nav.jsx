@@ -37,13 +37,12 @@ export default function Nav(){
 
   return(
     <>
-      { <div className='bubble navPos' onClick={ checking } >
+      <div className='bubble navPos' onClick={ checking } >
         <animated.div style={ arrowSpring } className='navMenu' >
         <FontAwesomeIcon icon={faChevronUp} className='navIcon' />
         </animated.div>
-      </div>
-      }
-      <>
+      </div>    
+     
       {trail.map(({ ...otherProps }, i) => (
         <Link key ={ links[i] } to={ "/" + links[i] }>
         <animated.div
@@ -57,8 +56,7 @@ export default function Nav(){
         <FontAwesomeIcon icon={ icons[i] } className='navIcon' />
       </animated.div>
       </Link>       
-      ))}
-      </>   
+      ))}      
     </>
   )
 }
