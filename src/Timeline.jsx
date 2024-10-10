@@ -49,7 +49,7 @@ function CompWater({ amount, time }) {
 
 function HeadComp ({ date, total }) {
     return <div style={{
-      width: "50vw", 
+      width: "50%", 
       height: '2.4rem',
       lineHeight: '2.4rem',
       display: 'block',
