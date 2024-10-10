@@ -7,6 +7,7 @@
   font-weight: 400;
   font-style: normal;
   --background: #8fdfff;
+  --backgroundG: #1fb0da;
   --backgroundHell: #b0e9ff;
   --backgroundDunkel: #5bcefc;
   --backgroundDunkeler: #0898da;
@@ -109,7 +110,7 @@
 }
 
 .gradient {
-  background-image: linear-gradient(180deg, var(--background), #1fb0da);
+  background-image: linear-gradient(180deg, var(--background), var(--backgroundG));
 }
 
 .center {
@@ -144,8 +145,16 @@ p {
 .content {
   position: absolute;
   top: 4.2rem;
-  width: 100vw;
+  width: 27rem;
   padding-bottom: 2rem;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+@media screen and (max-aspect-ratio: 0.5) {
+  .content {
+    width: 100vw;
+  }
 }
 
 .margin-bottom {
@@ -236,23 +245,187 @@ p.alarmText {
 }
 
 /*****       weather       *****/
+.sunMane {
+  animation-name: example;
+  animation-duration: 30s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  transform-origin: 0 0;
+}
+
+@keyframes example {
+  0% {
+    rotate: 0;
+  }
+
+  100% {
+    rotate: 360deg;
+  }
+}
+
+.currentInfo {
+  position: absolute;
+  width: inherit;
+  aspect-ratio: 1;
+  top: 3.7rem;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.current {
+  position: relative;
+  left: 50%;
+  top: 4rem;
+  transform: translateX(-50%);
+}
+
+.currentWeather {
+  width: 70%;
+  height: 50%;
+  margin-top: 1rem;
+}
+
+.currentTemp {
+  width: 20%;
+  height: 10%;
+  margin-top: 1rem;
+  font-size: 1.6rem;
+  color: var(--backgroundDunkeler);
+  font-weight: 600;
+}
+
 .clock {
   margin: auto;
-  width: calc(100vw - 2rem);
+  width: calc(100% - 2rem);
   height: auto;
   aspect-ratio: 1;
-  background-image: url("/weather/clock.png");
+  /* background-image: url("/weather/clock.png");
   background-size: contain;
+  background-repeat: no-repeat; */
 }
+
+.clockBg {
+  position: absolute;
+  margin: auto;
+  width: calc(100% - 2rem);
+  height: auto;
+  aspect-ratio: 1;
+  background-color: white;
+  border-radius: 50%;
+}
+
+.tick {
+  position: absolute;
+  transform-origin: 0 center;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.bigTick {
+  width: 0.6rem;
+  height: 1.2rem;
+}
+
+.smallTick {
+  width: 0.4rem;
+  height: 0.8rem;
+}
+
+.Uhr12 {
+  left: 50%;
+  background-color: #96d8f7;
+}
+
+.Uhr01 {
+  left: 75%;
+  top: 6.8%;
+  rotate: 30deg;
+  background-color: #92d5f5;
+}
+
+.Uhr02 {
+  left: 92%;
+  top: 24%;
+  rotate: 60deg;
+  background-color: #8bd1f1;
+}
+
+.Uhr03 {
+  right: 0;
+  top: 50%;
+  rotate: 90deg;
+  background-color: #81cbec;
+  transform: translateX(-140%);
+}
+
+.Uhr04 {
+  left: 92%;
+  bottom: 24%;
+  rotate: 120deg;
+  background-color: #79c6e9;
+  ;
+}
+
+.Uhr05 {
+  left: 75%;
+  bottom: 6%;
+  rotate: 150deg;
+  background-color: #71c2e5;
+}
+
+.Uhr06 {
+  left: 50%;
+  bottom: 0;
+  background-color: #6fc0e4;
+}
+
+.Uhr07 {
+  left: 26%;
+  bottom: 6%;
+  rotate: 210deg;
+  background-color: #71c2e5;
+}
+
+.Uhr08 {
+  left: 8%;
+  bottom: 24%;
+  rotate: 240deg;
+  background-color: #79c6e9;
+
+}
+
+.Uhr09 {
+  top: 50%;
+  transform: translate(-50%, -50%);
+  rotate: 90deg;
+  background-color: #81cbec;
+  transform: translate(-140%, -50%);
+}
+
+.Uhr10 {
+  left: 8%;
+  top: 24%;
+  rotate: 300deg;
+  background-color: #8bd1f1;
+}
+
+.Uhr11 {
+  left: 26%;
+  top: 6%;
+  rotate: 330deg;
+  background-color: #92d5f5;
+}
+
 
 .pointer {
   position: relative;
   left: calc(50% - 1.5rem);
-  width: 2.9rem;
+  top: -3%;
+  height: 53%;
   transform-origin: bottom center;
   mix-blend-mode: multiply;
-  transform: translateY(-0.6rem);
-  rotate: 360deg;
+  opacity: 0.8;
+  z-index: 2;
 }
 
 .info p {
@@ -262,7 +435,8 @@ p.alarmText {
 .weatherInfo {
   color: white;
   padding-top: 1rem;
-  margin: auto
+  margin: auto;
+  line-height: 1.1rem;
 }
 
 .weatherInfo th {
@@ -306,7 +480,7 @@ p.alarmText {
 
 /*****       Cups       *****/
 .cups {
-  width: 200vw;
+  width: 200%;
   display: grid;
   grid-template-columns: repeat(4, 50vw);
   position: relative;
@@ -314,7 +488,7 @@ p.alarmText {
 }
 
 .cups img {
-  width: 50vw;
+  width: 50%;
 }
 
 .notSelected {
