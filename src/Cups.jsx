@@ -26,8 +26,8 @@ export default function Weather(){
       </div>
       </Link>
 
-      <div className='content'>
-      <animated.div className='cups' style={ cupNum == 0? slideCup :  slideCup}>
+
+      <animated.div className='cups' style={ slideCup }>
         <img className={cupNum == 0? 'selected' : 'notSelected'} src='/cups/00.png' onClick={() => setCup(0)} />
         <img className={cupNum == 1? 'selected' : 'notSelected'} src='/cups/01.png' onClick={() => setCup(1)} />
         <img className={cupNum == 2? 'selected' : 'notSelected'} src='/cups/02.png' onClick={() => setCup(2)} />
@@ -41,14 +41,16 @@ export default function Weather(){
       </div>
 
 
-
-      <div className='btn center'>
+      <div className='btn center' style={{
+        top: '7rem',
+        position: 'relative'
+        }}>
             <Link to='/'>
               <button>USE</button>
             </Link>
         </div>
       </div>
-    </div>
+
   )
 }
 
