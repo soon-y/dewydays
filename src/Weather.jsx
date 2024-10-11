@@ -46,18 +46,15 @@ export default function Weather(){
 
   console.log(weatherData);
 
+const forecastData = [
+  { id: 0, days: day + 1, low: 13, high: 21 },
+  { id: 1, days: day + 2, low: 13, high: 21 },
+  { id: 2, days: day + 3, low: 13, high: 21 },
+  { id: 3, days: day + 4, low: 13, high: 21 },
+  { id: 4, days: day + 5, low: 13, high: 21 },
+  { id: 5, days: day + 6, low: 13, high: 21 },
+];
 
-let forecastData = [
-  [day+1, 0],
-  [day+2, 0],
-  [day+3, 0],
-  [day+4, 0],
-  [day+5, 0],
-  [day+6, 0],
-]
-
-
-console.log(forecastData[1][0] > 6 ? GLOBAL.days[forecastData[1][0] - 6] : GLOBAL.days[forecastData[1][0]])
 
   return(
     <>
@@ -80,7 +77,7 @@ console.log(forecastData[1][0] > 6 ? GLOBAL.days[forecastData[1][0] - 6] : GLOBA
         </div>
 
         <div className='clock'>
-        <div className='clockBg'>
+          <div className='clockBg'>
           <div onMouseUp={() => setClock(0)} onClick={() => setClock(0)} className='tick bigTick Uhr12'></div>
           <div onMouseUp={()=> setClock(1)}  onClick={()=> setClock(1)} className='tick smallTick Uhr01'></div>
           <div onMouseUp={()=> setClock(2)}  onClick={()=> setClock(2)} className='tick smallTick Uhr02'></div>
@@ -93,7 +90,7 @@ console.log(forecastData[1][0] > 6 ? GLOBAL.days[forecastData[1][0] - 6] : GLOBA
           <div onMouseUp={()=> setClock(9)}  onClick={()=> setClock(9)} className='tick bigTick Uhr09'></div>
           <div onMouseUp={()=> setClock(10)} onClick={()=> setClock(10)} className='tick smallTick Uhr10'></div>
           <div onMouseUp={()=> setClock(11)} onClick={()=> setClock(11)} className='tick smallTick Uhr11'></div>
-        </div>
+          </div>
           <animated.img className='pointer' src='/weather/pointer.png' style={rotatePoint}/>
           <div className='currentInfo'>
             <div className='current currentWeather'>
@@ -128,19 +125,19 @@ console.log(forecastData[1][0] > 6 ? GLOBAL.days[forecastData[1][0] - 6] : GLOBA
 
         {weatherData&&(
         <div className='weeklyWeather center'>
-          {forecastData.map(() => (
-          <div key={forecastData.id} >
-            <div key={forecastData.id} className='day'>{forecastData[1][0] > 6 ? GLOBAL.days[forecastData[1][0] - 6] : GLOBAL.days[forecastData[1][0]]}</div>
-            <div key={forecastData.id} className='weatherIcon'>
+          {forecastData.map( el => (
+          <div key={el.id}>
+            <div className='day'>{el.days > 6 ? GLOBAL.days[el.days - 7] : GLOBAL.days[el.days]}</div>
+            <div className='weatherIcon'>
             <FontAwesomeIcon icon={faCloud} />
             </div>
-            <span key={forecastData.id} className='lowest'>11°</span>
-            <span key={forecastData.id} className='highest'>18°</span>
+            <span className='lowest'>{el.low}°</span>
+            <span className='highest'>{el.id}°</span>
           </div>
           ))}          
         </div>
       )}
-      </div>
+      </div>      
     </>
   )
 }
