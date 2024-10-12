@@ -5,10 +5,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
 
-//https://react.dev/reference/react/Component
+function CompWater({ cup, amount, time }) {
+  let link = 'cups/' + cup + '.png'
 
-function CompWater({ amount, time }) {
-    return <>
+  return <>
     <div style={{
       marginLeft: '2.6rem',
       width: '0.4rem',
@@ -20,7 +20,6 @@ function CompWater({ amount, time }) {
       width: "auto", 
       height: '3rem',
       lineHeight: '3rem',
-      display: 'block',
       background: 'white',
       borderRadius: '2rem',
       border: '0.16rem solid ' + GLOBAL.backgroundDunkeler,
@@ -29,8 +28,15 @@ function CompWater({ amount, time }) {
       marginLeft: '1rem',
       marginRight: '1rem',
       }}>
+
+      <img src={link} style = {{
+        height: '100%',
+        float: 'left'
+      }} />
+
       <span style={{
         fontWeight: '700',
+        marginLeft: '0.6rem',
       }}>  
       {amount}ml
       </span>
@@ -44,7 +50,6 @@ function CompWater({ amount, time }) {
         </span>
       </div>
       </>
-
 }
 
 function HeadComp ({ date, total }) {
@@ -91,7 +96,14 @@ export default function Timeline(){
   let hr = d.getHours()
   let min = d.getMinutes()
 
-  const array = [300,200,100,500,300,600,500,300,600]
+  const data = [
+    { id: 0, amount: 100, cup: 0, },
+    { id: 1, amount: 300, cup: 1, },
+    { id: 2, amount: 200, cup: 2, },
+    { id: 3, amount: 150, cup: 3, },
+    { id: 4, amount: 400, cup: 0, },
+    { id: 5, amount: 500, cup: 1, },
+  ];
 
   return(
     <>
@@ -109,17 +121,17 @@ export default function Timeline(){
         date={day +" "+ GLOBAL.months[month] +" "+ year.slice(2,4)} 
         total={"1000ml"}
         />
-      {array.map((val) => (
-          <CompWater key={array.id} amount={val} time={hr + ":" + min} />
+      {data.map((el) => (
+          <CompWater key={el.id} amount={el.amount} time={hr + ":" + min} cup={el.cup} />
         ))}
 
       <HeadComp 
         date={day +" "+ GLOBAL.months[month] +" "+ year.slice(2,4)} 
         total={"1000ml"}
         />
-      {array.map((val) => (
-          <CompWater key={array.id} amount={val} time={hr + ":" + min} />
-        ))} 
+      {data.map((el) => (
+          <CompWater key={el.id} amount={el.amount} time={hr + ":" + min} cup={el.cup} />
+        ))}
       </div>
       </>
   )
