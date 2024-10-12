@@ -32,6 +32,23 @@ export default function Alarm(){
   const [selSat, setSelSat] = useState(false);
   const [selSun, setSelSun] = useState(false);
 
+  const data = [
+    { id: 0, hour: 10, min: 0, tags: ['Mon', 'Tue']},
+    { id: 1, hour: 9, min: 10, tags: ['Tue', 'Wed']},
+    { id: 2, hour: 13, min: 20, tags: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri']},
+    { id: 3, hour: 14, min: 30, tags: ['Mon', 'Tue']},
+    { id: 4, hour: 15, min: 0, tags: ['Mon', 'Tue','Thu']},
+    { id: 5, hour: 16, min: 10, tags: ['Sat', 'Sun']},
+    { id: 2, hour: 13, min: 20, tags: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri']},
+    { id: 3, hour: 14, min: 30, tags: ['Mon', 'Tue']},
+    { id: 4, hour: 15, min: 0, tags: ['Mon', 'Tue','Thu']},
+    { id: 5, hour: 16, min: 10, tags: ['Sat', 'Sun']},
+  ];
+
+  const tags = [
+'Mon', 'Thu'
+  ];
+
   return(
     <>
     <div className='bg'></div>
@@ -124,126 +141,54 @@ export default function Alarm(){
 
             <div className='btn'>
             <Link to='/'>
-              <button>save</button>
+              <button>SAVE</button>
             </Link>
             </div>
           </TabPanel>
           
 
           <TabPanel value={value} index={1} dir={theme.direction} disabled= {!active}> 
-          <FontAwesomeIcon icon={faPlus} className='plus' />
-          <ToggleButtonGroup
-              exclusive
-              aria-label="day selection"
-              //value={alignment}
-              //onChange={handleAlignment}
-              style={{ 
-                width: '100%',
-                justifyContent: 'center',
-                paddingTop: '1rem',
-              }}
-            >
-            <CustomToggle value="monday" aria-label="days" onClick={ () => setSelMon(!selMon) } selected = { selMon }> Mo
-            </CustomToggle>
-            <CustomToggle value="tuesday" aria-label="days" onClick={ () => setSelTue(!selTue) } selected = { selTue }> Tu
-            </CustomToggle>
-            <CustomToggle value="wednesday" aria-label="days" onClick={ () => setSelWed(!selWed) } selected = { selWed }> We
-            </CustomToggle>
-            <CustomToggle value="thursday" aria-label="days" onClick={ () => setSelThu(!selThu) } selected = { selThu }> Th
-            </CustomToggle>
-            <CustomToggle value="friday" aria-label="days" onClick={ () => setSelFri(!selFri) } selected = { selFri }> Fr
-            </CustomToggle>
-            <CustomToggle value="saturday" aria-label="days" onClick={ () => setSelSat(!selSat) } selected = { selSat }> Sa
-            </CustomToggle>
-            <CustomToggle value="sunday" aria-label="days" onClick={ () => setSelSun(!selSun) } selected = { selSun }> Su
-            </CustomToggle>
+            <ToggleButtonGroup
+                exclusive
+                aria-label="day selection"
+                //value={alignment}
+                //onChange={handleAlignment}
+                style={{ 
+                  width: '100%',
+                  justifyContent: 'center',
+                  paddingTop: '1rem',
+                  paddingBottom: '0.6rem',
+                }}
+              >
+              <CustomToggle value="monday" aria-label="days" onClick={ () => setSelMon(!selMon) } selected = { selMon }> Mo
+              </CustomToggle>
+              <CustomToggle value="tuesday" aria-label="days" onClick={ () => setSelTue(!selTue) } selected = { selTue }> Tu
+              </CustomToggle>
+              <CustomToggle value="wednesday" aria-label="days" onClick={ () => setSelWed(!selWed) } selected = { selWed }> We
+              </CustomToggle>
+              <CustomToggle value="thursday" aria-label="days" onClick={ () => setSelThu(!selThu) } selected = { selThu }> Th
+              </CustomToggle>
+              <CustomToggle value="friday" aria-label="days" onClick={ () => setSelFri(!selFri) } selected = { selFri }> Fr
+              </CustomToggle>
+              <CustomToggle value="saturday" aria-label="days" onClick={ () => setSelSat(!selSat) } selected = { selSat }> Sa
+              </CustomToggle>
+              <CustomToggle value="sunday" aria-label="days" onClick={ () => setSelSun(!selSun) } selected = { selSun }> Su
+              </CustomToggle>
             </ToggleButtonGroup>
 
-              <div className='alarmComp'>
-                <div className='time'>13:00</div>
+            {data.map((el) => (
+              <div className='alarmComp' key={el.id}>
+                <div className='time'>{ el.hour < 10? '0'+ el.hour : el.hour }:{ el.min < 10? '0'+ el.min : el.min}</div>
                 <div className='tag'>
-                  <span>Mon</span>
-                  <span>Tue</span>
-                  <span>Wed</span>
+                {el.tags.map((tag, index) => (
+                  <span>{tag}</span>
+                ))}
                 </div>
                 <FontAwesomeIcon icon={faMinus} className='minus'/>
               </div>
-
-              <div className='alarmComp'>
-                <div className='time'>13:00</div>
-                <div className='tag'>
-                  <span>Mon</span>
-                  <span>Tue</span>
-                  <span>Wed</span>
-                </div>
-                <FontAwesomeIcon icon={faMinus} className='minus'/>
-              </div>
-
-              <div className='alarmComp'>
-                <div className='time'>13:00</div>
-                <div className='tag'>
-                  <span>Mon</span>
-                  <span>Tue</span>
-                  <span>Wed</span>
-                </div>
-                <FontAwesomeIcon icon={faMinus} className='minus'/>
-              </div>
-
-              <div className='alarmComp'>
-                <div className='time'>13:00</div>
-                <div className='tag'>
-                  <span>Mon</span>
-                  <span>Tue</span>
-                  <span>Wed</span>
-                </div>
-                <FontAwesomeIcon icon={faMinus} className='minus'/>
-              </div>
-
-              <div className='alarmComp'>
-                <div className='time'>13:00</div>
-                <div className='tag'>
-                  <span>Mon</span>
-                  <span>Tue</span>
-                  <span>Wed</span>
-                </div>
-                <FontAwesomeIcon icon={faMinus} className='minus'/>
-              </div>
-
-              <div className='alarmComp'>
-                <div className='time'>13:00</div>
-                <div className='tag'>
-                  <span>Mon</span>
-                  <span>Tue</span>
-                  <span>Wed</span>
-                </div>
-                <FontAwesomeIcon icon={faMinus} className='minus'/>
-              </div>
-
-              <div className='alarmComp'>
-                <div className='time'>13:00</div>
-                <div className='tag'>
-                  <span>Mon</span>
-                  <span>Tue</span>
-                  <span>Wed</span>
-                </div>
-                <FontAwesomeIcon icon={faMinus} className='minus'/>
-              </div>
-
-              <div className='alarmComp'>
-                <div className='time'>13:00</div>
-                <div className='tag'>
-                  <span>Mon</span>
-                  <span>Tue</span>
-                  <span>Wed</span>
-                </div>
-                <FontAwesomeIcon icon={faMinus} className='minus'/>
-              </div>
-              
-
-
+            ))}
+            <FontAwesomeIcon icon={faPlus} className='plus' />
           </TabPanel>
-
-
         </Box>
 
         
@@ -327,7 +272,7 @@ const StyledTab = styled((props) => <Tab disableRipple {...props} />)(
 
 const CustomToggle = styled(ToggleButton)(({ theme }) => ({
   margin: '0',
-  width: '50px',
+  width: '14.2%',
   height: '50px',
   fontFamily: GLOBAL.fontFamily,
   color: 'white',
@@ -340,12 +285,19 @@ const CustomToggle = styled(ToggleButton)(({ theme }) => ({
     backgroundColor: GLOBAL.backgroundDunkel,
     color: 'white',
     },
+  '&.Mui-selected:hover': {
+    backgroundColor: GLOBAL.backgroundDunkel,
+    },
+  '&:hover': {
+    background: GLOBAL.background,
+    },
   })
 );
 
 const TimeRangeSlider = styled(Slider)(({ theme }) => ({
   color: 'rgba(255,255,255,0.7)',
   padding: '13px 0',
+  width: '94%',
   '& .MuiSlider-thumb': {
     height: '1.5rem',
     width: '1.5rem',

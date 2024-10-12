@@ -17,21 +17,21 @@ export default function Weather(){
   })
 
   return(
+
     <div className='bg gradient'>
       <h1 className='head'>{head}</h1>
-      
+
       <Link to='/'>
-      <div className='bubble navPos'>
+      <div className='bubble navPos close'>
         <FontAwesomeIcon icon={faXmark} className='navIcon' />
       </div>
       </Link>
 
-
       <animated.div className='cups' style={ slideCup }>
-        <img className={cupNum == 0? 'selected' : 'notSelected'} src='/cups/0.png' onClick={() => setCup(0)} />
-        <img className={cupNum == 1? 'selected' : 'notSelected'} src='/cups/1.png' onClick={() => setCup(1)} />
-        <img className={cupNum == 2? 'selected' : 'notSelected'} src='/cups/2.png' onClick={() => setCup(2)} />
-        <img className={cupNum == 3? 'selected' : 'notSelected'} src='/cups/3.png' onClick={() => setCup(3)} />
+        <img className={cupNum == 0? 'selected' : 'notSelected'} src='/cups/0.png' onMouseUp={() => setCup(0)} onClick={() => setCup(0)} />
+        <img className={cupNum == 1? 'selected' : 'notSelected'} src='/cups/1.png' onMouseUp={() => setCup(1)} onClick={() => setCup(1)} />
+        <img className={cupNum == 2? 'selected' : 'notSelected'} src='/cups/2.png' onMouseUp={() => setCup(2)} onClick={() => setCup(2)} />
+        <img className={cupNum == 3? 'selected' : 'notSelected'} src='/cups/3.png' onMouseUp={() => setCup(3)} onClick={() => setCup(3)} />
       </animated.div>
 
       <div className='cupAmount'>
@@ -40,16 +40,16 @@ export default function Weather(){
 	    </div>
       </div>
 
-
       <div className='btn center' style={{
         top: '7rem',
         position: 'relative'
         }}>
-            <Link to='/'>
-              <button>USE</button>
-            </Link>
-        </div>
+          <Link to='/'>
+            <button>USE</button>
+          </Link>
       </div>
+    
+    </div>
 
   )
 }

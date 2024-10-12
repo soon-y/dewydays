@@ -187,7 +187,7 @@ p.alarmText {
 }
 
 .alarmComp {
-  padding-top: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.425);
 }
 
 .alarmComp .time {
@@ -196,7 +196,6 @@ p.alarmText {
   font-weight: 400;
   font-size: 2.4rem;
   color: white;
-  border-top: 1px solid rgba(255, 255, 255, 0.425);
 }
 
 .alarmComp .tag {
@@ -204,6 +203,7 @@ p.alarmText {
   font-family: var(--fontFamily);
   color: var(--backgroundDunkeler);
   font-size: 0.8rem;
+  padding-bottom: 1rem;
 }
 
 .alarmComp .tag span {
@@ -216,28 +216,25 @@ p.alarmText {
 .plus {
   color: var(--backgroundDunkeler);
   background-color: var(--backgroundHell);
-  border-radius: 1rem;
+  border-radius: 50%;
   font-size: 1.4rem;
   padding: 1rem;
-  margin-right: 0.4rem;
   border: 1px solid white;
-  position: fixed;
-  bottom: 1rem;
-  right: 1.4rem;
   z-index: 1;
-  opacity: 0.9;
+  margin-top: 1rem;
+  transform: translateX(50%);
 }
 
 .alarmComp .minus {
   color: #7e7e7e;
   background-color: #dedede;
-  border-radius: 1rem;
+  border-radius: 50%;
   padding: 0.4rem 0.5rem;
   margin-right: 0.4rem;
   border: 1px solid #b9b9b9;
   position: relative;
   float: right;
-  transform: translate(0%, -150%);
+  transform: translate(0%, -200%);
 }
 
 /*****       weather       *****/
@@ -472,7 +469,7 @@ p.alarmText {
 
 /*****       Cups       *****/
 .cups {
-  top: 1rem;
+  top: 2.2rem;
   width: 200vw;
   display: grid;
   grid-template-columns: repeat(4, 50vw);
