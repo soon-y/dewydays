@@ -291,7 +291,7 @@ p.alarmText {
 
 .clock {
   margin: auto;
-  width: calc(100% - 2rem);
+  width: 90vw;
   height: auto;
   aspect-ratio: 1;
 }
@@ -299,7 +299,7 @@ p.alarmText {
 .clockBg {
   position: absolute;
   margin: auto;
-  width: calc(100% - 2rem);
+  width: 90vw;
   height: auto;
   aspect-ratio: 1;
   background-color: white;
