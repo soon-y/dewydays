@@ -28,10 +28,10 @@ export default function Weather(){
 
 
       <animated.div className='cups' style={ slideCup }>
-        <img className={cupNum == 0? 'selected' : 'notSelected'} src='/cups/00.png' onClick={() => setCup(0)} />
-        <img className={cupNum == 1? 'selected' : 'notSelected'} src='/cups/01.png' onClick={() => setCup(1)} />
-        <img className={cupNum == 2? 'selected' : 'notSelected'} src='/cups/02.png' onClick={() => setCup(2)} />
-        <img className={cupNum == 3? 'selected' : 'notSelected'} src='/cups/03.png' onClick={() => setCup(3)} />
+        <img className={cupNum == 0? 'selected' : 'notSelected'} src='/cups/0.png' onClick={() => setCup(0)} />
+        <img className={cupNum == 1? 'selected' : 'notSelected'} src='/cups/1.png' onClick={() => setCup(1)} />
+        <img className={cupNum == 2? 'selected' : 'notSelected'} src='/cups/2.png' onClick={() => setCup(2)} />
+        <img className={cupNum == 3? 'selected' : 'notSelected'} src='/cups/3.png' onClick={() => setCup(3)} />
       </animated.div>
 
       <div className='cupAmount'>

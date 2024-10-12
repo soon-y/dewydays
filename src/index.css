@@ -85,6 +85,7 @@
 
 .close {
   top: 0;
+  z-index: 10;
 }
 
 /* Main - WaterContorl */
@@ -471,7 +472,7 @@ p.alarmText {
 
 /*****       Cups       *****/
 .cups {
-  top: 4.2rem;
+  top: 1rem;
   width: 200vw;
   display: grid;
   grid-template-columns: repeat(4, 50vw);
