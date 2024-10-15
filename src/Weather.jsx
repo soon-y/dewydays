@@ -1,7 +1,5 @@
 import React, { useState, useEffect, createRef } from 'react'
 import { GLOBAL } from './Global'
-import touchEventsSupported from './touchEventsSupported.js'
-import { animated, useSpring } from '@react-spring/web'
 import Sun from './Sun'
 import './index.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -21,11 +19,6 @@ export default function Weather(){
   const API_KEY = '5e7132d57dd1b1491c308810e615e7ca'
   const latitude = 53.55
   const longitude = 10
-
-
-  const rotatePoint = useSpring({
-    transform: clock > 6 ? `rotate(${clock * 30}deg)` : `rotate(${clock * 30}deg)`
-  })
 
   useEffect(() => {
     // Setting the fetch options
