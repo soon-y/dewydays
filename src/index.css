@@ -311,7 +311,9 @@ p.alarmText {
   position: absolute;
   transform-origin: 0 center;
   transform: translateX(-50%);
-  z-index: 1;
+  z-index: 10;
+  cursor: pointer;
+  mix-blend-mode: multiply;
 }
 
 .bigTick {
@@ -416,8 +418,8 @@ p.alarmText {
   height: 53%;
   transform-origin: bottom center;
   mix-blend-mode: multiply;
-  opacity: 0.8;
-  z-index: 2;
+  opacity: 0.9;
+  z-index: 1;
 }
 
 .info p {
@@ -511,17 +513,17 @@ p.alarmText {
 
 @media screen and (min-aspect-ratio: 0.1) {
   .content {
-    width: 90vw;
-    padding-left: 5vw;
-    padding-right: 5vw;
+    width: 98vw;
+    padding-left: 1vw;
+    padding-right: 1vw;
   }
 
   .clock {
-    width: calc(90vw - 2rem);
+    width: calc(100vw - 2rem);
   }
 
   .clockBg {
-    width: calc(90vw - 2rem);
+    width: calc(100vw - 2rem);
   }
 
   .cupAmount {
