@@ -290,40 +290,56 @@ p.alarmText {
   font-weight: 600;
 }
 
-.clock {
+.clockPointer {
   margin: auto;
-  width: 90vw;
   height: auto;
+  aspect-ratio: 1;
+  width: 100%;
+  background-image: url("/weather/pointer.png");
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  z-index: 1;
+  position: relative;
+  mix-blend-mode: multiply;
+  opacity: 0.9;
+}
+
+.clock {
+  height: auto;
+  width: auto;
   aspect-ratio: 1;
 }
 
 .clockBg {
-  position: absolute;
   margin: auto;
-  width: 90vw;
+  width: 30rem;
   height: auto;
   aspect-ratio: 1;
-  background-color: white;
   border-radius: 50%;
+  position: absolute;
+  top: 4.7rem;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .tick {
   position: absolute;
   transform-origin: 0 center;
   transform: translateX(-50%);
-  z-index: 10;
-  cursor: pointer;
-  mix-blend-mode: multiply;
 }
 
 .bigTick {
-  width: 0.6rem;
-  height: 1.2rem;
+  width: 1rem;
+  height: 2.5rem;
+  background-color: rgb(0, 0, 0);
+  opacity: 0;
 }
 
 .smallTick {
-  width: 0.4rem;
-  height: 0.8rem;
+  width: 0.6rem;
+  height: 1.2rem;
 }
 
 .Uhr12 {
@@ -331,11 +347,59 @@ p.alarmText {
   background-color: #96d8f7;
 }
 
+.min01 {
+  left: 55%;
+  top: 1%;
+  rotate: 6deg;
+}
+
+.min02 {
+  left: 60%;
+  top: 2%;
+  rotate: 12deg;
+}
+
+.min03 {
+  left: 65%;
+  top: 3%;
+  rotate: 18deg;
+}
+
+.min04 {
+  left: 70%;
+  top: 5%;
+  rotate: 24deg;
+}
+
 .Uhr01 {
-  left: 75%;
+  left: 74%;
   top: 6.8%;
   rotate: 30deg;
   background-color: #92d5f5;
+}
+
+.min06 {
+  left: 79%;
+  top: 9%;
+  rotate: 36deg;
+}
+
+.min07 {
+  left: 82%;
+  top: 12%;
+  rotate: 42deg;
+}
+
+.min08 {
+  left: 86%;
+  top: 16%;
+  rotate: 48deg;
+}
+
+.min09 {
+  left: 90%;
+  top: 20%;
+  rotate: 54deg;
 }
 
 .Uhr02 {
@@ -343,6 +407,30 @@ p.alarmText {
   top: 24%;
   rotate: 60deg;
   background-color: #8bd1f1;
+}
+
+.min11 {
+  left: 94%;
+  top: 28%;
+  rotate: 66deg;
+}
+
+.min12 {
+  left: 96%;
+  top: 33%;
+  rotate: 72deg;
+}
+
+.min13 {
+  left: 97%;
+  top: 38%;
+  rotate: 78deg;
+}
+
+.min14 {
+  left: 98%;
+  top: 43%;
+  rotate: 84deg;
 }
 
 .Uhr03 {
@@ -353,25 +441,120 @@ p.alarmText {
   transform: translateX(-140%);
 }
 
+.min16 {
+  left: 98%;
+  bottom: 43%;
+  rotate: 96deg;
+}
+
+.min17 {
+  left: 97%;
+  bottom: 38%;
+  rotate: 102deg;
+}
+
+.min18 {
+  left: 96%;
+  bottom: 33%;
+  rotate: 108deg;
+}
+
+.min19 {
+  left: 94%;
+  bottom: 28%;
+  rotate: 114deg;
+}
+
 .Uhr04 {
   left: 92%;
   bottom: 24%;
   rotate: 120deg;
   background-color: #79c6e9;
-  ;
+}
+
+.min21 {
+  left: 88%;
+  bottom: 19%;
+  rotate: 124deg;
+}
+
+.min22 {
+  left: 86%;
+  bottom: 14%;
+  rotate: 130deg;
+}
+
+.min23 {
+  left: 82%;
+  bottom: 11%;
+  rotate: 136deg;
+}
+
+.min24 {
+  left: 78%;
+  bottom: 8%;
+  rotate: 142deg;
 }
 
 .Uhr05 {
-  left: 75%;
+  left: 74%;
   bottom: 6%;
   rotate: 150deg;
   background-color: #71c2e5;
+}
+
+.min26 {
+  left: 70%;
+  bottom: 4%;
+  rotate: 156deg;
+}
+
+.min27 {
+  left: 65%;
+  bottom: 2%;
+  rotate: 162deg;
+}
+
+.min28 {
+  left: 60%;
+  bottom: 1%;
+  rotate: 168deg;
+}
+
+.min29 {
+  left: 55%;
+  bottom: 0;
+  rotate: 174deg;
 }
 
 .Uhr06 {
   left: 50%;
   bottom: 0;
   background-color: #6fc0e4;
+}
+
+.min31 {
+  left: 45%;
+  bottom: 0;
+  rotate: 186deg;
+}
+
+.min32 {
+  left: 40%;
+  bottom: 1%;
+  rotate: 192deg;
+}
+
+.min33 {
+  left: 35%;
+  bottom: 2%;
+  rotate: 198deg;
+}
+
+.min34 {
+  left: 30%;
+  bottom: 4%;
+  rotate: 204deg;
 }
 
 .Uhr07 {
@@ -381,12 +564,59 @@ p.alarmText {
   background-color: #71c2e5;
 }
 
+.min36 {
+  left: 23%;
+  bottom: 8%;
+  rotate: 216deg;
+}
+
+.min37 {
+  left: 19%;
+  bottom: 12%;
+  rotate: 222deg;
+}
+
+.min38 {
+  left: 15%;
+  bottom: 15%;
+  rotate: 228deg;
+}
+
+.min39 {
+  left: 12%;
+  bottom: 20%;
+  rotate: 234deg;
+}
+
 .Uhr08 {
   left: 8%;
   bottom: 24%;
   rotate: 240deg;
   background-color: #79c6e9;
+}
 
+.min41 {
+  left: 7%;
+  bottom: 28%;
+  rotate: 246deg;
+}
+
+.min42 {
+  left: 6%;
+  bottom: 32%;
+  rotate: 252deg;
+}
+
+.min43 {
+  left: 5%;
+  bottom: 37%;
+  rotate: 258deg;
+}
+
+.min44 {
+  left: 4%;
+  bottom: 41%;
+  rotate: 264deg;
 }
 
 .Uhr09 {
@@ -397,11 +627,59 @@ p.alarmText {
   transform: translate(-140%, -50%);
 }
 
+.min46 {
+  left: 4%;
+  top: 42%;
+  rotate: 276deg;
+}
+
+.min47 {
+  left: 5%;
+  top: 36%;
+  rotate: 282deg;
+}
+
+.min48 {
+  left: 6%;
+  top: 32%;
+  rotate: 288deg;
+}
+
+.min49 {
+  left: 7%;
+  top: 28%;
+  rotate: 294deg;
+}
+
 .Uhr10 {
   left: 8%;
   top: 24%;
   rotate: 300deg;
   background-color: #8bd1f1;
+}
+
+.min51 {
+  left: 13%;
+  top: 19%;
+  rotate: 306deg;
+}
+
+.min52 {
+  left: 16%;
+  top: 15%;
+  rotate: 312deg;
+}
+
+.min53 {
+  left: 19%;
+  top: 12%;
+  rotate: 318deg;
+}
+
+.min54 {
+  left: 23%;
+  top: 8%;
+  rotate: 324deg;
 }
 
 .Uhr11 {
@@ -411,15 +689,28 @@ p.alarmText {
   background-color: #92d5f5;
 }
 
-.pointer {
-  position: relative;
-  left: calc(50% - 6%);
-  top: -3%;
-  height: 53%;
-  transform-origin: bottom center;
-  mix-blend-mode: multiply;
-  opacity: 0.9;
-  z-index: 1;
+.min56 {
+  left: 31%;
+  top: 3%;
+  rotate: 336deg;
+}
+
+.min57 {
+  left: 35%;
+  top: 2%;
+  rotate: 342deg;
+}
+
+.min58 {
+  left: 40%;
+  top: 1%;
+  rotate: 348deg;
+}
+
+.min59 {
+  left: 45%;
+  top: 0%;
+  rotate: 354deg;
 }
 
 .info p {
@@ -518,12 +809,8 @@ p.alarmText {
     padding-right: 1vw;
   }
 
-  .clock {
-    width: calc(100vw - 2rem);
-  }
-
   .clockBg {
-    width: calc(100vw - 2rem);
+    width: calc(98vw - 2rem);
   }
 
   .cupAmount {
@@ -545,10 +832,6 @@ p.alarmText {
     padding-right: 10vw;
   }
 
-  .clock {
-    width: calc(80vw - 2rem);
-  }
-
   .clockBg {
     width: calc(80vw - 2rem);
   }
@@ -567,10 +850,6 @@ p.alarmText {
     padding-right: 15vw;
   }
 
-  .clock {
-    width: calc(70vw - 2rem);
-  }
-
   .clockBg {
     width: calc(70vw - 2rem);
   }
@@ -581,10 +860,6 @@ p.alarmText {
     width: 60vw;
     padding-left: 20vw;
     padding-right: 20vw;
-  }
-
-  .clock {
-    width: calc(60vw - 2rem);
   }
 
   .clockBg {
@@ -600,12 +875,8 @@ p.alarmText {
     padding-right: 25vw;
   }
 
-  .clock {
-    width: 32rem;
-  }
-
   .clockBg {
-    width: 32rem;
+    width: 30rem;
   }
 
   .cupAmount {

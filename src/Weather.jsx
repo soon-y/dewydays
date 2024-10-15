@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, createRef } from 'react'
 import { GLOBAL } from './Global'
+import touchEventsSupported from './touchEventsSupported.js'
 import { animated, useSpring } from '@react-spring/web'
 import Sun from './Sun'
 import './index.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark,faCloud, faSun,faCloudBolt,faSnowflake,faCloudShowersHeavy,faCloudSun, } from '@fortawesome/free-solid-svg-icons'
-
 import { Link } from 'react-router-dom'
-
-
 
 export default function Weather(){ 
   const head = "Weather"
@@ -17,11 +15,13 @@ export default function Weather(){
   let date = d.getDate()
   let day = d.getDay()
   let hour = d.getHours();
+  let pointer = createRef()
   const [clock, setClock] = useState(hour);
   const [weatherData, setWeatherData] = useState(null);
   const API_KEY = '5e7132d57dd1b1491c308810e615e7ca'
   const latitude = 53.55
   const longitude = 10
+
 
   const rotatePoint = useSpring({
     transform: clock > 6 ? `rotate(${clock * 30}deg)` : `rotate(${clock * 30}deg)`
@@ -43,6 +43,10 @@ export default function Weather(){
       })
   }, [])
 
+  useEffect(() => {
+    pointer.current.style.transform = `rotate(${clock * 30}deg)`
+  }, [clock])
+
 
   console.log(weatherData);
 
@@ -54,7 +58,6 @@ const forecastData = [
   { id: 4, days: day + 5, low: 13, high: 21 },
   { id: 5, days: day + 6, low: 13, high: 21 },
 ];
-
 
   return(
     <>
@@ -77,24 +80,86 @@ const forecastData = [
         </div>
 
         <div className='clock'>
-          <div className='clockBg'>
-          <div onMouseUp={() => setClock(0)} onClick={() => setClock(0)} className='tick bigTick Uhr12'></div>
-          <div onMouseUp={()=> setClock(1)}  onClick={()=> setClock(1)} className='tick smallTick Uhr01'></div>
-          <div onMouseUp={()=> setClock(2)}  onClick={()=> setClock(2)} className='tick smallTick Uhr02'></div>
-          <div onMouseUp={()=> setClock(3)}  onClick={()=> setClock(3)} className='tick bigTick Uhr03'></div>
-          <div onMouseUp={()=> setClock(4)}  onClick={()=> setClock(4)} className='tick smallTick Uhr04'></div>
-          <div onMouseUp={()=> setClock(5)}  onClick={()=> setClock(5)} className='tick smallTick Uhr05'></div> 
-          <div onMouseUp={()=> setClock(6)}  onClick={()=> setClock(6)} className='tick bigTick Uhr06'></div>
-          <div onMouseUp={()=> setClock(7)}  onClick={()=> setClock(7)} className='tick smallTick Uhr07'></div>
-          <div onMouseUp={()=> setClock(8)}  onClick={()=> setClock(8)} className='tick smallTick Uhr08'></div>
-          <div onMouseUp={()=> setClock(9)}  onClick={()=> setClock(9)} className='tick bigTick Uhr09'></div>
-          <div onMouseUp={()=> setClock(10)} onClick={()=> setClock(10)} className='tick smallTick Uhr10'></div>
-          <div onMouseUp={()=> setClock(11)} onClick={()=> setClock(11)} className='tick smallTick Uhr11'></div>
+          <div className='clockBg' style={{ background: 'white' }}>
+            <div className='smallTick tick Uhr12'></div>
+            <div className='smallTick tick Uhr01'></div>
+            <div className='smallTick tick Uhr02'></div>
+            <div className='smallTick tick Uhr03'></div>
+            <div className='smallTick tick Uhr04'></div>
+            <div className='smallTick tick Uhr05'></div> 
+            <div className='smallTick tick Uhr06'></div>
+            <div className='smallTick tick Uhr07'></div>
+            <div className='smallTick tick Uhr08'></div>
+            <div className='smallTick tick Uhr09'></div>
+            <div className='smallTick tick Uhr10'></div>
+            <div className='smallTick tick Uhr11'></div>
           </div>
-          <animated.img className='pointer' src='/weather/pointer.png' style={rotatePoint}/>
+          <div className='clockPointer' ref={ pointer }></div>
+          <div className='clockBg ' style={{ zIndex: 100 }}>
+            <div className='bigTick tick Uhr12' onTouchMove={()=> setClock(0  )} onMouseOver={()=> setClock(0  )}></div>
+            <div className='bigTick tick min01' onTouchMove={()=> setClock(0.2)} onMouseOver={()=> setClock(0.2)}></div>
+            <div className='bigTick tick min02' onTouchMove={()=> setClock(0.4)} onMouseOver={()=> setClock(0.4)}></div>
+            <div className='bigTick tick min03' onTouchMove={()=> setClock(0.6)} onMouseOver={()=> setClock(0.6)}></div>
+            <div className='bigTick tick min04' onTouchMove={()=> setClock(0.8)} onMouseOver={()=> setClock(0.8)}></div>
+            <div className='bigTick tick Uhr01' onTouchMove={()=> setClock(1  )} onMouseOver={()=> setClock(1  )}></div>
+            <div className='bigTick tick min06' onTouchMove={()=> setClock(1.2)} onMouseOver={()=> setClock(1.2)}></div>
+            <div className='bigTick tick min07' onTouchMove={()=> setClock(1.4)} onMouseOver={()=> setClock(1.4)}></div>
+            <div className='bigTick tick min08' onTouchMove={()=> setClock(1.6)} onMouseOver={()=> setClock(1.6)}></div>
+            <div className='bigTick tick min09' onTouchMove={()=> setClock(1.8)} onMouseOver={()=> setClock(1.8)}></div>
+            <div className='bigTick tick Uhr02' onTouchMove={()=> setClock(2  )} onMouseOver={()=> setClock(2  )} ></div>
+            <div className='bigTick tick min11' onTouchMove={()=> setClock(2.2)} onMouseOver={()=> setClock(2.2)}></div>
+            <div className='bigTick tick min12' onTouchMove={()=> setClock(2.4)} onMouseOver={()=> setClock(2.4)}></div>
+            <div className='bigTick tick min13' onTouchMove={()=> setClock(2.6)} onMouseOver={()=> setClock(2.6)}></div>
+            <div className='bigTick tick min14' onTouchMove={()=> setClock(2.8)} onMouseOver={()=> setClock(2.8)}></div>
+            <div className='bigTick tick Uhr03' onTouchMove={()=> setClock(3  )} onMouseOver={()=> setClock(3  )}></div>
+            <div className='bigTick tick min16' onTouchMove={()=> setClock(3.2)} onMouseOver={()=> setClock(3.2)}></div>
+            <div className='bigTick tick min17' onTouchMove={()=> setClock(3.4)} onMouseOver={()=> setClock(3.4)}></div>
+            <div className='bigTick tick min18' onTouchMove={()=> setClock(3.6)} onMouseOver={()=> setClock(3.6)}></div>
+            <div className='bigTick tick min19' onTouchMove={()=> setClock(3.8)} onMouseOver={()=> setClock(3.8)}></div>
+            <div className='bigTick tick Uhr04' onTouchMove={()=> setClock(4  )} onMouseOver={()=> setClock(4  )}></div>
+            <div className='bigTick tick min21' onTouchMove={()=> setClock(4.2)} onMouseOver={()=> setClock(4.2)}></div>
+            <div className='bigTick tick min22' onTouchMove={()=> setClock(4.4)} onMouseOver={()=> setClock(4.4)}></div>
+            <div className='bigTick tick min23' onTouchMove={()=> setClock(4.6)} onMouseOver={()=> setClock(4.6)}></div>
+            <div className='bigTick tick min24' onTouchMove={()=> setClock(4.8)} onMouseOver={()=> setClock(4.8)}></div>
+            <div className='bigTick tick Uhr05' onTouchMove={()=> setClock(5  )} onMouseOver={()=> setClock(5  )}></div> 
+            <div className='bigTick tick min26' onTouchMove={()=> setClock(5.2)} onMouseOver={()=> setClock(5.2)}></div>
+            <div className='bigTick tick min27' onTouchMove={()=> setClock(5.4)} onMouseOver={()=> setClock(5.4)}></div>
+            <div className='bigTick tick min28' onTouchMove={()=> setClock(5.6)} onMouseOver={()=> setClock(5.6)}></div>
+            <div className='bigTick tick min29' onTouchMove={()=> setClock(5.8)} onMouseOver={()=> setClock(5.8)}></div>
+            <div className='bigTick tick Uhr06' onTouchMove={()=> setClock(6  )} onMouseOver={()=> setClock(6  )} ></div>
+            <div className='bigTick tick min31' onTouchMove={()=> setClock(6.2)} onMouseOver={()=> setClock(6.2)}></div>
+            <div className='bigTick tick min32' onTouchMove={()=> setClock(6.4)} onMouseOver={()=> setClock(6.4)}></div>
+            <div className='bigTick tick min33' onTouchMove={()=> setClock(6.6)} onMouseOver={()=> setClock(6.6)}></div>
+            <div className='bigTick tick min34' onTouchMove={()=> setClock(6.8)} onMouseOver={()=> setClock(6.8)}></div>
+            <div className='bigTick tick Uhr07' onTouchMove={()=> setClock(7  )} onMouseOver={()=> setClock(7  )}></div>
+            <div className='bigTick tick min36' onTouchMove={()=> setClock(7.2)} onMouseOver={()=> setClock(7.2)}></div>
+            <div className='bigTick tick min37' onTouchMove={()=> setClock(7.4)} onMouseOver={()=> setClock(7.4)}></div>
+            <div className='bigTick tick min38' onTouchMove={()=> setClock(7.6)} onMouseOver={()=> setClock(7.6)}></div>
+            <div className='bigTick tick min39' onTouchMove={()=> setClock(7.8)} onMouseOver={()=> setClock(7.8)}></div>
+            <div className='bigTick tick Uhr08' onTouchMove={()=> setClock(8  )} onMouseOver={()=> setClock(8  )}></div>
+            <div className='bigTick tick min41' onTouchMove={()=> setClock(8.2)} onMouseOver={()=> setClock(8.2)}></div>
+            <div className='bigTick tick min42' onTouchMove={()=> setClock(8.4)} onMouseOver={()=> setClock(8.4)}></div>
+            <div className='bigTick tick min43' onTouchMove={()=> setClock(8.6)} onMouseOver={()=> setClock(8.6)}></div>
+            <div className='bigTick tick min44' onTouchMove={()=> setClock(8.8)} onMouseOver={()=> setClock(8.8)}></div>
+            <div className='bigTick tick Uhr09' onTouchMove={()=> setClock(9  )} onMouseOver={()=> setClock(9  )} ></div>
+            <div className='bigTick tick min46' onTouchMove={()=> setClock(9.2)} onMouseOver={()=> setClock(9.2)}></div>
+            <div className='bigTick tick min47' onTouchMove={()=> setClock(9.4)} onMouseOver={()=> setClock(9.4)}></div>
+            <div className='bigTick tick min48' onTouchMove={()=> setClock(9.6)} onMouseOver={()=> setClock(9.6)}></div>
+            <div className='bigTick tick min49' onTouchMove={()=> setClock(9.8)} onMouseOver={()=> setClock(9.8)}></div>
+            <div className='bigTick tick Uhr10' onTouchMove={()=> setClock(10  )} onMouseOver={()=> setClock(10  )}></div>
+            <div className='bigTick tick min51' onTouchMove={()=> setClock(10.2)} onMouseOver={()=> setClock(10.2)}></div>
+            <div className='bigTick tick min52' onTouchMove={()=> setClock(10.4)} onMouseOver={()=> setClock(10.4)}></div>
+            <div className='bigTick tick min53' onTouchMove={()=> setClock(10.6)} onMouseOver={()=> setClock(10.6)}></div>
+            <div className='bigTick tick min54' onTouchMove={()=> setClock(10.8)} onMouseOver={()=> setClock(10.8)}></div>
+            <div className='bigTick tick Uhr11' onTouchMove={()=> setClock(11  )} onMouseOver={()=> setClock(11  )}></div>
+            <div className='bigTick tick min56' onTouchMove={()=> setClock(11.2)} onMouseOver={()=> setClock(11.2)}></div>
+            <div className='bigTick tick min57' onTouchMove={()=> setClock(11.4)} onMouseOver={()=> setClock(11.4)}></div>
+            <div className='bigTick tick min58' onTouchMove={()=> setClock(11.6)} onMouseOver={()=> setClock(11.6)}></div>
+            <div className='bigTick tick min59' onTouchMove={()=> setClock(11.8)} onMouseOver={()=> setClock(11.8)}></div>
+          </div>
+
           <div className='currentInfo'>
-            <div className='current currentWeather'>
-              <Sun />
+            <div className='current currentWeather'>           
             </div>
             {weatherData&&(
             <div className='current currentTemp center'>{Math.trunc(weatherData.main.temp)}°</div>
