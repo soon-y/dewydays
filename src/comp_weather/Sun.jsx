@@ -1,4 +1,4 @@
-export default function Sun({ display }){
+export default function Sun({daytime}){
 
   return(
     <>
@@ -9,7 +9,15 @@ export default function Sun({ display }){
         transform: 'translate(-50%, -50%)',
         height: '100%',
         margin: 'auto',
-        display: display,
+        display: daytime? 'block' : 'none'
+      }} />
+      <img src="/weather/moonlight.png" alt="moon" className="moonlight" style={{
+        position: "absolute",
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        margin: 'auto',
+        display: daytime? 'none' : 'block'
       }} />
       <img src="/weather/sunFace.png" alt="sun" style={{
         position: "absolute",
@@ -17,7 +25,6 @@ export default function Sun({ display }){
         left: '50%',
         transform: 'translate(-50%, -50%)',
         height: '65%',
-        display: display
       }} />
     </>
   )

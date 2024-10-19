@@ -1,10 +1,17 @@
 import React, { useState, useEffect, createRef } from 'react'
 import { GLOBAL } from './Global'
-import Sun from './Sun'
 import './index.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faXmark,faCloud, faSun,faCloudBolt,faSnowflake,faCloudShowersHeavy,faCloudSun, } from '@fortawesome/free-solid-svg-icons'
+import { faXmark,faSmog,faTornado,faCloud,faSun,faCloudBolt,faSnowflake,faCloudShowersHeavy,faCloudRain, } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
+import Sun from './comp_weather/Sun'
+import Cloud from './comp_weather/Cloud'
+import Rain from './comp_weather/Rain'
+import Snow from './comp_weather/Snow'
+import Drizzle from './comp_weather/Drizzle'
+import Thunder from './comp_weather/Thunder'
+import Smog from './comp_weather/Smog'
+import Tornado from './comp_weather/Tornado'
 
 export default function Weather(){ 
   const head = "Weather"
@@ -12,45 +19,298 @@ export default function Weather(){
   let month = d.getMonth()
   let date = d.getDate()
   let day = d.getDay()
-  let hour = d.getHours();
+  let hour = d.getHours()
   let pointer = createRef()
-  const [clock, setClock] = useState(hour);
-  const [weatherData, setWeatherData] = useState(null);
+  const [clock, setClock] = useState(hour)
+  const [currentData, setcurrentData] = useState(null)
+  const [forecastData, setforecastData] = useState(null)
+  const [forecastDataFiltered, setforecastDataFiltered] = useState(null)
+  const [airData, setairData] = useState(null)
   const API_KEY = '5e7132d57dd1b1491c308810e615e7ca'
-  const latitude = 53.55
-  const longitude = 10
+  let latitude, longitude
 
   useEffect(() => {
-    // Setting the fetch options
-    const options = { method: 'GET', headers: { accept: 'application/json' } };
-
-    // Fetching weather data
-    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`, options)
-      .then(response => response.json())
-      .then(data => {
-        setWeatherData(data);
-      })
-      .catch(err => {
-        setError(err);
-        console.error(err);
-      })
-  }, [])
+    navigator.geolocation.getCurrentPosition(result)
+  },[])
 
   useEffect(() => {
     pointer.current.style.transform = `rotate(${clock * 30}deg)`
+
   }, [clock])
 
+  const result = (position) => {
+    if(position){
+      latitude =  position.coords.latitude
+      longitude = position.coords.longitude
+    }else {
+      latitude =  53.55
+      longitude = 10
+    }
+    getWeatherData(latitude,longitude)
+  }
 
-  console.log(weatherData);
+  const getWeatherData = (lat,lon) => {
+    // Setting the fetch options
+    const options = { method: 'GET', headers: { accept: 'application/json' } }
 
-const forecastData = [
-  { id: 0, days: day + 1, low: 13, high: 21 },
-  { id: 1, days: day + 2, low: 13, high: 21 },
-  { id: 2, days: day + 3, low: 13, high: 21 },
-  { id: 3, days: day + 4, low: 13, high: 21 },
-  { id: 4, days: day + 5, low: 13, high: 21 },
-  { id: 5, days: day + 6, low: 13, high: 21 },
-];
+    // Fetching current weather data
+    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`, options)
+    .then(response => response.json())
+    .then(data => {
+      setcurrentData(data)
+      console.log(data)
+    })
+    .catch(err => {
+      setError(err)
+      console.error(err)
+    })
+
+    // Fetching 5 day / 3 hour forecast data
+    fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`, options)
+    .then(response => response.json())
+    .then(data => {
+      filterData(data)
+      setforecastData(data)
+      console.log(data)
+    })
+    .catch(err => {
+      setError(err)
+      console.error(err)
+    })
+
+    // Fetching current air pollution data
+    fetch(`https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`, options)
+    .then(response => response.json())
+    .then(data => {
+      setairData(data)
+    })
+    .catch(err => {
+      setError(err)
+      console.error(err)
+    })
+  }
+
+  const filterData = (data) => {
+    let forecastDataFiltered = []
+    let num = 0
+    for (let i = 0; i < data.cnt/8; i++) {
+      let array = []
+      let icon
+        for (let j = 0; j < data.cnt/5; j++) {
+        array.push(data.list[num].main.temp)
+        icon = data.list[num].weather[0].main
+        num++
+        }
+      let high = Math.trunc(Math.max(...array))
+      let low = Math.trunc(Math.min(...array))
+      switch(icon) {
+        case "Clouds":
+          icon = faCloud
+          break
+        case "Thunderstorm":
+           icon = faCloudBolt
+           break
+        case "Drizzle":
+          icon = faCloudRain
+          break
+        case "Rain":
+          icon = faCloudShowersHeavy
+          break
+        case "Snow":
+          icon = faSnowflake
+          break
+        case "Clear":
+          icon = faSun
+          break
+        case "Mist":
+          icon = faSmog
+          break
+        case "Smoke":
+            icon = faSmog
+            break
+        case "Haze":
+          icon = faSmog
+          break
+        case "Dust":
+          icon = faSmog
+          break
+        case "Fog":
+          icon = faSmog
+          break
+        case "Sand":
+          icon = faSmog
+          break
+        case "Ash":
+          icon = faSmog
+          break
+        case "Squall":
+          icon = faCloudShowersHeavy
+          break
+        case "Tornado":
+          icon = faTornado
+          break
+      }  
+      let d = { "id" : i, "days" : day + i + 1, "low": low, "high": high, "icon": icon}
+      forecastDataFiltered.push(d)
+      // 6th data copied from 5th one
+      if(i == data.cnt/8-1){
+        let d = { "id" : i + 1, "days" : day + i + 2, "low": low, "high": high, "icon": icon }
+        forecastDataFiltered.push(d)
+      }
+    }
+    setforecastDataFiltered(forecastDataFiltered)
+  }
+
+  const airQuality10 = (data) => {
+    let state
+    if (data < 20) {
+      state = "Good"
+    } else if (data >= 20 && data < 50){
+      state = "Fair"
+    } else if (data >= 50 && data < 100){
+      state = "Moderate"
+    } else if (data >= 100 && data < 200){
+      state = "Poor"
+    } else {
+      state = "Very Poor"
+    }
+    return (
+      <>
+        <span>
+          {data<10? '0'+ data : data}
+        </span>
+        <span style={{ 
+          marginLeft: '0.5rem',
+          fontWeight: 700,
+          color: data >= 100? '#d61a17' : 'white',
+          }}>{state}
+        </span>
+      </>
+    )
+  }
+
+  const airQuality25 = (data) => {
+    let state
+    if (data < 10) {
+      state = "Good"
+    } else if (data >= 10 && data < 25){
+      state = "Fair"
+    } else if (data >= 25 && data < 50){
+      state = "Moderate"
+    } else if (data >= 50 && data < 75){
+      state = "Poor"
+    } else {
+      state = "Very Poor"
+    }
+    return (
+    <>
+      <span>
+        {data<10? '0'+ data : data}
+      </span>
+      <span style={{ 
+        marginLeft: '0.5rem',
+        fontWeight: 700,
+        color: data >= 50? '#d61a17' : 'white',
+        }}>{state}
+      </span>
+    </>
+    )
+  }
+
+  const AMPM = () => {
+    let uhr = hour >= 12? hour - 12 : hour
+    if (hour >= 12 && clock < uhr ) {
+      return "AM"
+    } else if (hour == 0){
+      return "AM"
+    } else if (hour == 12){
+      return "PM"
+    } else {
+      return "PM"
+    }
+  }
+
+  const currentIcon = (data) => {
+    let now = Date.now() / 1000 
+    now = data.base == "stations" ? now : data.dt
+    let sunrise = currentData.sys.sunrise 
+    let sunset = currentData.sys.sunset 
+    let daytime = now > sunrise && now < sunset ? true : false
+
+    console.log(now)
+    console.log(sunrise)
+    
+    switch(data.weather[0].main) {
+      case "Clouds":
+        return (<Cloud />)
+      case "Thunderstorm":
+        return (<Thunder />)
+      case "Drizzle":
+        return (<Drizzle />)
+      case "Rain":
+        return (<Rain />)
+      case "Snow":
+        return (<Snow />)
+      case "Mist":
+        return (<Smog />)
+      case "Smoke":
+        return (<Smog />)
+      case "Haze":
+        return (<Smog />)
+      case "Dust":
+        return (<Smog />)
+      case "Fog":
+        return (<Smog />)
+      case "Sand":
+        return (<Smog />)
+      case "Ash":
+        return (<Smog />)
+      case "Squall":
+        return (<Rain />)
+      case "Tornado":
+        return (<Tornado />)
+      case "Clear":
+        return (
+        <Sun daytime = { daytime } ></Sun>
+      )
+    }  
+  }
+
+  const dataFilter  = (dataC, dataF) => {
+    let uhr = hour >= 12? hour - 12 : hour
+    let clk = clock >= 12? clock - 12 : clock
+    let nextUhr = []
+    let now = Date.now() / 1000 + dataC.timezone
+    let j
+
+    for (let i = 1; i < 12; i++) {  
+      if ((uhr + i)% 3 == 0){
+        let n = uhr + i > 11 ? uhr + i - 12 : uhr + i
+        nextUhr.push(n)    
+      }
+    }
+    if (nextUhr.length == 3){
+      nextUhr.push(uhr)
+    }
+ 
+    if (dataF.list[0].dt > now) {
+      j = 0
+    } else {
+      j = 1
+    }
+
+    if (uhr <= clk && nextUhr[0] == 0 ? clk < 12 : clk < nextUhr[0]){
+      return dataC
+    } else if (nextUhr[0] <= clk && nextUhr[1] == 0 ? clk < 12 : clk < nextUhr[1]){
+      return dataF.list[j]
+    } else if (nextUhr[1]<= clk && nextUhr[2] == 0 ? clk < 12 : clk < nextUhr[2]){
+      return dataF.list[j+1]
+    } else if (nextUhr[2]<= clk && nextUhr[3] == 0 ? clk < 12 : clk < nextUhr[3]){
+      return dataF.list[j+2]
+    } else {
+      return dataF.list[j+3]
+    }
+  }
 
   return(
     <>
@@ -68,129 +328,124 @@ const forecastData = [
           color:'white',
           margin: '0 0 1rem 0',
         }}>
-        <p>{GLOBAL.days[day]} {date} {GLOBAL.months[month]} </p>
-        <p>HAMBURG</p>
+        <p>{ GLOBAL.days[day] } { date } { GLOBAL.months[month] } </p>
+        {currentData&&(
+        <p style={{ textTransform: 'uppercase' }}>{ currentData.name }</p>
+        )}
         </div>
 
         <div className='clock'>
-          <div className='clockBg' style={{ background: 'white' }}>
-            <div className='smallTick tick Uhr12'></div>
-            <div className='smallTick tick Uhr01'></div>
-            <div className='smallTick tick Uhr02'></div>
-            <div className='smallTick tick Uhr03'></div>
-            <div className='smallTick tick Uhr04'></div>
-            <div className='smallTick tick Uhr05'></div> 
-            <div className='smallTick tick Uhr06'></div>
-            <div className='smallTick tick Uhr07'></div>
-            <div className='smallTick tick Uhr08'></div>
-            <div className='smallTick tick Uhr09'></div>
-            <div className='smallTick tick Uhr10'></div>
-            <div className='smallTick tick Uhr11'></div>
+          <div className='clockBg' style={{ 
+            backgroundImage: 'url(/weather/clock.png)',
+            backgroundPosition: 'center center',
+            backgroundRepeat: 'no-repeat',
+            backgroundAttachment: 'fixed',
+            backgroundSize: 'cover',
+          }}>
+            {currentData&&forecastData&&(
+            <div className='currentInfo'>
+              <div className='current currentTime center'>{ AMPM() }</div>
+              <div className='current currentWeather'>{ currentIcon(dataFilter(currentData, forecastData)) }</div>
+              <div className='current currentTemp center'>{ Math.trunc(dataFilter(currentData, forecastData).main.temp) }°</div>              
+            </div>)}
           </div>
           <div className='clockPointer' ref={ pointer }></div>
           <div className='clockBg ' style={{ zIndex: 100 }}>
-            <div className='bigTick tick Uhr12' onTouchMove={()=> setClock(0  )} onMouseOver={()=> setClock(0  )}></div>
-            <div className='bigTick tick min01' onTouchMove={()=> setClock(0.2)} onMouseOver={()=> setClock(0.2)}></div>
-            <div className='bigTick tick min02' onTouchMove={()=> setClock(0.4)} onMouseOver={()=> setClock(0.4)}></div>
-            <div className='bigTick tick min03' onTouchMove={()=> setClock(0.6)} onMouseOver={()=> setClock(0.6)}></div>
-            <div className='bigTick tick min04' onTouchMove={()=> setClock(0.8)} onMouseOver={()=> setClock(0.8)}></div>
-            <div className='bigTick tick Uhr01' onTouchMove={()=> setClock(1  )} onMouseOver={()=> setClock(1  )}></div>
-            <div className='bigTick tick min06' onTouchMove={()=> setClock(1.2)} onMouseOver={()=> setClock(1.2)}></div>
-            <div className='bigTick tick min07' onTouchMove={()=> setClock(1.4)} onMouseOver={()=> setClock(1.4)}></div>
-            <div className='bigTick tick min08' onTouchMove={()=> setClock(1.6)} onMouseOver={()=> setClock(1.6)}></div>
-            <div className='bigTick tick min09' onTouchMove={()=> setClock(1.8)} onMouseOver={()=> setClock(1.8)}></div>
-            <div className='bigTick tick Uhr02' onTouchMove={()=> setClock(2  )} onMouseOver={()=> setClock(2  )} ></div>
-            <div className='bigTick tick min11' onTouchMove={()=> setClock(2.2)} onMouseOver={()=> setClock(2.2)}></div>
-            <div className='bigTick tick min12' onTouchMove={()=> setClock(2.4)} onMouseOver={()=> setClock(2.4)}></div>
-            <div className='bigTick tick min13' onTouchMove={()=> setClock(2.6)} onMouseOver={()=> setClock(2.6)}></div>
-            <div className='bigTick tick min14' onTouchMove={()=> setClock(2.8)} onMouseOver={()=> setClock(2.8)}></div>
-            <div className='bigTick tick Uhr03' onTouchMove={()=> setClock(3  )} onMouseOver={()=> setClock(3  )}></div>
-            <div className='bigTick tick min16' onTouchMove={()=> setClock(3.2)} onMouseOver={()=> setClock(3.2)}></div>
-            <div className='bigTick tick min17' onTouchMove={()=> setClock(3.4)} onMouseOver={()=> setClock(3.4)}></div>
-            <div className='bigTick tick min18' onTouchMove={()=> setClock(3.6)} onMouseOver={()=> setClock(3.6)}></div>
-            <div className='bigTick tick min19' onTouchMove={()=> setClock(3.8)} onMouseOver={()=> setClock(3.8)}></div>
-            <div className='bigTick tick Uhr04' onTouchMove={()=> setClock(4  )} onMouseOver={()=> setClock(4  )}></div>
-            <div className='bigTick tick min21' onTouchMove={()=> setClock(4.2)} onMouseOver={()=> setClock(4.2)}></div>
-            <div className='bigTick tick min22' onTouchMove={()=> setClock(4.4)} onMouseOver={()=> setClock(4.4)}></div>
-            <div className='bigTick tick min23' onTouchMove={()=> setClock(4.6)} onMouseOver={()=> setClock(4.6)}></div>
-            <div className='bigTick tick min24' onTouchMove={()=> setClock(4.8)} onMouseOver={()=> setClock(4.8)}></div>
-            <div className='bigTick tick Uhr05' onTouchMove={()=> setClock(5  )} onMouseOver={()=> setClock(5  )}></div> 
-            <div className='bigTick tick min26' onTouchMove={()=> setClock(5.2)} onMouseOver={()=> setClock(5.2)}></div>
-            <div className='bigTick tick min27' onTouchMove={()=> setClock(5.4)} onMouseOver={()=> setClock(5.4)}></div>
-            <div className='bigTick tick min28' onTouchMove={()=> setClock(5.6)} onMouseOver={()=> setClock(5.6)}></div>
-            <div className='bigTick tick min29' onTouchMove={()=> setClock(5.8)} onMouseOver={()=> setClock(5.8)}></div>
-            <div className='bigTick tick Uhr06' onTouchMove={()=> setClock(6  )} onMouseOver={()=> setClock(6  )} ></div>
-            <div className='bigTick tick min31' onTouchMove={()=> setClock(6.2)} onMouseOver={()=> setClock(6.2)}></div>
-            <div className='bigTick tick min32' onTouchMove={()=> setClock(6.4)} onMouseOver={()=> setClock(6.4)}></div>
-            <div className='bigTick tick min33' onTouchMove={()=> setClock(6.6)} onMouseOver={()=> setClock(6.6)}></div>
-            <div className='bigTick tick min34' onTouchMove={()=> setClock(6.8)} onMouseOver={()=> setClock(6.8)}></div>
-            <div className='bigTick tick Uhr07' onTouchMove={()=> setClock(7  )} onMouseOver={()=> setClock(7  )}></div>
-            <div className='bigTick tick min36' onTouchMove={()=> setClock(7.2)} onMouseOver={()=> setClock(7.2)}></div>
-            <div className='bigTick tick min37' onTouchMove={()=> setClock(7.4)} onMouseOver={()=> setClock(7.4)}></div>
-            <div className='bigTick tick min38' onTouchMove={()=> setClock(7.6)} onMouseOver={()=> setClock(7.6)}></div>
-            <div className='bigTick tick min39' onTouchMove={()=> setClock(7.8)} onMouseOver={()=> setClock(7.8)}></div>
-            <div className='bigTick tick Uhr08' onTouchMove={()=> setClock(8  )} onMouseOver={()=> setClock(8  )}></div>
-            <div className='bigTick tick min41' onTouchMove={()=> setClock(8.2)} onMouseOver={()=> setClock(8.2)}></div>
-            <div className='bigTick tick min42' onTouchMove={()=> setClock(8.4)} onMouseOver={()=> setClock(8.4)}></div>
-            <div className='bigTick tick min43' onTouchMove={()=> setClock(8.6)} onMouseOver={()=> setClock(8.6)}></div>
-            <div className='bigTick tick min44' onTouchMove={()=> setClock(8.8)} onMouseOver={()=> setClock(8.8)}></div>
-            <div className='bigTick tick Uhr09' onTouchMove={()=> setClock(9  )} onMouseOver={()=> setClock(9  )} ></div>
-            <div className='bigTick tick min46' onTouchMove={()=> setClock(9.2)} onMouseOver={()=> setClock(9.2)}></div>
-            <div className='bigTick tick min47' onTouchMove={()=> setClock(9.4)} onMouseOver={()=> setClock(9.4)}></div>
-            <div className='bigTick tick min48' onTouchMove={()=> setClock(9.6)} onMouseOver={()=> setClock(9.6)}></div>
-            <div className='bigTick tick min49' onTouchMove={()=> setClock(9.8)} onMouseOver={()=> setClock(9.8)}></div>
-            <div className='bigTick tick Uhr10' onTouchMove={()=> setClock(10  )} onMouseOver={()=> setClock(10  )}></div>
-            <div className='bigTick tick min51' onTouchMove={()=> setClock(10.2)} onMouseOver={()=> setClock(10.2)}></div>
-            <div className='bigTick tick min52' onTouchMove={()=> setClock(10.4)} onMouseOver={()=> setClock(10.4)}></div>
-            <div className='bigTick tick min53' onTouchMove={()=> setClock(10.6)} onMouseOver={()=> setClock(10.6)}></div>
-            <div className='bigTick tick min54' onTouchMove={()=> setClock(10.8)} onMouseOver={()=> setClock(10.8)}></div>
-            <div className='bigTick tick Uhr11' onTouchMove={()=> setClock(11  )} onMouseOver={()=> setClock(11  )}></div>
-            <div className='bigTick tick min56' onTouchMove={()=> setClock(11.2)} onMouseOver={()=> setClock(11.2)}></div>
-            <div className='bigTick tick min57' onTouchMove={()=> setClock(11.4)} onMouseOver={()=> setClock(11.4)}></div>
-            <div className='bigTick tick min58' onTouchMove={()=> setClock(11.6)} onMouseOver={()=> setClock(11.6)}></div>
-            <div className='bigTick tick min59' onTouchMove={()=> setClock(11.8)} onMouseOver={()=> setClock(11.8)}></div>
-          </div>
-
-          <div className='currentInfo'>
-            <div className='current currentWeather'>           
-            </div>
-            {weatherData&&(
-            <div className='current currentTemp center'>{Math.trunc(weatherData.main.temp)}°</div>
-            )}
+            <div className='bigTick tick Uhr12' onTouchStart={()=> setClock(0  )} onMouseOver={()=> setClock(0  )}></div>
+            <div className='bigTick tick min01' onTouchStart={()=> setClock(0.2)} onMouseOver={()=> setClock(0.2)}></div>
+            <div className='bigTick tick min02' onTouchStart={()=> setClock(0.4)} onMouseOver={()=> setClock(0.4)}></div>
+            <div className='bigTick tick min03' onTouchStart={()=> setClock(0.6)} onMouseOver={()=> setClock(0.6)}></div>
+            <div className='bigTick tick min04' onTouchStart={()=> setClock(0.8)} onMouseOver={()=> setClock(0.8)}></div>
+            <div className='bigTick tick Uhr01' onTouchStart={()=> setClock(1  )} onMouseOver={()=> setClock(1  )}></div>
+            <div className='bigTick tick min06' onTouchStart={()=> setClock(1.2)} onMouseOver={()=> setClock(1.2)}></div>
+            <div className='bigTick tick min07' onTouchStart={()=> setClock(1.4)} onMouseOver={()=> setClock(1.4)}></div>
+            <div className='bigTick tick min08' onTouchStart={()=> setClock(1.6)} onMouseOver={()=> setClock(1.6)}></div>
+            <div className='bigTick tick min09' onTouchStart={()=> setClock(1.8)} onMouseOver={()=> setClock(1.8)}></div>
+            <div className='bigTick tick Uhr02' onTouchStart={()=> setClock(2  )} onMouseOver={()=> setClock(2  )} ></div>
+            <div className='bigTick tick min11' onTouchStart={()=> setClock(2.2)} onMouseOver={()=> setClock(2.2)}></div>
+            <div className='bigTick tick min12' onTouchStart={()=> setClock(2.4)} onMouseOver={()=> setClock(2.4)}></div>
+            <div className='bigTick tick min13' onTouchStart={()=> setClock(2.6)} onMouseOver={()=> setClock(2.6)}></div>
+            <div className='bigTick tick min14' onTouchStart={()=> setClock(2.8)} onMouseOver={()=> setClock(2.8)}></div>
+            <div className='bigTick tick Uhr03' onTouchStart={()=> setClock(3  )} onMouseOver={()=> setClock(3  )}></div>
+            <div className='bigTick tick min16' onTouchStart={()=> setClock(3.2)} onMouseOver={()=> setClock(3.2)}></div>
+            <div className='bigTick tick min17' onTouchStart={()=> setClock(3.4)} onMouseOver={()=> setClock(3.4)}></div>
+            <div className='bigTick tick min18' onTouchStart={()=> setClock(3.6)} onMouseOver={()=> setClock(3.6)}></div>
+            <div className='bigTick tick min19' onTouchStart={()=> setClock(3.8)} onMouseOver={()=> setClock(3.8)}></div>
+            <div className='bigTick tick Uhr04' onTouchStart={()=> setClock(4  )} onMouseOver={()=> setClock(4  )}></div>
+            <div className='bigTick tick min21' onTouchStart={()=> setClock(4.2)} onMouseOver={()=> setClock(4.2)}></div>
+            <div className='bigTick tick min22' onTouchStart={()=> setClock(4.4)} onMouseOver={()=> setClock(4.4)}></div>
+            <div className='bigTick tick min23' onTouchStart={()=> setClock(4.6)} onMouseOver={()=> setClock(4.6)}></div>
+            <div className='bigTick tick min24' onTouchStart={()=> setClock(4.8)} onMouseOver={()=> setClock(4.8)}></div>
+            <div className='bigTick tick Uhr05' onTouchStart={()=> setClock(5  )} onMouseOver={()=> setClock(5  )}></div> 
+            <div className='bigTick tick min26' onTouchStart={()=> setClock(5.2)} onMouseOver={()=> setClock(5.2)}></div>
+            <div className='bigTick tick min27' onTouchStart={()=> setClock(5.4)} onMouseOver={()=> setClock(5.4)}></div>
+            <div className='bigTick tick min28' onTouchStart={()=> setClock(5.6)} onMouseOver={()=> setClock(5.6)}></div>
+            <div className='bigTick tick min29' onTouchStart={()=> setClock(5.8)} onMouseOver={()=> setClock(5.8)}></div>
+            <div className='bigTick tick Uhr06' onTouchStart={()=> setClock(6  )} onMouseOver={()=> setClock(6  )} ></div>
+            <div className='bigTick tick min31' onTouchStart={()=> setClock(6.2)} onMouseOver={()=> setClock(6.2)}></div>
+            <div className='bigTick tick min32' onTouchStart={()=> setClock(6.4)} onMouseOver={()=> setClock(6.4)}></div>
+            <div className='bigTick tick min33' onTouchStart={()=> setClock(6.6)} onMouseOver={()=> setClock(6.6)}></div>
+            <div className='bigTick tick min34' onTouchStart={()=> setClock(6.8)} onMouseOver={()=> setClock(6.8)}></div>
+            <div className='bigTick tick Uhr07' onTouchStart={()=> setClock(7  )} onMouseOver={()=> setClock(7  )}></div>
+            <div className='bigTick tick min36' onTouchStart={()=> setClock(7.2)} onMouseOver={()=> setClock(7.2)}></div>
+            <div className='bigTick tick min37' onTouchStart={()=> setClock(7.4)} onMouseOver={()=> setClock(7.4)}></div>
+            <div className='bigTick tick min38' onTouchStart={()=> setClock(7.6)} onMouseOver={()=> setClock(7.6)}></div>
+            <div className='bigTick tick min39' onTouchStart={()=> setClock(7.8)} onMouseOver={()=> setClock(7.8)}></div>
+            <div className='bigTick tick Uhr08' onTouchStart={()=> setClock(8  )} onMouseOver={()=> setClock(8  )}></div>
+            <div className='bigTick tick min41' onTouchStart={()=> setClock(8.2)} onMouseOver={()=> setClock(8.2)}></div>
+            <div className='bigTick tick min42' onTouchStart={()=> setClock(8.4)} onMouseOver={()=> setClock(8.4)}></div>
+            <div className='bigTick tick min43' onTouchStart={()=> setClock(8.6)} onMouseOver={()=> setClock(8.6)}></div>
+            <div className='bigTick tick min44' onTouchStart={()=> setClock(8.8)} onMouseOver={()=> setClock(8.8)}></div>
+            <div className='bigTick tick Uhr09' onTouchStart={()=> setClock(9  )} onMouseOver={()=> setClock(9  )} ></div>
+            <div className='bigTick tick min46' onTouchStart={()=> setClock(9.2)} onMouseOver={()=> setClock(9.2)}></div>
+            <div className='bigTick tick min47' onTouchStart={()=> setClock(9.4)} onMouseOver={()=> setClock(9.4)}></div>
+            <div className='bigTick tick min48' onTouchStart={()=> setClock(9.6)} onMouseOver={()=> setClock(9.6)}></div>
+            <div className='bigTick tick min49' onTouchStart={()=> setClock(9.8)} onMouseOver={()=> setClock(9.8)}></div>
+            <div className='bigTick tick Uhr10' onTouchStart={()=> setClock(10  )} onMouseOver={()=> setClock(10  )}></div>
+            <div className='bigTick tick min51' onTouchStart={()=> setClock(10.2)} onMouseOver={()=> setClock(10.2)}></div>
+            <div className='bigTick tick min52' onTouchStart={()=> setClock(10.4)} onMouseOver={()=> setClock(10.4)}></div>
+            <div className='bigTick tick min53' onTouchStart={()=> setClock(10.6)} onMouseOver={()=> setClock(10.6)}></div>
+            <div className='bigTick tick min54' onTouchStart={()=> setClock(10.8)} onMouseOver={()=> setClock(10.8)}></div>
+            <div className='bigTick tick Uhr11' onTouchStart={()=> setClock(11  )} onMouseOver={()=> setClock(11  )}></div>
+            <div className='bigTick tick min56' onTouchStart={()=> setClock(11.2)} onMouseOver={()=> setClock(11.2)}></div>
+            <div className='bigTick tick min57' onTouchStart={()=> setClock(11.4)} onMouseOver={()=> setClock(11.4)}></div>
+            <div className='bigTick tick min58' onTouchStart={()=> setClock(11.6)} onMouseOver={()=> setClock(11.6)}></div>
+            <div className='bigTick tick min59' onTouchStart={()=> setClock(11.8)} onMouseOver={()=> setClock(11.8)}></div>
           </div>
         </div>
 
+        {airData&&currentData&&forecastData&&(
         <table className='weatherInfo'>
           <tbody>
           <tr>
-            <th>Change of Rain</th>
-            <td>0%</td>
+            <th>Wind</th> 
+            <td>{ dataFilter(currentData, forecastData).wind.speed }m/s</td>
           </tr>
           <tr>
-            <th>Humitidy</th>
-            <td>35%</td>
+            <th>Humidity</th>
+            <td>{ dataFilter(currentData, forecastData).main.humidity }%</td>
           </tr>
           <tr>
             <th>PM 10</th>
-            <td>81</td>
+            <td>{airQuality10(Math.round(airData.list[0].components.pm10))}</td>
           </tr>
           <tr>
-            <th>UV Index</th>
-            <td>0</td>
+            <th>PM2.5</th>
+            <td>{airQuality25(Math.round(airData.list[0].components.pm2_5))}</td>
           </tr>
           </tbody>
-        </table>
+        </table>)}
 
-        {weatherData&&(
+        {forecastDataFiltered&&(
         <div className='weeklyWeather center'>
-          {forecastData.map( el => (
+          {forecastDataFiltered.map( el => (
           <div key={el.id}>
-            <div className='day'>{el.days > 6 ? GLOBAL.days[el.days - 7] : GLOBAL.days[el.days]}</div>
+            <div className='day'>{ el.days > 6 ? GLOBAL.days[el.days - 7] : GLOBAL.days[el.days] }</div>
             <div className='weatherIcon'>
-            <FontAwesomeIcon icon={faCloud} />
+            <FontAwesomeIcon icon={ el.icon } />
             </div>
-            <span className='lowest'>{el.low}°</span>
-            <span className='highest'>{el.id}°</span>
+            <span className='lowest'>{ el.low }°</span>
+            <span className='highest'>{ el.high }°</span>
           </div>
           ))}          
         </div>

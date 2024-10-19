@@ -241,15 +241,42 @@ p.alarmText {
 }
 
 /*****       weather       *****/
+.moonlight {
+  animation-name: light;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-out;
+  ;
+  transform-origin: 0 0;
+}
+
+@keyframes light {
+  0% {
+
+    height: 50%;
+    opacity: 1;
+  }
+
+  60% {
+    opacity: 0.7;
+  }
+
+  100% {
+
+    height: 110%;
+    opacity: 0;
+  }
+}
+
 .sunMane {
-  animation-name: example;
+  animation-name: rotate;
   animation-duration: 30s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
   transform-origin: 0 0;
 }
 
-@keyframes example {
+@keyframes rotate {
   0% {
     rotate: 0;
   }
@@ -259,32 +286,210 @@ p.alarmText {
   }
 }
 
+.cloud {
+  animation-name: dungdung;
+  animation-duration: 6s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  transform-origin: top center;
+}
+
+@keyframes dungdung {
+  0% {
+    transform: translate(-50%, 0);
+  }
+
+  50% {
+    transform: translate(-50%, 10%);
+  }
+
+  100% {
+    transform: translate(-50%, 0);
+  }
+}
+
+.smogT {
+  animation-name: dungdungNgiggleT;
+  animation-duration: 6s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  transform-origin: top center;
+}
+
+@keyframes dungdungNgiggleT {
+  0% {
+    transform: translate(-45%, 0);
+  }
+
+  25% {
+    transform: translate(-55%, 5%);
+  }
+
+  50% {
+    transform: translate(-45%, 10%);
+  }
+
+  75% {
+    transform: translate(-55%, 5%);
+  }
+
+  100% {
+    transform: translate(-45%, 0);
+  }
+}
+
+.smogB {
+  animation-name: dungdungNgiggleB;
+  animation-duration: 6s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  transform-origin: top center;
+}
+
+@keyframes dungdungNgiggleB {
+  0% {
+    transform: translate(-55%, 0);
+  }
+
+  25% {
+    transform: translate(-45%, 5%);
+  }
+
+  50% {
+    transform: translate(-55%, 10%);
+  }
+
+  75% {
+    transform: translate(-45%, 5%);
+  }
+
+  100% {
+    transform: translate(-55%, 0);
+  }
+}
+
+.rain,
+.lightning {
+  animation-name: drop;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  transform-origin: 0 0;
+}
+
+@keyframes drop {
+  0% {
+    top: 30%;
+    opacity: 1;
+  }
+
+  70% {
+    opacity: 1;
+  }
+
+  100% {
+    top: 90%;
+    opacity: 0;
+  }
+}
+
+.snow {
+  animation-name: dropNrotate;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  transform-origin: 0 50%;
+}
+
+@keyframes dropNrotate {
+  0% {
+    rotate: 0;
+    top: 30%;
+    opacity: 1;
+  }
+
+  70% {
+    opacity: 1;
+  }
+
+  100% {
+    rotate: 360deg;
+    top: 95%;
+    opacity: 0;
+  }
+}
+
+.tornado0,
+.tornado2 {
+  animation-name: giggleTop;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  transform-origin: 0 0;
+}
+
+@keyframes giggleTop {
+  0% {
+    transform: translate(-52%, 0%);
+  }
+
+  50% {
+    transform: translate(-48%, 0%);
+  }
+
+  100% {
+    transform: translate(-52%, 0%);
+  }
+}
+
+.tornado1,
+.tornado3 {
+  animation-name: giggleBottom;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  transform-origin: 0 0;
+}
+
+@keyframes giggleBottom {
+  0% {
+    transform: translate(-48%, 0%);
+  }
+
+  50% {
+    transform: translate(-52%, 0%);
+  }
+
+  100% {
+    transform: translate(-48%, 0%);
+  }
+}
+
 .currentInfo {
-  position: absolute;
-  width: inherit;
-  aspect-ratio: 1;
-  top: 3.7rem;
-  border-radius: 50%;
-  overflow: hidden;
+  width: 70%;
+  height: 70%;
+  position: relative;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -60%);
 }
 
 .current {
   position: relative;
   left: 50%;
-  top: 4rem;
   transform: translateX(-50%);
+  display: block;
 }
 
 .currentWeather {
-  width: 70%;
-  height: 60%;
-  margin-top: 1rem;
+  margin: 0.6rem 0;
+  height: 90%;
 }
 
+.currentTime,
 .currentTemp {
-  width: 20%;
+  margin: 0;
   height: 10%;
-  margin-top: 1rem;
   font-size: 1.6rem;
   color: var(--backgroundDunkeler);
   font-weight: 600;
@@ -719,8 +924,7 @@ p.alarmText {
 
 .weatherInfo {
   color: white;
-  padding-top: 1rem;
-  margin: auto;
+  margin: 1rem auto;
   line-height: 1.1rem;
 }
 
