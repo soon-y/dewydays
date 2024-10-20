@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { GLOBAL } from '../Global'
 import '../index.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -20,7 +20,7 @@ export default function Weather(){
   let date = d.getDate()
   let day = d.getDay()
   let hour = d.getHours()
-  let pointer = createRef()
+  let pointer = useRef()
   const [clock, setClock] = useState(hour)
   const [currentData, setcurrentData] = useState(null)
   const [forecastData, setforecastData] = useState(null)
@@ -149,7 +149,7 @@ export default function Weather(){
           icon = faTornado
           break
       }  
-      let d = { "id" : i, "days" : day + i + 1, "low": low, "high": high, "icon": icon}
+      let d = { "id" : i, "days" : day + i + 1, "low": low, "high": high, "icon": icon }
       forecastDataFiltered.push(d)
       // 6th data copied from 5th one
       if(i == data.cnt/8-1){
@@ -226,7 +226,7 @@ export default function Weather(){
       return "AM"
     } else if (hour < 12 && clock < uhr){
       return "PM"
-    } else if (hour >= 12 && clock > uhr){
+    } else if (hour >= 12 && clock < uhr){
       return "AM"
     } else if (hour >= 12 && clock >= uhr){
       return "PM"
@@ -234,6 +234,7 @@ export default function Weather(){
   }
 
   const currentIcon = (data) => {
+    console.log(data)
     let now = Date.now() / 1000 
     now = data.base == "stations" ? now : data.dt
     let sunrise = currentData.sys.sunrise 
@@ -299,17 +300,18 @@ export default function Weather(){
       j = 1
     }
 
-    if (uhr <= clk && nextUhr[0] == 0 ? clk < 12 : clk < nextUhr[0]){
+    if (uhr <= clk && (nextUhr[0] == 0 ? clk < 12 : clk < nextUhr[0])){
       return dataC
-    } else if (nextUhr[0] <= clk && nextUhr[1] == 0 ? clk < 12 : clk < nextUhr[1]){
+    } else if (nextUhr[0] <= clk && (nextUhr[1] == 0 ? clk < 12 : clk < nextUhr[1])){
       return dataF.list[j]
-    } else if (nextUhr[1]<= clk && nextUhr[2] == 0 ? clk < 12 : clk < nextUhr[2]){
+    } else if (nextUhr[1] <= clk && (nextUhr[2] == 0 ? clk < 12 : clk < nextUhr[2])){
       return dataF.list[j+1]
-    } else if (nextUhr[2]<= clk && nextUhr[3] == 0 ? clk < 12 : clk < nextUhr[3]){
+    } else if (nextUhr[2] <= clk && (nextUhr[3] == 0 ? clk < 12 : clk < nextUhr[3])){
       return dataF.list[j+2]
     } else {
       return dataF.list[j+3]
     }
+
   }
 
   return(
