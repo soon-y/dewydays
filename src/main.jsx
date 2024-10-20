@@ -12,6 +12,7 @@ import Cups from './component/Cups.jsx'
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
+    <App />
       <Routes>
         <Route path='/home' element = { <App /> } />
         <Route path='/profile' element = { <Profile /> } />
