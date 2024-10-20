@@ -1,36 +1,9 @@
-import React, { forwardRef, useState, useEffect } from 'react'
+import React, { forwardRef } from 'react'
 import { Unstable_NumberInput as BaseNumberInput } from '@mui/base/Unstable_NumberInput';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import { styled } from '@mui/material/styles';
 import { GLOBAL } from '../Global'
-import ActiveLocalStorage from '../ActiveLocalStorage';
-
-export default function NumInput({ keyName, label, min, max, placeholder, unit }) {
-  let nbsp = "\u00A0"
-
-  const [value, set] = useState(0);
-  const [active, setActive] = ActiveLocalStorage();
-
-  useEffect(() => {
-    localStorage.setItem( keyName , JSON.stringify(value))
-  }, [value]);
-
-  return<>
-    <NumberInput 
-      aria-label={ label }
-      min={ min } 
-      max={ max } 
-      onChange={(event, val) => set(val)}
-      placeholder= { placeholder }
-      endAdornment={<InputAdornment> {unit.length>2? unit : unit + nbsp + nbsp + nbsp } </InputAdornment>} 
-      disabled={ label == "exercise" ? !active : false }
-      step={ label == "exercise" ? 5 : 1}
-      shiftMultiplier={5}
-      />  
-  </>
-
-}
 
 const NumberInput = forwardRef(function CustomNumberInput(props, ref) {
   return (
@@ -56,52 +29,27 @@ const NumberInput = forwardRef(function CustomNumberInput(props, ref) {
   );
 });
 
-const blue = {
-  100: '#daecff',
-  200: '#b6daff',
-  300: '#66b2ff',
-  400: '#3399ff',
-  500: '#007fff',
-  600: '#0072e5',
-  700: '#0059B2',
-  800: '#004c99',
-};
-
-const grey = {
-  50: '#F3F6F9',
-  100: '#E5EAF2',
-  200: '#DAE2ED',
-  300: '#C7D0DD',
-  400: '#B0B8C4',
-  500: '#9DA8B7',
-  600: '#6B7A90',
-  700: '#434D5B',
-  800: '#303740',
-  900: '#1C2025',
-};
-
 const StyledInputRoot = styled('div')(
-  ({ theme }) => `
+  ( ) => `
   font-family: 'IBM Plex Sans', sans-serif;
   font-weight: 400;
-  color: '${theme.palette.mode === 'dark' ? grey[300] : grey[500]}';
+  color: '#9DA8B7';
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
-  align-items: center;
-`,
+  align-items: center;`,
 );
 
 const StyledInput = styled('input')(
-  ({ theme }) => `
+  () => `
   font-size: 0.875rem;
   font-family: ${ GLOBAL.fontFamily };
   font-weight: 400;
   line-height: 1.375;
-  color: ${ '#000' };
-  background: ${ '#fff' };
-  border: 1px solid ${ grey[200] };
-  box-shadow: 0px 2px 4px ${'rgba(0,0,0, 0.05)'};
+  color: #000 ;
+  background: #fff;
+  border: 1px solid #DAE2ED;
+  box-shadow: 0px 2px 4px rgba(0,0,0, 0.05);
   border-radius: 8px;
   margin: 0 8px;
   padding: 10px 12px;
@@ -110,13 +58,8 @@ const StyledInput = styled('input')(
   width: 4rem;
   text-align: center;
 
-  &:hover {
-    border-color: ${blue[400]};
-  }
-
   &:focus {
-    border-color: ${blue[400]};
-    box-shadow: 0 0 0 3px ${theme.palette.mode === 'dark' ? blue[700] : blue[200]};
+    border-color: black;
   }
 
   &:focus-visible {
@@ -124,23 +67,23 @@ const StyledInput = styled('input')(
   }
   
   &:disabled {
-    color: ${grey[600]};
-    background: ${grey[200]};
+    color: #6B7A90;
+    background: #DAE2ED;
   }
 `,
 );
 
 const StyledButton = styled('button')(
-  ({ theme }) => `
+  () => `
   font-family: 'IBM Plex Sans', sans-serif;
   font-size: 0.875rem;
   box-sizing: border-box;
   line-height: 1.5;
   border: 1px solid;
   border-radius: 999px;
-  border-color: ${theme.palette.mode === 'dark' ? grey[800] : grey[200]};
-  background: ${theme.palette.mode === 'dark' ? grey[900] : grey[100]};
-  color: ${theme.palette.mode === 'dark' ? grey[200] : grey[900]};
+  border-color: #DAE2ED;
+  background: #E5EAF2;
+  color: #1C2025;
   width: 32px;
   height: 32px;
   display: flex;
@@ -154,8 +97,8 @@ const StyledButton = styled('button')(
   &:hover {
     cursor: pointer;
     background: ${ GLOBAL.hover };
-    border-color: ${ grey[200] };
-    color: ${grey[50]};
+    border-color: #DAE2ED;
+    color: #F3F6F9;
   }
 
   &:focus-visible {
@@ -164,20 +107,20 @@ const StyledButton = styled('button')(
 
   &.increment {
     order: 1;
-  }
-`,
+  }`,
 );
 
 const InputAdornment = styled('div')(
-  ({ theme }) => `
+  () => `
   font-family: ${ GLOBAL.fontFamily };
-  color: ${grey[600]};
+  color: #6B7A90;
   margin-left: 0.2rem;
   margin-right: 0.8rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   grid-row: 1/3;
-};
-`,
+  };`,
 );
+
+export { NumberInput, InputAdornment };
