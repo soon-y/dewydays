@@ -1,34 +1,36 @@
-import React, { useState, useEffect, useRef, createRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { animated, useSpring } from '@react-spring/web'
 import { GLOBAL } from '../Global'
 import '../index.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark} from '@fortawesome/free-solid-svg-icons'
-
 import { Link } from 'react-router-dom'
 
 export default function Cups(){
   
   const head = "Cups"
   const [cupNum, setCup] = useState(1);
-  const [cupAmount, setAmount] = useState(350);
+  const [cupAmount0, setAmount0] = useState(190);
+  const [cupAmount1, setAmount1] = useState(350);
+  const [cupAmount2, setAmount2] = useState(600);
+  const [cupAmount3, setAmount3] = useState(1000);
   const slideNum = [25, -25, -75, -125]
   const slideCup = useSpring({
     transform: `translateX(${slideNum[cupNum]}vw)`
   })
-  let cupAmountScroll = createRef()
+  let cupAmountScroll = useRef()
   let startNum = 0
   let num = startNum
   let step = 10
   let endNum = 2000 - step
   var totalNum = ((endNum - startNum)/step + 10);
-  let cupArray = []
+  let numArray = []
   let width = window.innerWidth
   let ratio = width/window.innerHeight
   let colWidth = ratio >= 1? width / 100 * 11.11 : width / 100 * 20
 
   while (num < endNum + step + 1) {
-    cupArray.push(num)
+    numArray.push(num)
     num = num + step
   }
 
@@ -37,16 +39,41 @@ export default function Cups(){
     ratio = width/window.innerHeight
     colWidth = ratio >= 1? width / 100 * 11.11 : width / 100 * 20
     const finalValue = Math.round(((cupAmountScroll.current.scrollLeft)/colWidth)*step);
-    setAmount(finalValue)
-    console.log(cupAmount)
+
+    switch (cupNum){
+      case 0:
+        setAmount0(finalValue)
+        break
+      case 1:
+        setAmount1(finalValue)
+        break
+      case 2:
+        setAmount2(finalValue)
+        break
+      case 3:
+        setAmount3(finalValue)
+        break
+    }
   }
 
   useEffect(()=> {
-    cupAmountScroll.current.scrollLeft = cupAmount / step * colWidth
-  }, [cupAmountScroll, cupAmount, cupNum])
+    switch (cupNum){
+      case 0:
+        cupAmountScroll.current.scrollLeft = cupAmount0 / step * colWidth
+        break
+      case 1:
+        cupAmountScroll.current.scrollLeft = cupAmount1 / step * colWidth
+        break
+      case 2:
+        cupAmountScroll.current.scrollLeft = cupAmount2 / step * colWidth
+        break
+      case 3:
+        cupAmountScroll.current.scrollLeft = cupAmount3 / step * colWidth
+        break
+    }
+  }, [cupNum])
 
   return(
-
     <div className='bg gradient'>
       <h1 className='head'>{head}</h1>
 
@@ -57,10 +84,10 @@ export default function Cups(){
       </Link>
 
       <animated.div className='cups' style={ slideCup }>
-        <img className={cupNum == 0? 'selected' : 'notSelected'} src='/cups/0.png' onMouseUp={() => setCup(0)} onClick={() => setCup(0)} />
-        <img className={cupNum == 1? 'selected' : 'notSelected'} src='/cups/1.png' onMouseUp={() => setCup(1)} onClick={() => setCup(1)} />
-        <img className={cupNum == 2? 'selected' : 'notSelected'} src='/cups/2.png' onMouseUp={() => setCup(2)} onClick={() => setCup(2)} />
-        <img className={cupNum == 3? 'selected' : 'notSelected'} src='/cups/3.png' onMouseUp={() => setCup(3)} onClick={() => setCup(3)} />
+        <img className={cupNum == 0? 'selected' : 'notSelected'} src='/cups/0.png' onClick={() => setCup(0)} />
+        <img className={cupNum == 1? 'selected' : 'notSelected'} src='/cups/1.png' onClick={() => setCup(1)} />
+        <img className={cupNum == 2? 'selected' : 'notSelected'} src='/cups/2.png' onClick={() => setCup(2)} />
+        <img className={cupNum == 3? 'selected' : 'notSelected'} src='/cups/3.png' onClick={() => setCup(3)} />
       </animated.div>
 
       <div className='cupAmountBg' style={{
@@ -105,8 +132,8 @@ export default function Cups(){
         scrollSnapStop: 'always',
         display: 'grid',
       }}>
-        {cupArray.map((el, index) => (
-          <p key={ index } className='cupArray' style={{
+        {numArray.map((el, index) => (
+          <p key={ index } className='numArray' style={{
             position: 'relative',
             color: 'white',
             margin: 'auto',
@@ -118,15 +145,12 @@ export default function Cups(){
         ))}
       </div>
 
-      <div className='btn center' style={{
-        }}>
-
-            <button onClick={ getFianlNum }>USE</button>
-
+      <Link to='/home'>
+      <div className='btn center'>
+        <button onClick={ getFianlNum() }>USE</button>
       </div>
-    
+      </Link>
     </div>
-
   )
 }
 
