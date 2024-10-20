@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { GLOBAL } from './Global'
-import './index.css'
+import { GLOBAL } from '../Global'
+import '../index.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGlassWater,faPlus } from '@fortawesome/free-solid-svg-icons'
 import { Slider } from '@mui/material';

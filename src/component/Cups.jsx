@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef, createRef } from 'react'
 import { animated, useSpring } from '@react-spring/web'
-import { GLOBAL } from './Global'
-import ReactDOM from 'react-dom/client'
-import './index.css'
+import { GLOBAL } from '../Global'
+import '../index.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark} from '@fortawesome/free-solid-svg-icons'
 
@@ -51,7 +50,7 @@ export default function Cups(){
     <div className='bg gradient'>
       <h1 className='head'>{head}</h1>
 
-      <Link to='/'>
+      <Link to='/home'>
       <div className='bubble navPos close'>
         <FontAwesomeIcon icon={faXmark} className='navIcon' />
       </div>

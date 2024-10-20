@@ -1,11 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react'
-import { GLOBAL } from './Global'
-import './index.css'
+import { GLOBAL } from '../Global'
+import '../index.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faXmark,faCalculator } from '@fortawesome/free-solid-svg-icons'
-import NumInput from './mui/NumInput.jsx'
-import ActiveSwitch from './mui/MySwitch.jsx'
-import MyToggle from './mui/MyToggle.jsx'
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
+import NumInput from '../component_mui/NumInput.jsx'
+import ActiveSwitch from '../component_mui/MySwitch.jsx'
 import { Link } from 'react-router-dom'
 
 export default function Profile(){
@@ -41,7 +40,7 @@ export default function Profile(){
     <div className='bg gradient'></div>
       <h1 className='head'>{head}</h1>
       
-      <Link to='/'>
+      <Link to='/home'>
       <div className='bubble navPos close'>
         <FontAwesomeIcon icon={faXmark} className='navIcon' />
       </div>
@@ -107,7 +106,7 @@ export default function Profile(){
         </div>
 
         <div className='btn center'>
-            <Link to='/'>
+            <Link to='/home'>
               <button>SAVE</button>
             </Link>
         </div>

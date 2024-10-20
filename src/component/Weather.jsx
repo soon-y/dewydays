@@ -1,17 +1,17 @@
 import React, { useState, useEffect, createRef } from 'react'
-import { GLOBAL } from './Global'
-import './index.css'
+import { GLOBAL } from '../Global'
+import '../index.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark,faSmog,faTornado,faCloud,faSun,faCloudBolt,faSnowflake,faCloudShowersHeavy,faCloudRain, } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
-import Sun from './comp_weather/Sun'
-import Cloud from './comp_weather/Cloud'
-import Rain from './comp_weather/Rain'
-import Snow from './comp_weather/Snow'
-import Drizzle from './comp_weather/Drizzle'
-import Thunder from './comp_weather/Thunder'
-import Smog from './comp_weather/Smog'
-import Tornado from './comp_weather/Tornado'
+import Sun from '../component_weather/Sun'
+import Cloud from '../component_weather/Cloud'
+import Rain from '../component_weather/Rain'
+import Snow from '../component_weather/Snow'
+import Drizzle from '../component_weather/Drizzle'
+import Thunder from '../component_weather/Thunder'
+import Smog from '../component_weather/Smog'
+import Tornado from '../component_weather/Tornado'
 
 export default function Weather(){ 
   const head = "Weather"
@@ -58,7 +58,6 @@ export default function Weather(){
     .then(response => response.json())
     .then(data => {
       setcurrentData(data)
-      console.log(data)
     })
     .catch(err => {
       setError(err)
@@ -219,15 +218,19 @@ export default function Weather(){
 
   const AMPM = () => {
     let uhr = hour >= 12? hour - 12 : hour
-    if (hour >= 12 && clock < uhr ) {
-      return "AM"
-    } else if (hour == 0){
+    if (hour == 0) {
       return "AM"
     } else if (hour == 12){
       return "PM"
-    } else {
+    } else if (hour < 12 && clock >= uhr){
+      return "AM"
+    } else if (hour < 12 && clock < uhr){
       return "PM"
-    }
+    } else if (hour >= 12 && clock > uhr){
+      return "AM"
+    } else if (hour >= 12 && clock >= uhr){
+      return "PM"
+    } 
   }
 
   const currentIcon = (data) => {
@@ -236,9 +239,6 @@ export default function Weather(){
     let sunrise = currentData.sys.sunrise 
     let sunset = currentData.sys.sunset 
     let daytime = now > sunrise && now < sunset ? true : false
-
-    console.log(now)
-    console.log(sunrise)
     
     switch(data.weather[0].main) {
       case "Clouds":
@@ -317,7 +317,7 @@ export default function Weather(){
     <div className='bg gradient'></div>
       <h1 className='head'>{head}</h1>
       
-      <Link to='/'>
+      <Link to='/home'>
       <div className='bubble navPos close'>
         <FontAwesomeIcon icon={faXmark} className='navIcon' />
       </div>

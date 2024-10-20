@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import './index.css'
+import '../index.css'
 import { animated, useSpring, useTrail } from '@react-spring/web'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronUp,faUser,faSun,faBell,faChartSimple } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
-import { GLOBAL } from './Global'
+import { GLOBAL } from '../Global'
 
 export default function Nav(){
 

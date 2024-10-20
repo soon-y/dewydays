@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { GLOBAL } from './Global'
-import './index.css'
+import { GLOBAL } from '../Global'
+import '../index.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
@@ -29,7 +29,7 @@ function CompWater({ cup, amount, time }) {
       marginRight: '1rem',
       }}>
 
-      <img src={link} style = {{
+      <img src={ link } style = {{
         height: '100%',
         float: 'left'
       }} />
@@ -110,7 +110,7 @@ export default function Timeline(){
     <div className='bg gradient'></div>
       <h1 className='head'>{head}</h1>
       
-      <Link to='/'>
+      <Link to='/home'>
       <div className='bubble navPos close' key="close">
         <FontAwesomeIcon icon={faXmark} className='navIcon' />
       </div>

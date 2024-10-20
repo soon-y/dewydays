@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { GLOBAL } from './Global'
-import './index.css'
+import { GLOBAL } from '../Global.js'
+import '../index.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
 import Switch from '@mui/material/Switch';
@@ -15,7 +15,7 @@ import { Box } from '@mui/material';
 import ToggleButton from '@mui/material/ToggleButton';
 import useTheme from '@mui/material/styles/useTheme';
 import Slider, { SliderThumb } from '@mui/material/Slider';
-import NumInput from './mui/NumInput.jsx'
+import NumInput from '../component_mui/NumInput.jsx'
 import { Link } from 'react-router-dom'
 
 export default function Alarm(){
@@ -54,7 +54,7 @@ export default function Alarm(){
     <div className='bg'></div>
       <h1 className='head'>{head}</h1>
       
-      <Link to='/'>
+      <Link to='/home'>
       <div className='bubble navPos close' key="close">
         <FontAwesomeIcon icon={faXmark} className='navIcon ' />
       </div>
@@ -140,7 +140,7 @@ export default function Alarm(){
             />   
 
             <div className='btn'>
-            <Link to='/'>
+            <Link to='/home'>
               <button>SAVE</button>
             </Link>
             </div>
