@@ -9,8 +9,7 @@ import { Link } from 'react-router-dom'
 
 export default function WaterContorl(){
 
-  const [checked, setChecked] = useState(false);
-  const [angle, setAngle] = useState(0);
+
 
   function valuetext(value) {
   return `${value}°C`;
@@ -91,10 +90,7 @@ export default function WaterContorl(){
         </div>
         
         <Link to='/Cups'>
-        <div className='bubble'
-                style={{
-
-                }}>
+        <div className='bubble'>
           <FontAwesomeIcon icon={faGlassWater} className='navIcon' />
         </div>
         </Link>
