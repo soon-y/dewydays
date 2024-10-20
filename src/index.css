@@ -129,6 +129,12 @@
   paint-order: stroke fill;
 }
 
+.todaysGoal {
+  -webkit-text-stroke-width: 0.3rem;
+  -webkit-text-stroke-color: var(--strokeColor);
+  paint-order: stroke fill;
+}
+
 h1 {
   font-family: var(--fontMain);
   color: white;
@@ -226,6 +232,7 @@ p.alarmText {
   z-index: 1;
   margin-top: 1rem;
   transform: translateX(50%);
+  cursor: pointer;
 }
 
 .alarmComp .minus {
@@ -238,6 +245,50 @@ p.alarmText {
   position: relative;
   float: right;
   transform: translate(0%, -200%);
+}
+
+.timePickerWrapper {
+  -webkit-mask-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+  -webkit-mask-size: 100%;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: 0 0;
+}
+
+.timePicker {
+  height: 20vh;
+  display: grid;
+  grid-auto-rows: 2rem;
+  align-items: center;
+  max-block-size: calc(9vmin * 5);
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  scroll-snap-type: y mandatory;
+  padding-inline-end: 1ch;
+  font-size: 7vmin;
+  font-weight: lighter;
+  color: hsl(0 0% 20%);
+}
+
+.timePicker::-webkit-scrollbar {
+  display: none;
+}
+
+.timeArray {
+  scroll-snap-align: center;
+  position: relative;
+  color: white;
+  margin: 'auto';
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.timeArray:first-child {
+  margin-top: 0rem;
+}
+
+.addAlarm {
+  z-index: 1000;
 }
 
 /*****       weather       *****/
