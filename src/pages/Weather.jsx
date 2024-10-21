@@ -30,7 +30,7 @@ export default function Weather(){
   let latitude, longitude
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(result)
+    navigator.geolocation.getCurrentPosition(success, fail)
   },[])
 
   useEffect(() => {
@@ -38,18 +38,20 @@ export default function Weather(){
 
   }, [clock])
 
-  const result = (position) => {
-    if(position){
-      latitude =  position.coords.latitude
-      longitude = position.coords.longitude
-    }else {
-      latitude =  53.55
-      longitude = 10
-    }
-    getWeatherData(latitude,longitude)
+  const success = (position) => {
+    latitude =  position.coords.latitude
+    longitude = position.coords.longitude
+    getWeatherData(latitude, longitude)
+  }
+
+  const fail = () => {
+    latitude =  53.55
+    longitude = 10
+    getWeatherData(latitude, longitude)
   }
 
   const getWeatherData = (lat,lon) => {
+    console.log("fetching data")
     // Setting the fetch options
     const options = { method: 'GET', headers: { accept: 'application/json' } }
 
@@ -319,7 +321,7 @@ export default function Weather(){
     <div className='bg gradient'></div>
       <h1 className='head'>{head}</h1>
       
-      <Link to='/home'>
+      <Link to='/'>
       <div className='bubble navPos close'>
         <FontAwesomeIcon icon={faXmark} className='navIcon' />
       </div>

@@ -27,12 +27,16 @@ export default function Profile(){
     setIntake(Math.round(result))
   }, [weight, age, duration, activity]);
 
+  const setTodaysGoal = () =>{
+    GLOBAL.todaysGoal = result
+  }
+
   return(
     <>
     <div className='bg gradient'></div>
       <h1 className='head'>{head}</h1>
       
-      <Link to='/home'>
+      <Link to='/'>
       <div className='bubble navPos close'>
         <FontAwesomeIcon icon={faXmark} className='navIcon' />
       </div>
@@ -115,8 +119,8 @@ export default function Profile(){
         </div>
 
         <div className='btn center'>
-            <Link to='/home'>
-              <button>SAVE</button>
+            <Link to='/'>
+              <button onClick={ setTodaysGoal }>SAVE</button>
             </Link>
         </div>
       </div>

@@ -9,11 +9,11 @@ import { Link } from 'react-router-dom'
 export default function Cups(){
   
   const head = "Cups"
-  const [cupNum, setCup] = useState(1);
-  const [cupAmount0, setAmount0] = useState(190);
-  const [cupAmount1, setAmount1] = useState(350);
-  const [cupAmount2, setAmount2] = useState(600);
-  const [cupAmount3, setAmount3] = useState(1000);
+  const [cupNum, setCup] = useState(GLOBAL.cupNum);
+  const [cupAmount0, setAmount0] = useState(GLOBAL.cupAmount[0]);
+  const [cupAmount1, setAmount1] = useState(GLOBAL.cupAmount[1]);
+  const [cupAmount2, setAmount2] = useState(GLOBAL.cupAmount[2]);
+  const [cupAmount3, setAmount3] = useState(GLOBAL.cupAmount[3]);
   const slideNum = [25, -25, -75, -125]
   const slideCup = useSpring({
     transform: `translateX(${slideNum[cupNum]}vw)`
@@ -43,15 +43,23 @@ export default function Cups(){
     switch (cupNum){
       case 0:
         setAmount0(finalValue)
+        GLOBAL.cupNum = 0
+        GLOBAL.cupAmount[0] = finalValue
         break
       case 1:
         setAmount1(finalValue)
+        GLOBAL.cupNum = 1
+        GLOBAL.cupAmount[1] = finalValue
         break
       case 2:
         setAmount2(finalValue)
+        GLOBAL.cupNum = 2
+        GLOBAL.cupAmount[2] = finalValue
         break
       case 3:
         setAmount3(finalValue)
+        GLOBAL.cupNum = 3
+        GLOBAL.cupAmount[3] = finalValue
         break
     }
   }
@@ -77,7 +85,7 @@ export default function Cups(){
     <div className='bg gradient'>
       <h1 className='head'>{head}</h1>
 
-      <Link to='/home'>
+      <Link to='/'>
       <div className='bubble navPos close'>
         <FontAwesomeIcon icon={faXmark} className='navIcon' />
       </div>
@@ -145,9 +153,9 @@ export default function Cups(){
         ))}
       </div>
 
-      <Link to='/home'>
+      <Link to='/'>
       <div className='btn center'>
-        <button onClick={ getFianlNum() }>USE</button>
+        <button onClick={ getFianlNum }>USE</button>
       </div>
       </Link>
     </div>

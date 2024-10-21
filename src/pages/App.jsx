@@ -1,13 +1,11 @@
 import React, { useState, useEffect, createRef } from 'react'
 import '../index.css'
-import Nav from './Nav.jsx'
-import WaterControl from './WaterControl.jsx'
-
-
+import Nav from '../component/Nav.jsx'
+import WaterControl from '../component/WaterControl.jsx'
+import { GLOBAL } from '../Global'
 
 export default function App(){ 
 
-  
   return(
     <>
     <div id='bg'>
@@ -28,7 +26,7 @@ export default function App(){
         height: '10%',
       }}>
         Today's goal <br />
-        2000ml
+        { GLOBAL.todaysGoal }ml
       </div>
     </div>   
     </>

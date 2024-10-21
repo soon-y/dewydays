@@ -52,6 +52,8 @@ function CompWater({ cup, amount, time }) {
       </>
 }
 
+
+
 function HeadComp ({ date, total }) {
     return <div style={{
       width: "50%", 
@@ -110,7 +112,7 @@ export default function Timeline(){
     <div className='bg gradient'></div>
       <h1 className='head'>{head}</h1>
       
-      <Link to='/home'>
+      <Link to='/'>
       <div className='bubble navPos close' key="close">
         <FontAwesomeIcon icon={faXmark} className='navIcon' />
       </div>

@@ -8,12 +8,7 @@ import { styled } from '@mui/material/styles';
 import { Link } from 'react-router-dom'
 
 export default function WaterContorl(){
-
-
-
-  function valuetext(value) {
-  return `${value}°C`;
-}
+  let src = 'cups/' + GLOBAL.cupNum + '.png'
 
   const WaterSlider = styled(Slider)({
     color: 'rgba(255,255,255,0.8)',
@@ -21,7 +16,7 @@ export default function WaterContorl(){
     '& .MuiSlider-markLabel': {
       color: 'rgba(255,255,255,1)',
       fontSize: '1rem',
-      right: '-3rem',
+      right: GLOBAL.cupAmount[GLOBAL.cupNum] > 1000? '-7rem' : '-5.8rem',
       top: '1.8rem',
       fontFamily: GLOBAL.fontFamily,
     },
@@ -44,8 +39,8 @@ export default function WaterContorl(){
       fontSize: '1rem',
       background: 'unset',
       padding: 0,
-      width: '2.4rem',
-      height: '2.4rem',
+      width: '3rem',
+      height: '3rem',
       borderRadius: '50% 50% 50% 0',
       backgroundColor: 'rgba(255,255,255,0.2)',
       transformOrigin: 'bottom left',
@@ -62,8 +57,8 @@ export default function WaterContorl(){
 
   const marks = [
     {
-      value: 100,
-      label: '100',
+      value: GLOBAL.cupAmount[GLOBAL.cupNum],
+      label: GLOBAL.cupAmount[GLOBAL.cupNum] + 'ml',
     },
   ]
 
@@ -72,26 +67,23 @@ export default function WaterContorl(){
       <div className='setWater'>
         <WaterSlider
           aria-label="Intake"
-          getAriaValueText={valuetext}
           valueLabelDisplay="auto"
-          step={10}
+          step={5}
           min={0}
-          marks={marks}
+          max={ GLOBAL.cupAmount[GLOBAL.cupNum] }
+          marks={ marks }
           defaultValue={ 0 }
         />
 
         <div className='empty'></div>
 
-        <div className='bubble'
-        style={{
-
-        }}>
+        <div className='bubble'>
           <FontAwesomeIcon icon={faPlus} className='navIcon' />
         </div>
         
         <Link to='/Cups'>
         <div className='bubble'>
-          <FontAwesomeIcon icon={faGlassWater} className='navIcon' />
+          <img src={ src } style={{ height: '100%'}}/>
         </div>
         </Link>
 

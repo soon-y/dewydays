@@ -15,10 +15,10 @@ import Tab from '@mui/material/Tab';
 import { Box } from '@mui/material';
 import { SliderThumb } from '@mui/material/Slider';
 import useTheme from '@mui/material/styles/useTheme';
-import { CustomSlider } from '../component_mui/Slider'
-import { MaterialUISwitch } from '../component_mui/Switch'
-import { NumberInput, InputAdornment } from '../component_mui/NumInput'
-import { Toggle } from '../component_mui/Toggle'
+import { CustomSlider } from '../component_mui/Slider.jsx'
+import { MaterialUISwitch } from '../component_mui/Switch.jsx'
+import { NumberInput, InputAdornment } from '../component_mui/NumInput.jsx'
+import { Toggle } from '../component_mui/Toggle.jsx'
 
 export default function Alarm(){
   const head = "Alarm"
@@ -58,7 +58,7 @@ export default function Alarm(){
 
 
   const slide = useSpring({
-    transform: `translateY(${display}vw)`
+    transform: `translateY(${display}vw)`,
   })
   let hour = 0
   let min = 0
@@ -66,6 +66,7 @@ export default function Alarm(){
   let minArray = []
   let timeScrollHour = useRef()
   let timeScrollMin = useRef()
+  let alarmAddition = useRef()
   let nbsp = "\u00A0"
 
   for(let i = 0; i < 2; i++){
@@ -88,8 +89,9 @@ export default function Alarm(){
   }
 
   function getFianlNum() {
-    const finalHour = Math.round(((timeScrollHour.current.scrollTop)/32));
-    const finalMin = Math.round(((timeScrollMin.current.scrollTop)/32));
+    const finalHour = Math.round(((timeScrollHour.current.scrollTop)/32))
+    const finalMin = Math.round(((timeScrollMin.current.scrollTop)/32))
+
     console.log(finalHour)
     console.log(finalMin)
     setDisplay(200)
@@ -129,7 +131,7 @@ export default function Alarm(){
     <div className='bg'></div>
       <h1 className='head'>{head}</h1>
       
-      <Link to='/home'>
+      <Link to='/'>
       <div className='bubble navPos close' key="close">
         <FontAwesomeIcon icon={faXmark} className='navIcon ' />
       </div>
@@ -223,7 +225,7 @@ export default function Alarm(){
           />  
 
             <div className='btn'>
-            <Link to='/home'>
+            <Link to='/'>
               <button>SAVE</button>
             </Link>
             </div>
@@ -272,7 +274,7 @@ export default function Alarm(){
         </Box>     
       </div>
 
-      <animated.div className = 'bg gradient addAlarm' style ={ slide }>
+      <animated.div className = 'bg gradient addAlarm' style ={ slide } ref= { alarmAddition } >
         <div className='content'>
         <h1 className='head' style={{ 
           transform: 'translate(-50%, -150%)'

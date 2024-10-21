@@ -23,6 +23,9 @@ const GLOBAL = {
     'Dec',
   ],
   days : ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+  todaysGoal: 2100,
+  cupNum: 1,
+  cupAmount: [190,350,600,1000],
 }
 
 export { GLOBAL }
