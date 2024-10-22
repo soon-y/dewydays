@@ -16,7 +16,7 @@ export default function WaterContorl(){
     '& .MuiSlider-markLabel': {
       color: 'rgba(255,255,255,1)',
       fontSize: '1rem',
-      right: GLOBAL.cupAmount[GLOBAL.cupNum] > 1000? '-7rem' : '-5.8rem',
+      right: GLOBAL.cupAmount[GLOBAL.cupNum] >= 1000? '-7rem' : '-5.8rem',
       top: '1.8rem',
       fontFamily: GLOBAL.fontFamily,
     },

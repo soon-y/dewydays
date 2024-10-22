@@ -16,7 +16,7 @@ const Toggle = styled(ToggleButton)(() => ({
   textTransform: 'capitalize',
   borderRadius: '1rem',
   '&.Mui-selected': {
-    backgroundColor: GLOBAL.backgroundDunkel,
+    backgroundColor: GLOBAL.hover,
     color: 'white',
     },
   '&.Mui-selected:hover': {

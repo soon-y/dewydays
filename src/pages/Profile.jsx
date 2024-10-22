@@ -15,20 +15,24 @@ export default function Profile(){
   let nbsp = "\u00A0"
   const d = new Date();
   let year = d.getFullYear();
-  const [result, setIntake] = useState(0)
-  const [weight, setWeight] = useState(70)
-  const [age, setAge] = useState(2000)
-  const [duration, setDuration] = useState(60)
-  const [activity, setActivity] = useState(0)
+  const [result, setIntake] = useState(GLOBAL.todaysGoal)
+  const [weight, setWeight] = useState(GLOBAL.weight)
+  const [age, setAge] = useState(GLOBAL.age)
+  const [duration, setDuration] = useState(GLOBAL.duration)
+  const [mode, setActivity] = useState(GLOBAL.activity)
 
   // todo take into account weather info & age
   useEffect(() => {
-    let result = activity? weight * 30 + Number.parseFloat(duration / 30).toFixed(1) * 355 : weight * 30
+    let result = mode? weight * 30 + Number.parseFloat(duration / 30).toFixed(1) * 355 : weight * 30
     setIntake(Math.round(result))
-  }, [weight, age, duration, activity]);
+  }, [weight, age, duration, mode]);
 
   const setTodaysGoal = () =>{
     GLOBAL.todaysGoal = result
+    GLOBAL.activity = mode
+    GLOBAL.weight = weight
+    GLOBAL.age = age
+    GLOBAL.duration = duration
   }
 
   return(
@@ -79,6 +83,7 @@ export default function Profile(){
             <MaterialUISwitch sx={{ m: 0 }}
             onChange={(event, val) => setActivity(val)} 
             svg = { svg }
+            checked = { mode }
             />}
           label= {
           <Typography sx={{ 
@@ -101,7 +106,7 @@ export default function Profile(){
           onChange={(event, val) => setDuration(val)}
           placeholder= { "" }
           endAdornment={<InputAdornment> { "mins" } </InputAdornment>} 
-          disabled={ activity? false : true }
+          disabled={ mode? false : true }
           step={ 5 }
           shiftMultiplier={5}
           />        

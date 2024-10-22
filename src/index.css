@@ -197,6 +197,7 @@ p.alarmText {
 
 .alarmComp {
   border-bottom: 1px solid rgba(255, 255, 255, 0.425);
+  height: 5.6rem;
 }
 
 .alarmComp .time {
@@ -222,29 +223,30 @@ p.alarmText {
   margin-right: 0.4rem;
 }
 
-.plus {
-  color: var(--backgroundDunkeler);
-  background-color: var(--backgroundHell);
-  border-radius: 50%;
-  font-size: 1.4rem;
-  padding: 1rem;
-  border: 1px solid white;
-  z-index: 1;
-  margin-top: 1rem;
-  transform: translateX(50%);
-  cursor: pointer;
-}
-
 .alarmComp .minus {
+  text-align: right;
   color: #7e7e7e;
   background-color: #dedede;
   border-radius: 50%;
   padding: 0.4rem 0.5rem;
   margin-right: 0.4rem;
   border: 1px solid #b9b9b9;
-  position: relative;
   float: right;
-  transform: translate(0%, -200%);
+  transform: translateY(-100%);
+  cursor: pointer;
+}
+
+.plus {
+  position: relative;
+  color: var(--backgroundDunkeler);
+  background-color: var(--backgroundHell);
+  border-radius: 50%;
+  font-size: 1.4rem;
+  padding: 0.8rem;
+  border: 1px solid white;
+  z-index: 1;
+  margin-top: 1rem;
+  cursor: pointer;
 }
 
 .timePickerWrapper {

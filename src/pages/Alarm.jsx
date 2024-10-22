@@ -24,18 +24,19 @@ export default function Alarm(){
   const head = "Alarm"
   const svg = "M224 0c-17.7 0-32 14.3-32 32l0 19.2C119 66 64 130.6 64 208l0 18.8c0 47-17.3 92.4-48.5 127.6l-7.4 8.3c-8.4 9.4-10.4 22.9-5.3 34.4S19.4 416 32 416l384 0c12.6 0 24-7.4 29.2-18.9s3.1-25-5.3-34.4l-7.4-8.3C401.3 319.2 384 273.9 384 226.8l0-18.8c0-77.4-55-142-128-156.8L256 32c0-17.7-14.3-32-32-32zm45.3 493.3c12-12 18.7-28.3 18.7-45.3l-64 0-64 0c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7z"
   
-  const [active, setActive] = useState(false);
+  const [active, setActive] = useState(GLOBAL.notification);
 
-  const theme = useTheme();
-  const [value, setTab] = useState(0);
-  const [interval, setInterval] = useState(60);
-  const [repeatMon, setRepeatMon] = useState(false)
-  const [repeatTue, setRepeatTue] = useState(false)
-  const [repeatWed, setRepeatWed] = useState(false)
-  const [repeatThu, setRepeatThu] = useState(false)
-  const [repeatFri, setRepeatFri] = useState(false)
-  const [repeatSat, setRepeatSat] = useState(false)
-  const [repeatSun, setRepeatSun] = useState(false)
+  const theme = useTheme()
+  const [value, setTab] = useState(GLOBAL.tabNum)
+  const [interval, setInterval] = useState(GLOBAL.interval)
+  const [timeRange, setTimeRange] = useState([GLOBAL.timeRangeStart,GLOBAL.timeRangeEnd])
+  const [repeatMon, setRepeatMon] = useState(GLOBAL.repeatMon)
+  const [repeatTue, setRepeatTue] = useState(GLOBAL.repeatTue)
+  const [repeatWed, setRepeatWed] = useState(GLOBAL.repeatWed)
+  const [repeatThu, setRepeatThu] = useState(GLOBAL.repeatThu)
+  const [repeatFri, setRepeatFri] = useState(GLOBAL.repeatFri)
+  const [repeatSat, setRepeatSat] = useState(GLOBAL.repeatSat)
+  const [repeatSun, setRepeatSun] = useState(GLOBAL.repeatSun)
 
   const [filterMon, setFilterMon] = useState(false)
   const [filterTue, setFilterTue] = useState(false)
@@ -52,13 +53,15 @@ export default function Alarm(){
   const [selFri, setSelFri] = useState(false);
   const [selSat, setSelSat] = useState(false);
   const [selSun, setSelSun] = useState(false);
+  const [move, setMove] = useState(100);
 
-  const [display, setDisplay] = useState(200);
-
-
+  const updateNotification = (val) => {
+    setActive(val)
+    GLOBAL.notification = val
+  }
 
   const slide = useSpring({
-    transform: `translateY(${display}vw)`,
+    transform: `translateX(${move}vw)`,
   })
   let hour = 0
   let min = 0
@@ -88,13 +91,25 @@ export default function Alarm(){
     minArray.push(nbsp)
   }
 
-  function getFianlNum() {
+  function getFinalNum() {
     const finalHour = Math.round(((timeScrollHour.current.scrollTop)/32))
     const finalMin = Math.round(((timeScrollMin.current.scrollTop)/32))
 
-    console.log(finalHour)
-    console.log(finalMin)
-    setDisplay(200)
+    // console.log(finalHour)
+    // console.log(finalMin)
+
+    let tag= []
+    if(selMon) tag.push("Mon")
+    if(selTue) tag.push("Tue")
+    if(selWed) tag.push("Wed")
+    if(selThu) tag.push("Thu")
+    if(selFri) tag.push("Fri")
+    if(selSat) tag.push("Sat")
+    if(selSun) tag.push("Sun")
+    let d = { id: GLOBAL.alarmData[GLOBAL.alarmData.length-1].id + 1, hour: finalHour, min: finalMin, tags: tag }
+    GLOBAL.alarmData.push(d)
+
+    setMove(100)
     setSelMon(false)
     setSelTue(false)
     setSelWed(false)
@@ -113,18 +128,40 @@ export default function Alarm(){
     timeScrollMin.current.scrollTop = min * 32
   }, [])
 
-  const data = [
-    { id: 0, hour: 10, min: 0, tags: ['Today']},
-    { id: 1, hour: 9, min: 10, tags: ['Tue', 'Wed']},
-    { id: 2, hour: 13, min: 20, tags: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri']},
-    { id: 3, hour: 14, min: 30, tags: ['Mon', 'Tue']},
-    { id: 4, hour: 15, min: 0, tags: ['Mon', 'Tue','Thu']},
-    { id: 5, hour: 16, min: 10, tags: ['Sat', 'Sun']},
-    { id: 2, hour: 13, min: 20, tags: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri']},
-    { id: 3, hour: 14, min: 30, tags: ['Mon', 'Tue']},
-    { id: 4, hour: 15, min: 0, tags: ['Mon', 'Tue','Thu']},
-    { id: 5, hour: 16, min: 10, tags: ['Sat', 'Sun']},
-  ];
+  const saveRoutine = () =>{
+    GLOBAL.repeatMon = repeatMon
+    GLOBAL.repeatTue = repeatTue
+    GLOBAL.repeatWed = repeatWed
+    GLOBAL.repeatThu = repeatThu
+    GLOBAL.repeatFri = repeatFri
+    GLOBAL.repeatSat = repeatSat
+    GLOBAL.repeatSun = repeatSun
+    GLOBAL.interval = interval
+    GLOBAL.timeRangeStart = timeRange[0]
+    GLOBAL.timeRangeEnd = timeRange[1]
+  }
+
+  const saveTab = (val) =>{
+    setTab(val)
+    GLOBAL.tabNum = val
+  }
+  // console.log("GLOBAL.alarmData[5]")
+  // console.log(GLOBAL.alarmData[5])
+ //GLOBAL.alarmData.splice(0,1)
+  // console.log(GLOBAL.alarmData[5])
+
+  const showIndex= (e) =>{
+    console.log(e.target)
+  }
+
+
+  console.log(GLOBAL.alarmData.filter(check))
+
+  function check(i,x){
+    return x.tags ==  "Mon"
+  }
+
+
 
   return(
     <>
@@ -145,8 +182,9 @@ export default function Alarm(){
             }}
           control={
             <MaterialUISwitch sx={{ m: 0 }}
-            onChange={(event, val) => setActive(val)} 
+            onChange={(event, val) => updateNotification(val)} 
             svg = { svg }
+            checked = {GLOBAL.notification}
             />}
           label= {
           <Typography sx={{ 
@@ -167,7 +205,7 @@ export default function Alarm(){
             
           <StyledTabs
             value={value}
-            onChange={(event,val) => setTab(val)}
+            onChange={(event,val) => saveTab(val)}
             aria-label="tabs"
           >
             <StyledTab disabled= {!active} index={0} label="Set Routines"/>
@@ -184,49 +222,51 @@ export default function Alarm(){
                 justifyContent: 'center',
               }}
             >
-            <Toggle value="monday" aria-label="days" onClick={ () => setRepeatMon(!selMon) } selected = { repeatMon }> Mo
+            <Toggle value="monday" aria-label="days" onClick={ () => setRepeatMon(!repeatMon) } selected = { repeatMon }> Mo
             </Toggle>
-            <Toggle value="tuesday" aria-label="days" onClick={ () => setRepeatTue(!selTue) } selected = { repeatTue }> Tu
+            <Toggle value="tuesday" aria-label="days" onClick={ () => setRepeatTue(!repeatTue) } selected = { repeatTue }> Tu
             </Toggle>
-            <Toggle value="wednesday" aria-label="days" onClick={ () => setRepeatWed(!selWed) } selected = { repeatWed }> We
+            <Toggle value="wednesday" aria-label="days" onClick={ () => setRepeatWed(!repeatWed) } selected = { repeatWed }> We
             </Toggle>
-            <Toggle value="thursday" aria-label="days" onClick={ () => setRepeatThu(!selThu) } selected = { repeatThu }> Th
+            <Toggle value="thursday" aria-label="days" onClick={ () => setRepeatThu(!repeatThu) } selected = { repeatThu }> Th
             </Toggle>
-            <Toggle value="friday" aria-label="days" onClick={ () => setRepeatFri(!selFri) } selected = { repeatFri }> Fr
+            <Toggle value="friday" aria-label="days" onClick={ () => setRepeatFri(!repeatFri) } selected = { repeatFri }> Fr
             </Toggle>
-            <Toggle value="saturday" aria-label="days" onClick={ () => setRepeatSat(!selSat) } selected = { repeatSat }> Sa
+            <Toggle value="saturday" aria-label="days" onClick={ () => setRepeatSat(!repeatSat) } selected = { repeatSat }> Sa
             </Toggle>
-            <Toggle value="sunday" aria-label="days" onClick={ () => setRepeatSun(!selSun) } selected = { repeatSun }> Su
+            <Toggle value="sunday" aria-label="days" onClick={ () => setRepeatSun(!repeatSun) } selected = { repeatSun }> Su
             </Toggle>
             </ToggleButtonGroup>
 
             <p data-text="Time range" className='alarmText'> Time range </p>
 
             <CustomSlider
-            sx={{ marginTop: '3.6rem'}}
-            slots={{ thumb: ThumbComponent }}
-            getAriaLabel={(index) => (index === 0 ? 'Start' : 'End')}
-            valueLabelDisplay="on"
-            min={1}
-            max={24}
-            defaultValue={[9, 22]}
+              sx={{ marginTop: '3.6rem'}}
+              slots={{ thumb: ThumbComponent }}
+              getAriaLabel={(index) => (index === 0 ? 'Start' : 'End')}
+              valueLabelDisplay="on"
+              min={1}
+              max={24}
+              defaultValue={[GLOBAL.timeRangeStart, GLOBAL.timeRangeEnd]}
+              onChange={(event, val) => setTimeRange(val)} 
             />
 
             <p className='alarmText'> Notify me every </p>
 
             <NumberInput 
-            aria-label={ "alarm" }
-            min={ 0 } 
-            max={ 60 * 5 } 
-            value={ interval }
-            onChange={(event, val) => setInterval(val)}
-            placeholder= { "" }
-            endAdornment={<InputAdornment> { "mins" } </InputAdornment>} 
-          />  
+              aria-label={ "alarm" }
+              min={ 0 } 
+              max={ 60 * 5 } 
+              value={ GLOBAL.interval }
+              onChange={(event, val) => setInterval(val)}
+              placeholder= { "" }
+              endAdornment={<InputAdornment> { "mins" } </InputAdornment>}
+              disabled= { repeatMon||repeatTue||repeatWed||repeatThu||repeatFri||repeatSat||repeatSun ? false : true }
+            />  
 
             <div className='btn'>
             <Link to='/'>
-              <button>SAVE</button>
+              <button onClick={ saveRoutine() }>SAVE</button>
             </Link>
             </div>
           </TabPanel>
@@ -242,40 +282,47 @@ export default function Alarm(){
                   paddingBottom: '0.6rem',
                 }}
               >
-              <Toggle value="monday" aria-label="days" onClick={ () => setFilterMon(!selMon) } selected = { filterMon }> Mo
+              <Toggle value="monday" aria-label="days" onClick={ () => setFilterMon(!filterMon) } selected = { filterMon }> Mo
               </Toggle>
-              <Toggle value="tuesday" aria-label="days" onClick={ () => setFilterTue(!selTue) } selected = { filterTue }> Tu
+              <Toggle value="tuesday" aria-label="days" onClick={ () => setFilterTue(!filterTue) } selected = { filterTue }> Tu
               </Toggle>
-              <Toggle value="wednesday" aria-label="days" onClick={ () => setFilterWed(!selWed) } selected = { filterWed }> We
+              <Toggle value="wednesday" aria-label="days" onClick={ () => setFilterWed(!filterWed) } selected = { filterWed }> We
               </Toggle>
-              <Toggle value="thursday" aria-label="days" onClick={ () => setFilterThu(!selThu) } selected = { filterThu }> Th
+              <Toggle value="thursday" aria-label="days" onClick={ () => setFilterThu(!filterThu) } selected = { filterThu }> Th
               </Toggle>
-              <Toggle value="friday" aria-label="days" onClick={ () => setFilterFri(!selFri) } selected = { filterFri }> Fr
+              <Toggle value="friday" aria-label="days" onClick={ () => setFilterFri(!filterFri) } selected = { filterFri }> Fr
               </Toggle>
-              <Toggle value="saturday" aria-label="days" onClick={ () => setFilterSat(!selSat) } selected = { filterSat }> Sa
+              <Toggle value="saturday" aria-label="days" onClick={ () => setFilterSat(!filterSat) } selected = { filterSat }> Sa
               </Toggle>
-              <Toggle value="sunday" aria-label="days" onClick={ () => setFilterSun(!selSun) } selected = { filterSun }> Su
+              <Toggle value="sunday" aria-label="days" onClick={ () => setFilterSun(!filterSun) } selected = { filterSun }> Su
               </Toggle>
             </ToggleButtonGroup>
 
-            {data.map((el) => (
+            {GLOBAL.alarmData.map((el) => (
               <div className='alarmComp' key={el.id}>
                 <div className='time'>{ el.hour < 10? '0'+ el.hour : el.hour }:{ el.min < 10? '0'+ el.min : el.min}</div>
                 <div className='tag'>
                 {el.tags.map((x, index) => (
                   <span key={ index }>{ x }</span>
                 ))}
+                <FontAwesomeIcon value={ "el.index "} icon={faMinus} className='minus' onClick={ (e) => showIndex(e) }/>
                 </div>
-                <FontAwesomeIcon icon={faMinus} className='minus'/>
               </div>
             ))}
-            <FontAwesomeIcon icon={faPlus} className='plus' onClick={()=> setDisplay(0)}/>
+
+            <FontAwesomeIcon icon={faPlus} className='plus' onClick={()=> setMove(0)}/>
           </TabPanel>
         </Box>     
       </div>
 
       <animated.div className = 'bg gradient addAlarm' style ={ slide } ref= { alarmAddition } >
-        <div className='content'>
+      <div className='bubble navPos close' key="close">
+        <FontAwesomeIcon icon={faXmark} className='navIcon' onClick={ () => setMove(100) }/>
+      </div>
+        <div className='content' style={{
+          top: '50%',
+          transform: 'translate(-50%, -50%)'
+        }}>
         <h1 className='head' style={{ 
           transform: 'translate(-50%, -150%)'
           }}> Add Alarm </h1>
@@ -329,7 +376,7 @@ export default function Alarm(){
           </div>
 
           <div className='btn center'> 
-            <button onClick={ ()=> getFianlNum() }>ADD</button>
+            <button onClick={ ()=> getFinalNum() }>ADD</button>
           </div>
         </div>       
       </animated.div>  
