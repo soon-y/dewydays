@@ -68,7 +68,6 @@ export default function App(){
       sunset = data.sys.sunset 
       const day = now > sunrise && now < sunset ? true : false
       setDaytime(day)
-      console.log(daytime)
     })
     .catch(err => {
       setError(err)
@@ -81,7 +80,7 @@ export default function App(){
   })
 
   const onWater = useSpring({
-    top: waterHeight == 100? '82%' : `${waterHeight}%`,
+    top: waterHeight == 100? '80%' : `${waterHeight}%`,
   })
 
   const addWaterData = () => {
@@ -114,8 +113,6 @@ export default function App(){
     setWaterHeight(GLOBAL.waterHeight)
     setPercent(GLOBAL.currentIntake/GLOBAL.todaysGoal * 100)
     GLOBAL.waterPercent = percent
-    console.log(GLOBAL.waterHeight)
-    console.log(GLOBAL.timelineData)
   }
 
   const currentIcon = (data) => {    
@@ -187,7 +184,7 @@ export default function App(){
         color: 'white',
         height: 'auto',
         width: '50vw',
-        padding: '1rem'
+        padding: '1rem',
       }}>
         Today's goal <br />
         { GLOBAL.todaysGoal }ml
@@ -277,7 +274,9 @@ const WaterSlider = styled(Slider)({
     width: '3rem',
     height: '3rem',
     borderRadius: '50% 50% 50% 0',
-    backgroundColor: 'rgba(255,255,255,0.2)',
+    backgroundColor: 'rgba(255,255,255,0.8)',
+    color: GLOBAL.backgroundDunkel,
+    fontWeight: 700,
     transformOrigin: 'bottom left',
     transform: 'translate(50%, -100%) rotate(-45deg) scale(0)',
     '&::before': { display: 'none' },
