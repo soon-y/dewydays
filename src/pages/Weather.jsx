@@ -56,7 +56,6 @@ export default function Weather(){
     .then(data => {
       filterData(data)
       setforecastData(data)
-      console.log(data)
     })
     .catch(err => {
       setError(err)
