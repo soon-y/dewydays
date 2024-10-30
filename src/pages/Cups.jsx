@@ -154,8 +154,8 @@ export default function Cups(){
       </div>
 
       <Link to='/'>
-      <div className='btn center'>
-        <button onClick={ getFianlNum }>USE</button>
+      <div className='btn center' onClick={ getFianlNum }>
+        <button>USE</button>
       </div>
       </Link>
     </div>

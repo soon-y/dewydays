@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import { BrowserRouter, Route, Routes, Navigate  } from 'react-router-dom'
+import { BrowserRouter, Route, Routes  } from 'react-router-dom'
 import Profile from './pages/Profile.jsx'
 import Timeline from './pages/Timeline.jsx'
 import Weather from './pages/Weather.jsx'

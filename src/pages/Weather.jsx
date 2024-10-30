@@ -26,37 +26,21 @@ export default function Weather(){
   const [forecastData, setforecastData] = useState(null)
   const [forecastDataFiltered, setforecastDataFiltered] = useState(null)
   const [airData, setairData] = useState(null)
-  const API_KEY = '5e7132d57dd1b1491c308810e615e7ca'
-  let latitude, longitude
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(success, fail)
+    getWeatherData(GLOBAL.latitude, GLOBAL.longitude)
   },[])
 
   useEffect(() => {
     pointer.current.style.transform = `rotate(${clock * 30}deg)`
-
   }, [clock])
 
-  const success = (position) => {
-    latitude =  position.coords.latitude
-    longitude = position.coords.longitude
-    getWeatherData(latitude, longitude)
-  }
-
-  const fail = () => {
-    latitude =  53.55
-    longitude = 10
-    getWeatherData(latitude, longitude)
-  }
-
   const getWeatherData = (lat,lon) => {
-    console.log("fetching data")
     // Setting the fetch options
     const options = { method: 'GET', headers: { accept: 'application/json' } }
 
     // Fetching current weather data
-    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`, options)
+    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${GLOBAL.API_KEY}&units=metric`, options)
     .then(response => response.json())
     .then(data => {
       setcurrentData(data)
@@ -67,7 +51,7 @@ export default function Weather(){
     })
 
     // Fetching 5 day / 3 hour forecast data
-    fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`, options)
+    fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${GLOBAL.API_KEY}&units=metric`, options)
     .then(response => response.json())
     .then(data => {
       filterData(data)
@@ -80,7 +64,7 @@ export default function Weather(){
     })
 
     // Fetching current air pollution data
-    fetch(`https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`, options)
+    fetch(`https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${GLOBAL.API_KEY}&units=metric`, options)
     .then(response => response.json())
     .then(data => {
       setairData(data)
@@ -236,7 +220,6 @@ export default function Weather(){
   }
 
   const currentIcon = (data) => {
-    console.log(data)
     let now = Date.now() / 1000 
     now = data.base == "stations" ? now : data.dt
     let sunrise = currentData.sys.sunrise 

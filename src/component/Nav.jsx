@@ -37,7 +37,9 @@ export default function Nav(){
 
   return(
     <>
-      <div className='bubble navPos' onClick={ checking } >
+      <div className='bubble navPos' onClick={ checking } style={{
+        zIndex:  1000
+      }}>
         <animated.div style={ arrowSpring } className='navMenu' >
         <FontAwesomeIcon icon={faChevronUp} className='navIcon' />
         </animated.div>

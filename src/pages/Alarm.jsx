@@ -23,8 +23,12 @@ import { Toggle } from '../component_mui/Toggle.jsx'
 export default function Alarm(){
   const head = "Alarm"
   const svg = "M224 0c-17.7 0-32 14.3-32 32l0 19.2C119 66 64 130.6 64 208l0 18.8c0 47-17.3 92.4-48.5 127.6l-7.4 8.3c-8.4 9.4-10.4 22.9-5.3 34.4S19.4 416 32 416l384 0c12.6 0 24-7.4 29.2-18.9s3.1-25-5.3-34.4l-7.4-8.3C401.3 319.2 384 273.9 384 226.8l0-18.8c0-77.4-55-142-128-156.8L256 32c0-17.7-14.3-32-32-32zm45.3 493.3c12-12 18.7-28.3 18.7-45.3l-64 0-64 0c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7z"
-  
-  const [active, setActive] = useState(GLOBAL.notification);
+  const [alarmDataFiltered, setAlarmData] = useState(GLOBAL.alarmData);
+  const [index, setIndex] = useState(true);
+  const [active, setActive] = useState(GLOBAL.notification)
+  const [move, setMove] = useState(100);
+  const alarmComp = useRef([])
+  const alarmCompTime = useRef([])
 
   const theme = useTheme()
   const [value, setTab] = useState(GLOBAL.tabNum)
@@ -38,22 +42,21 @@ export default function Alarm(){
   const [repeatSat, setRepeatSat] = useState(GLOBAL.repeatSat)
   const [repeatSun, setRepeatSun] = useState(GLOBAL.repeatSun)
 
-  const [filterMon, setFilterMon] = useState(false)
-  const [filterTue, setFilterTue] = useState(false)
-  const [filterWed, setFilterWed] = useState(false)
-  const [filterThu, setFilterThu] = useState(false)
-  const [filterFri, setFilterFri] = useState(false)
-  const [filterSat, setFilterSat] = useState(false)
-  const [filterSun, setFilterSun] = useState(false)
+  const [filterMon, setFilterMon] = useState(GLOBAL.filterMon)
+  const [filterTue, setFilterTue] = useState(GLOBAL.filterTue)
+  const [filterWed, setFilterWed] = useState(GLOBAL.filterWed)
+  const [filterThu, setFilterThu] = useState(GLOBAL.filterThu)
+  const [filterFri, setFilterFri] = useState(GLOBAL.filterFri)
+  const [filterSat, setFilterSat] = useState(GLOBAL.filterSat)
+  const [filterSun, setFilterSun] = useState(GLOBAL.filterSun)
 
-  const [selMon, setSelMon] = useState(false);
-  const [selTue, setSelTue] = useState(false);
-  const [selWed, setSelWed] = useState(false);
-  const [selThu, setSelThu] = useState(false);
-  const [selFri, setSelFri] = useState(false);
-  const [selSat, setSelSat] = useState(false);
-  const [selSun, setSelSun] = useState(false);
-  const [move, setMove] = useState(100);
+  const [selMon, setSelMon] = useState(false)
+  const [selTue, setSelTue] = useState(false)
+  const [selWed, setSelWed] = useState(false)
+  const [selThu, setSelThu] = useState(false)
+  const [selFri, setSelFri] = useState(false)
+  const [selSat, setSelSat] = useState(false)
+  const [selSun, setSelSun] = useState(false)
 
   const updateNotification = (val) => {
     setActive(val)
@@ -86,17 +89,9 @@ export default function Alarm(){
     min++
   }
 
-  for(let i = 0; i < 3; i++){
-    hourArray.push(nbsp)
-    minArray.push(nbsp)
-  }
-
   function getFinalNum() {
     const finalHour = Math.round(((timeScrollHour.current.scrollTop)/32))
     const finalMin = Math.round(((timeScrollMin.current.scrollTop)/32))
-
-    // console.log(finalHour)
-    // console.log(finalMin)
 
     let tag= []
     if(selMon) tag.push("Mon")
@@ -106,7 +101,7 @@ export default function Alarm(){
     if(selFri) tag.push("Fri")
     if(selSat) tag.push("Sat")
     if(selSun) tag.push("Sun")
-    let d = { id: GLOBAL.alarmData[GLOBAL.alarmData.length-1].id + 1, hour: finalHour, min: finalMin, tags: tag }
+    let d = { hour: finalHour, min: finalMin, tags: tag }
     GLOBAL.alarmData.push(d)
 
     setMove(100)
@@ -123,10 +118,9 @@ export default function Alarm(){
     const d = new Date()
     const hour = d.getHours()
     const min = d.getMinutes()
-
     timeScrollHour.current.scrollTop = hour * 32
     timeScrollMin.current.scrollTop = min * 32
-  }, [])
+  }, [move])
 
   const saveRoutine = () =>{
     GLOBAL.repeatMon = repeatMon
@@ -145,23 +139,90 @@ export default function Alarm(){
     setTab(val)
     GLOBAL.tabNum = val
   }
-  // console.log("GLOBAL.alarmData[5]")
-  // console.log(GLOBAL.alarmData[5])
- //GLOBAL.alarmData.splice(0,1)
-  // console.log(GLOBAL.alarmData[5])
 
-  const showIndex= (e) =>{
-    console.log(e.target)
+  const deleteAlarm = (val) =>{
+    setIndex(!index)
+    GLOBAL.alarmData.splice(val,1)
   }
 
+  useEffect(() => {
+    const d = new Date()
+    const hour = d.getHours()
+    const min = d.getMinutes()
 
-  console.log(GLOBAL.alarmData.filter(check))
+    if(alarmComp.current.length != 0){
+      GLOBAL.filterMon = filterMon
+      GLOBAL.filterTue = filterTue
+      GLOBAL.filterWed = filterWed
+      GLOBAL.filterThu = filterThu
+      GLOBAL.filterFri = filterFri
+      GLOBAL.filterSat = filterSat
+      GLOBAL.filterSun = filterSun
+      for (const i in alarmDataFiltered) {
+        alarmComp.current[i].style.display = 'none'
+    }
 
-  function check(i,x){
-    return x.tags ==  "Mon"
-  }
-
-
+    if(filterMon){
+      for (const i in alarmDataFiltered) {
+        if (alarmDataFiltered[i].tags.includes("Mon")){
+          alarmComp.current[i].style.display = 'block'
+        }
+      }
+    }
+    if (filterTue) {
+      for (const i in alarmDataFiltered) {
+        if (alarmDataFiltered[i].tags.includes("Tue")){
+          alarmComp.current[i].style.display = 'block'
+        }
+      }
+    }
+    if (filterWed) {
+      for (const i in alarmDataFiltered) {
+        if (alarmDataFiltered[i].tags.includes("Wed")){
+          alarmComp.current[i].style.display = 'block'
+        }
+      }
+    }
+    if (filterThu) {
+      for (const i in alarmDataFiltered) {
+        if (alarmDataFiltered[i].tags.includes("Thu")){
+          alarmComp.current[i].style.display = 'block'
+        }
+      }
+    }
+    if (filterFri) {
+      for (const i in alarmDataFiltered) {
+        if (alarmDataFiltered[i].tags.includes("Fri")){
+          alarmComp.current[i].style.display = 'block'
+        }
+      }
+    }
+    if (filterSat) {
+      for (const i in alarmDataFiltered) {
+        if (alarmDataFiltered[i].tags.includes("Sat")){
+          alarmComp.current[i].style.display = 'block'
+        }
+      }
+    }
+    if (filterSun) {
+      for (const i in alarmDataFiltered) {
+        if (alarmDataFiltered[i].tags.includes("Sun")){
+          alarmComp.current[i].style.display = 'block'
+        }
+      }
+    }}
+    if (!filterMon && !filterTue && !filterWed && !filterThu && !filterFri && !filterSat && !filterSun)
+    for (const i in alarmDataFiltered) {
+      if (alarmDataFiltered[i].tags.length == 0){
+        alarmComp.current[i].style.display = 'block'
+        if(hour >= alarmDataFiltered[i].hour && min >= alarmDataFiltered[i].min){
+          alarmCompTime.current[i].style.color = GLOBAL.backgroundHell
+        }else{
+          alarmCompTime.current[i].style.color = 'white'
+        }
+      }
+    }
+  }, [filterMon, filterTue, filterWed, filterThu, filterFri, filterSat, filterSun, index, move]);
 
   return(
     <>
@@ -298,26 +359,31 @@ export default function Alarm(){
               </Toggle>
             </ToggleButtonGroup>
 
-            {GLOBAL.alarmData.map((el) => (
-              <div className='alarmComp' key={el.id}>
-                <div className='time'>{ el.hour < 10? '0'+ el.hour : el.hour }:{ el.min < 10? '0'+ el.min : el.min}</div>
-                <div className='tag'>
+            {alarmDataFiltered.map((el, index) => (
+              <div key={ index } ref={(element) => alarmComp.current[index] = element} style={{ borderBottom: '0.1rem solid '+ GLOBAL.backgroundHell}}>  
+                <div className='time' ref={(element) => alarmCompTime.current[index] = element} style ={{
+                    textAlign: 'left',
+                    fontFamily: GLOBAL.fontFamily,
+                    fontWeight: 400,
+                    fontSize: '2.4rem',
+                    color: 'white',
+                }}>{ el.hour < 10? '0'+ el.hour : el.hour }:{ el.min < 10? '0'+ el.min : el.min}</div>
+                <div className='alarmTag' style={{ height: '1rem'}}>
                 {el.tags.map((x, index) => (
                   <span key={ index }>{ x }</span>
                 ))}
-                <FontAwesomeIcon value={ "el.index "} icon={faMinus} className='minus' onClick={ (e) => showIndex(e) }/>
+                <FontAwesomeIcon icon={faMinus} className='minus' onClick={ (e) => deleteAlarm(index) }/>
                 </div>
               </div>
             ))}
-
             <FontAwesomeIcon icon={faPlus} className='plus' onClick={()=> setMove(0)}/>
           </TabPanel>
         </Box>     
       </div>
 
       <animated.div className = 'bg gradient addAlarm' style ={ slide } ref= { alarmAddition } >
-      <div className='bubble navPos close' key="close">
-        <FontAwesomeIcon icon={faXmark} className='navIcon' onClick={ () => setMove(100) }/>
+      <div className='bubble navPos close' key="close"  onClick={ () => setMove(100)}>
+        <FontAwesomeIcon icon={faXmark} className='navIcon' />
       </div>
         <div className='content' style={{
           top: '50%',
@@ -358,32 +424,48 @@ export default function Alarm(){
           <div className='timePickerWrapper' style={{
             display: 'grid',
             gridAutoFlow: 'column',
-            width: '30%',
-            margin: 'auto'
+            width: '100%',
+            margin: 'auto',
+            marginTop: '1rem',
           }}>
-            
+            <div className='selection' style={{
+              background: GLOBAL.background,
+              height: '2rem',
+              position: 'absolute',
+              top: '50%',
+              transform: 'translateY(-50%)',
+            }}><p style={{
+              fontWeight: '900',
+              color: 'white',
+              fontSize: '1.2rem',
+              textAlign: 'center',
+              lineHeight: 1.5
+            }}>:</p></div>
             <div className='timePicker' ref= { timeScrollHour }>
             {hourArray.map((el, index) => (
-            <p key={ index } className='timeArray'>{el}</p>
+            <p key={ index } className='timeArray' style={{
+              textAlign: 'right',
+            }}>{el} </p>
             ))}
             </div>
 
             <div className='timePicker' ref= { timeScrollMin }>
             {minArray.map((el, index) => (
-            <p key={ index } className='timeArray'>{el}</p>
+            <p key={ index } className='timeArray'style={{
+              textAlign: 'left',
+            }}>{el}</p>
             ))}
             </div>
           </div>
 
-          <div className='btn center'> 
-            <button onClick={ ()=> getFinalNum() }>ADD</button>
+          <div className='btn center' onClick={ ()=> getFinalNum() }> 
+            <button>ADD</button>
           </div>
         </div>       
       </animated.div>  
     </>
   )
 }
-
 
 function TabPanel(props) {
   const { children, value, index, disabled,...other } = props;
