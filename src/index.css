@@ -3,7 +3,7 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: "Nunito", sans-serif;
+  font-family: "Quicksand", sans-serif;
   font-weight: 400;
   font-style: normal;
   --background: #8fdfff;
@@ -12,7 +12,7 @@
   --backgroundDunkel: #5bcefc;
   --backgroundDunkeler: #0898da;
   --hover: #56c5fd;
-  --fontFamily: "Nunito", sans-serif;
+  --fontFamily: "Quicksand", sans-serif;
   --fontMain: "Cherry Bomb One", system-ui;
   --iconGap: 0.6rem;
   --strokeColor: rgba(87, 190, 238, 1);
@@ -211,7 +211,6 @@
 
 .todaysGoal {
   -webkit-text-stroke-width: 0.3rem;
-  -webkit-text-stroke-color: var(--strokeColor);
   paint-order: stroke fill;
 }
 
@@ -395,7 +394,7 @@ p.alarmText {
     opacity: 0.7;
   }
 
-  100% {
+  99% {
 
     height: 110%;
     opacity: 0;
@@ -521,7 +520,7 @@ p.alarmText {
     opacity: 1;
   }
 
-  100% {
+  99% {
     top: 90%;
     opacity: 0;
   }
@@ -546,7 +545,7 @@ p.alarmText {
     opacity: 1;
   }
 
-  100% {
+  99% {
     rotate: 360deg;
     top: 95%;
     opacity: 0;
