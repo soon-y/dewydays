@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, Suspense } from 'react'
 import '../index.css'
 import Nav from '../component/Nav.jsx'
 import { Link } from 'react-router-dom'
@@ -118,42 +118,44 @@ export default function App(){
   const currentIcon = (data) => {    
     switch(data.weather[0].main) {
       case "Clouds":
-        return (<Cloud />)
+        return (<Cloud daytime = { daytime }/>)
       case "Thunderstorm":
-        return (<Thunder />)
+        return (<Thunder daytime = { daytime }/>)
       case "Drizzle":
-        return (<Drizzle />)
+        return (<Drizzle daytime = { daytime }/>)
       case "Rain":
-        return (<Rain />)
+        return (<Rain daytime = { daytime }/>)
       case "Snow":
-        return (<Snow />)
+        return (<Snow daytime = { daytime }/>)
       case "Mist":
-        return (<Smog />)
+        return (<Smog daytime = { daytime }/>)
       case "Smoke":
-        return (<Smog />)
+        return (<Smog daytime = { daytime }/>)
       case "Haze":
-        return (<Smog />)
+        return (<Smog daytime = { daytime }/>)
       case "Dust":
-        return (<Smog />)
+        return (<Smog daytime = { daytime }/>)
       case "Fog":
-        return (<Smog />)
+        return (<Smog daytime = { daytime }/>)
       case "Sand":
-        return (<Smog />)
+        return (<Smog daytime = { daytime }/>)
       case "Ash":
-        return (<Smog />)
+        return (<Smog daytime = { daytime }/>)
       case "Squall":
-        return (<Rain />)
+        return (<Rain daytime = { daytime }/>)
       case "Tornado":
-        return (<Tornado />)
+        return (<Tornado daytime = { daytime }/>)
       case "Clear":
         return (
-        <Sun daytime = { daytime } ></Sun>
+        <Sun daytime = { daytime } />
       )
+      default:
+        return (<Cloud />)
     }  
   }
 
   return(
-    <>
+    <Suspense fallback={<Loading />}>
     <div id='bg' style={{
       backgroundImage: daytime ? "url(/main/bg.jpg)" : "url(/main/bgNight.jpg)",
       height: '100vh',
@@ -185,6 +187,7 @@ export default function App(){
         height: 'auto',
         width: '50vw',
         padding: '1rem',
+        WebkitTextStrokeColor: daytime? GLOBAL.strokeColor : "#5e99d0",
       }}>
         Today's goal <br />
         { GLOBAL.todaysGoal }ml
@@ -238,7 +241,7 @@ export default function App(){
         </Link>
       </div>
     </div>
-    </>
+    </Suspense>
   )
 }
 
@@ -290,4 +293,8 @@ const WaterSlider = styled(Slider)({
 });
 
 
+function Loading() {
+  console.log("loading")
+  return <h2>🌀 Loading...</h2>;
+}
 

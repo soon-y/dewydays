@@ -1,4 +1,4 @@
-export default function Thunder(){
+export default function Thunder({daytime}){
   return(
     <>
       <img src="/weather/cloud.png" alt="cloud" className="cloud" style={{
@@ -8,13 +8,15 @@ export default function Thunder(){
         width: '100%',
         margin: 'auto',
         zIndex: 1,
+        display: daytime? 'block' : 'none'
       }} />
 
       <img src="/weather/rain.png" alt="raindrop" className="rain" style={{
         position: "absolute",
         left: '20%',
         width: '12%',
-        transform: 'translateX(-50%)'
+        transform: 'translateX(-50%)',
+        display: daytime? 'block' : 'none'
       }} />
 
       <img src="/weather/lightning.png" alt="raindrop" className="lightning" style={{
@@ -28,7 +30,34 @@ export default function Thunder(){
         position: "absolute",
         left: '80%',
         width: '12%',
-        transform: 'translateX(-50%)'
+        transform: 'translateX(-50%)',
+        display: daytime? 'block' : 'none'
+      }} />
+
+      <img src="/weather/cloudNight.png" alt="cloud" className="cloud" style={{
+        position: "absolute",
+        left: '50%',
+        transform: 'translate(-50%, 0%)',
+        width: '100%',
+        margin: 'auto',
+        zIndex: 1,
+        display: daytime? 'none' : 'block'
+      }} />
+
+      <img src="/weather/rainNight.png" alt="raindrop" className="rain" style={{
+        position: "absolute",
+        left: '20%',
+        width: '12%',
+        transform: 'translateX(-50%)',
+        display: daytime? 'none' : 'block'
+      }} />
+
+      <img src="/weather/rainNight.png" alt="raindrop" className="rain" style={{
+        position: "absolute",
+        left: '80%',
+        width: '12%',
+        transform: 'translateX(-50%)',
+        display: daytime? 'none' : 'block'
       }} />
     </>
   )

@@ -227,37 +227,39 @@ export default function Weather(){
     
     switch(data.weather[0].main) {
       case "Clouds":
-        return (<Cloud />)
+        return (<Cloud daytime = { daytime }/>)
       case "Thunderstorm":
-        return (<Thunder />)
+        return (<Thunder daytime = { daytime }/>)
       case "Drizzle":
-        return (<Drizzle />)
+        return (<Drizzle daytime = { daytime }/>)
       case "Rain":
-        return (<Rain />)
+        return (<Rain daytime = { daytime }/>)
       case "Snow":
-        return (<Snow />)
+        return (<Snow daytime = { daytime }/>)
       case "Mist":
-        return (<Smog />)
+        return (<Smog daytime = { daytime }/>)
       case "Smoke":
-        return (<Smog />)
+        return (<Smog daytime = { daytime }/>)
       case "Haze":
-        return (<Smog />)
+        return (<Smog daytime = { daytime }/>)
       case "Dust":
-        return (<Smog />)
+        return (<Smog daytime = { daytime }/>)
       case "Fog":
-        return (<Smog />)
+        return (<Smog daytime = { daytime }/>)
       case "Sand":
-        return (<Smog />)
+        return (<Smog daytime = { daytime }/>)
       case "Ash":
-        return (<Smog />)
+        return (<Smog daytime = { daytime }/>)
       case "Squall":
-        return (<Rain />)
+        return (<Rain daytime = { daytime }/>)
       case "Tornado":
-        return (<Tornado />)
+        return (<Tornado daytime = { daytime }/>)
       case "Clear":
         return (
-        <Sun daytime = { daytime } ></Sun>
+        <Sun daytime = { daytime } />
       )
+      default:
+        return (<Cloud />)
     }  
   }
 
