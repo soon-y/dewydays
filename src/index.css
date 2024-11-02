@@ -88,9 +88,9 @@
 .dewy {
   width: 6rem;
   height: 10rem;
-  position: absolute;
+  position: fixed;
   left: 50%;
-  transform: translate(-50%, -80%);
+  transform: translate(-50%, -30%);
 }
 
 .dewyOnWater {
@@ -116,7 +116,7 @@
 }
 
 .ground {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   background-image: url("/main/ground.jpg");
   background-position: center bottom;
