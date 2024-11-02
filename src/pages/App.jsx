@@ -80,7 +80,7 @@ export default function App(){
   })
 
   const onWater = useSpring({
-    top: waterHeight == 101? '34rem' : `${waterHeight}%`,
+    top: waterHeight == 101? '82%' : `${waterHeight}%`,
   })
 
   const addWaterData = () => {
