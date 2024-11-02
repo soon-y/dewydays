@@ -28,6 +28,7 @@
 }
 
 #root {
+  box-sizing: border-box;
   position: absolute;
   top: 0;
   left: 0;
@@ -603,7 +604,7 @@ p.alarmText {
   display: block;
   width: 70%;
   height: 80%;
-  position: relative;
+  position: fixed;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
