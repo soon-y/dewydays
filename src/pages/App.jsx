@@ -198,7 +198,7 @@ export default function App(){
       <div className='ground'></div>
  
       <div className='waterWrapper' style={{
-        position: 'relative',
+        position: 'fixed',
         width: '100%',
         height:'75%',
         minHeight: 'WebkitFillAvailable',
