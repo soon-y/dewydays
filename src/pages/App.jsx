@@ -20,6 +20,7 @@ import { styled } from '@mui/material/styles';
 export default function App(){ 
   const [currentData, setcurrentData] = useState(null)
   const [waterHeight, setWaterHeight] = useState(GLOBAL.waterHeight)
+  const [dewyHeight, setDewyHeight] = useState(GLOBAL.waterHeight + 76)
   const [amount, setAmount] = useState(GLOBAL.cupAmount[GLOBAL.cupNum])
   const [percent, setPercent] = useState(GLOBAL.waterPercent)
   const [daytime, setDaytime] = useState(true)
@@ -34,8 +35,8 @@ export default function App(){
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(success, fail)
     let ratio = GLOBAL.currentIntake/GLOBAL.todaysGoal
-    if (GLOBAL.waterHeight != 100) {
-      GLOBAL.waterHeight = (80 - (ratio * 80)) <= 0? 0 : 80 - (ratio * 80)
+    if (GLOBAL.waterHeight != -101) {
+      GLOBAL.waterHeight = ratio - 80 <= 0? 0 : ratio - 80
     }
     setWaterHeight(GLOBAL.waterHeight)
     setPercent(GLOBAL.currentIntake/GLOBAL.todaysGoal * 100)
@@ -76,11 +77,15 @@ export default function App(){
   }
 
   const addWater = useSpring({
-    top: `${waterHeight}%`,
+    bottom: `${waterHeight}%`,
+  })
+
+  const moveByWater = useSpring({
+    bottom: `${waterHeight+90}%`,
   })
 
   const onWater = useSpring({
-    top: waterHeight == 100? '80%' : `${waterHeight}%`,
+    bottom: waterHeight == -101? '-2.4rem' : `${dewyHeight}%`,
   })
 
   const addWaterData = () => {
@@ -103,14 +108,15 @@ export default function App(){
       GLOBAL.timelineData.splice(GLOBAL.timelineDataIndex,0,newD)
       GLOBAL.timelineDataIndex += 1
       GLOBAL.currentIntake += amount
-      let ratio = GLOBAL.currentIntake/GLOBAL.todaysGoal
-        if (GLOBAL.waterHeight == 100) {
-          GLOBAL.waterHeight = 80 - (ratio * 80)
+      let ratio = GLOBAL.currentIntake/GLOBAL.todaysGoal * 80
+        if (GLOBAL.waterHeight == -101) {
+           GLOBAL.waterHeight = ratio - 80
         } else {
-          GLOBAL.waterHeight = (80 - (ratio * 80)) <= 0? 0 : 80 - (ratio * 80)
+          GLOBAL.waterHeight = ratio - 80 >= 0? 0 : ratio - 80
         }
     }
     setWaterHeight(GLOBAL.waterHeight)
+    setDewyHeight(GLOBAL.waterHeight + 76)
     setPercent(GLOBAL.currentIntake/GLOBAL.todaysGoal * 100)
     GLOBAL.waterPercent = percent
   }
@@ -159,6 +165,7 @@ export default function App(){
     <div id='bg' style={{
       backgroundImage: daytime ? "url(/main/bg.jpg)" : "url(/main/bgNight.jpg)",
       height: '100vh',
+      width: '100vw',
       overflow: 'hidden',
     }}>
       <Nav /> 
@@ -201,17 +208,17 @@ export default function App(){
         height:'75vh',
       }}>
         <animated.img src='/main/water.png' width= '200%' className= "water" style={ addWater }/>
-        <animated.span style={ addWater } className= "waterIntake" >
+        <animated.span style={ moveByWater } className= "waterIntake" >
           { GLOBAL.currentIntake }ml <br/>
           { Math.round(percent) }%
         </animated.span>
 
         <animated.div className="dewy" style={ onWater }>
         <img src='/dewy/dewy.png' width= '100%' style={{
-          display: waterHeight == 100 ? 'block' : 'none'
+          display: waterHeight == -101 ? 'block' : 'none'
         }}/>
         <img src='/dewy/dewyWater.png' width= '100%' className="dewyOnWater" style={{
-          display: waterHeight != 100 ? 'block' : 'none'
+          display: waterHeight != -101 ? 'block' : 'none'
         }}/>
       </animated.div>
       </div>
@@ -252,8 +259,9 @@ const WaterSlider = styled(Slider)({
     color: 'rgba(255,255,255,1)',
     fontSize: '1rem',
     right: GLOBAL.cupAmount[GLOBAL.cupNum] >= 1000? '-7rem' : '-5.8rem',
-    top: '1.8rem',
+    top: '2rem',
     fontFamily: GLOBAL.fontFamily,
+    fontWeight: 700,
   },
   '& .MuiSlider-track': {
     border: 'none',
@@ -277,8 +285,8 @@ const WaterSlider = styled(Slider)({
     width: '3rem',
     height: '3rem',
     borderRadius: '50% 50% 50% 0',
-    backgroundColor: 'rgba(255,255,255,0.8)',
-    color: GLOBAL.backgroundDunkel,
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    color: 'white',
     fontWeight: 700,
     transformOrigin: 'bottom left',
     transform: 'translate(50%, -100%) rotate(-45deg) scale(0)',
