@@ -20,7 +20,6 @@ import { styled } from '@mui/material/styles';
 export default function App(){ 
   const [currentData, setcurrentData] = useState(null)
   const [waterHeight, setWaterHeight] = useState(GLOBAL.waterHeight)
-  const [dewyHeight, setDewyHeight] = useState(GLOBAL.waterHeight + 76)
   const [amount, setAmount] = useState(GLOBAL.cupAmount[GLOBAL.cupNum])
   const [percent, setPercent] = useState(GLOBAL.waterPercent)
   const [daytime, setDaytime] = useState(true)
@@ -34,9 +33,9 @@ export default function App(){
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(success, fail)
-    let ratio = GLOBAL.currentIntake/GLOBAL.todaysGoal
-    if (GLOBAL.waterHeight != -101) {
-      GLOBAL.waterHeight = ratio - 80 <= 0? 0 : ratio - 80
+    let ratio = GLOBAL.currentIntake/GLOBAL.todaysGoal  * 80
+    if (GLOBAL.waterHeight != 101) {
+      GLOBAL.waterHeight = (80 - ratio) <= 0? 0 : 80 - ratio
     }
     setWaterHeight(GLOBAL.waterHeight)
     setPercent(GLOBAL.currentIntake/GLOBAL.todaysGoal * 100)
@@ -77,15 +76,11 @@ export default function App(){
   }
 
   const addWater = useSpring({
-    bottom: `${waterHeight}%`,
-  })
-
-  const moveByWater = useSpring({
-    bottom: `${waterHeight+90}%`,
+    top: `${waterHeight}%`,
   })
 
   const onWater = useSpring({
-    bottom: waterHeight == -101? '-2.4rem' : `${dewyHeight}%`,
+    top: waterHeight == 101? '82%' : `${waterHeight}%`,
   })
 
   const addWaterData = () => {
@@ -98,7 +93,6 @@ export default function App(){
 
     if(amount !=  0) {
       let newD = { 
-        //id: 
         amount: amount, 
         cup: GLOBAL.cupNum, 
         date: day +" "+ GLOBAL.months[month] +" "+ year.slice(2,4), 
@@ -109,14 +103,13 @@ export default function App(){
       GLOBAL.timelineDataIndex += 1
       GLOBAL.currentIntake += amount
       let ratio = GLOBAL.currentIntake/GLOBAL.todaysGoal * 80
-        if (GLOBAL.waterHeight == -101) {
-           GLOBAL.waterHeight = ratio - 80
+      if (GLOBAL.waterHeight == -101) {
+         GLOBAL.waterHeight = ratio - 80
         } else {
-          GLOBAL.waterHeight = ratio - 80 >= 0? 0 : ratio - 80
+          GLOBAL.waterHeight = (80 - ratio) <= 0? 0 : 80 - ratio
         }
     }
     setWaterHeight(GLOBAL.waterHeight)
-    setDewyHeight(GLOBAL.waterHeight + 76)
     setPercent(GLOBAL.currentIntake/GLOBAL.todaysGoal * 100)
     GLOBAL.waterPercent = percent
   }
@@ -165,7 +158,9 @@ export default function App(){
     <div id='bg' style={{
       backgroundImage: daytime ? "url(/main/bg.jpg)" : "url(/main/bgNight.jpg)",
       height: '100vh',
+      minHeight: 'WebkitFillAvailable',
       width: '100vw',
+      position: 'fixed',
       overflow: 'hidden',
     }}>
       <Nav /> 
@@ -208,19 +203,19 @@ export default function App(){
         height:'75vh',
       }}>
         <animated.img src='/main/water.png' width= '200%' className= "water" style={ addWater }/>
-        <animated.span style={ moveByWater } className= "waterIntake" >
+        <animated.span style={ addWater } className= "waterIntake" >
           { GLOBAL.currentIntake }ml <br/>
           { Math.round(percent) }%
         </animated.span>
 
         <animated.div className="dewy" style={ onWater }>
         <img src='/dewy/dewy.png' width= '100%' style={{
-          display: waterHeight == -101 ? 'block' : 'none'
+          display: waterHeight == 101 ? 'block' : 'none'
         }}/>
         <img src='/dewy/dewyWater.png' width= '100%' className="dewyOnWater" style={{
-          display: waterHeight != -101 ? 'block' : 'none'
+          display: waterHeight != 101 ? 'block' : 'none'
         }}/>
-      </animated.div>
+        </animated.div>
       </div>
 
       <div className='setWater' style={{

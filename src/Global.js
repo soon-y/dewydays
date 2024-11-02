@@ -30,7 +30,7 @@ const GLOBAL = {
   activity: false,
   todaysGoal: 2100,
   currentIntake: 0,
-  waterHeight: -101,
+  waterHeight: 101,
   waterPercent: 0,
 
   cupNum: 1,
