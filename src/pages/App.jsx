@@ -219,7 +219,8 @@ export default function App(){
       </div>
 
       <div className='setWater' style={{
-        zIndex: 1000
+        zIndex: 1000,
+        position: 'fixed',
       }}>
         <WaterSlider
           aria-label="Water Intake"

@@ -88,9 +88,9 @@
 .dewy {
   width: 6rem;
   height: 10rem;
-  position: fixed;
+  position: absolute;
   left: 50%;
-  transform: translate(-50%, -30%);
+  transform: translate(-50%, -80%);
 }
 
 .dewyOnWater {
