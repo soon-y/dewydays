@@ -4,9 +4,9 @@ export default function Sun({daytime}){
     <>
       <img src="/weather/sunMane.png" alt="sun" className="sunMane" style={{
         position: "absolute",
+        transform: 'translate(-50%, -50%)',
         top: '50%',
         left: '50%',
-        transform: 'translate(-50%, -50%)',
         height: '100%',
         margin: 'auto',
         display: daytime? 'block' : 'none'
