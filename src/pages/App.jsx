@@ -80,7 +80,7 @@ export default function App(){
   })
 
   const onWater = useSpring({
-    top: waterHeight == 101? '77%' : `${waterHeight}%`,
+    top: waterHeight == 101? '34rem' : `${waterHeight}%`,
   })
 
   const addWaterData = () => {
@@ -201,7 +201,7 @@ export default function App(){
         position: 'relative',
         width: '100%',
         height:'75vh',
-        minHeight: WebkitFillAvailable,
+        minHeight: 'WebkitFillAvailable',
       }}>
         <animated.img src='/main/water.png' width= '200%' className= "water" style={ addWater }/>
         <animated.span style={ addWater } className= "waterIntake" >
