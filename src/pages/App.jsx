@@ -201,6 +201,7 @@ export default function App(){
         position: 'relative',
         width: '100%',
         height:'75vh',
+        minHeight: WebkitFillAvailable,
       }}>
         <animated.img src='/main/water.png' width= '200%' className= "water" style={ addWater }/>
         <animated.span style={ addWater } className= "waterIntake" >
