@@ -332,7 +332,7 @@ export default function Weather(){
           }}>
             {currentData&&forecastData&&(
             <div className='currentInfo'>
-              {/* <div className='current currentTime center'>{ AMPM() }</div> */}
+              <div className='current currentTime center'>{ AMPM() }</div>
               <div className='current currentWeather'>{ currentIcon(dataFilter(currentData, forecastData)) }</div>
               <div className='current currentTemp center'>{ Math.trunc(dataFilter(currentData, forecastData).main.temp) }°</div>              
             </div>)}
