@@ -22,7 +22,7 @@ export default function Timeline(){
         array.push(totalAmount)
         num++
 
-        if(i == GLOBAL.timelineData.length -1) {
+        if((i == GLOBAL.timelineData.length -1)) {
           let max = Math.max(...array)
           for(let j = 0; j <= num; j++){
             total.push(max)
@@ -30,24 +30,22 @@ export default function Timeline(){
           }
         }
       } else {
-        if(array.length > 0 ) {
+        if(array.length > 0) {
           let max = Math.max(...array)
-          for(let j = 0; j < num; j++){
+          for(let j = 0; j <= num; j++){
             total.push(max)
-            console.log(max)
-            console.log(num)
           }
-          console.log(total)
           array = []
+          num=0
+        }
+        if(i == 0) {
+          array.push(GLOBAL.timelineData[i].amount)
         }
         totalAmount = GLOBAL.timelineData[i].amount
         date = GLOBAL.timelineData[i].date 
         headComp.current[i].style.display = 'block'
       }
     }
-
-console.log(total)
-    
   },[])
 
   return(
@@ -86,6 +84,7 @@ console.log(total)
           </span>
           <span style={{
               float: 'right', 
+              fontWeight: '500'
           }}> 
             {el.date}
           </span>
@@ -121,6 +120,7 @@ console.log(total)
           </span>
           <span style={{
             float: 'right',
+            fontWeight: '500',
           }}> 
             {el.hour + el.min}
             &nbsp;&nbsp;
