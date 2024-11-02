@@ -200,7 +200,7 @@ export default function App(){
       <div className='waterWrapper' style={{
         position: 'relative',
         width: '100%',
-        height:'75vh',
+        height:'75%',
         minHeight: 'WebkitFillAvailable',
       }}>
         <animated.img src='/main/water.png' width= '200%' className= "water" style={ addWater }/>
