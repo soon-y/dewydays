@@ -388,7 +388,7 @@ p.alarmText {
     opacity: 0;
   }
 
-  2% {
+  5% {
     height: 50%;
     opacity: 1;
   }
@@ -397,7 +397,7 @@ p.alarmText {
     opacity: 0.7;
   }
 
-  98% {
+  95% {
     height: 110%;
     opacity: 0;
   }
@@ -523,7 +523,7 @@ p.alarmText {
     opacity: 0;
   }
 
-  2% {
+  5% {
     top: 30%;
     opacity: 1;
   }
@@ -532,7 +532,7 @@ p.alarmText {
     opacity: 1;
   }
 
-  98% {
+  95% {
     top: 90%;
     opacity: 0;
   }
@@ -558,7 +558,7 @@ p.alarmText {
     opacity: 0;
   }
 
-  2% {
+  5% {
     rotate: 0;
     top: 30%;
     opacity: 1;
@@ -568,7 +568,7 @@ p.alarmText {
     opacity: 1;
   }
 
-  98% {
+  95% {
     rotate: 360deg;
     top: 95%;
     opacity: 0;
