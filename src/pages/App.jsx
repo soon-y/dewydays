@@ -33,9 +33,9 @@ export default function App(){
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(success, fail)
-    let ratio = GLOBAL.currentIntake/GLOBAL.todaysGoal  * 80
+    let waterAmount = 80 - (GLOBAL.currentIntake/GLOBAL.todaysGoal * 54)
     if (GLOBAL.waterHeight != 101) {
-      GLOBAL.waterHeight = (80 - ratio) <= 0? 0 : 80 - ratio
+      GLOBAL.waterHeight = waterAmount <= 26? 26 : waterAmount
     }
     setWaterHeight(GLOBAL.waterHeight)
     setPercent(GLOBAL.currentIntake/GLOBAL.todaysGoal * 100)
@@ -76,11 +76,7 @@ export default function App(){
   }
 
   const addWater = useSpring({
-    top: `${waterHeight}%`,
-  })
-
-  const onWater = useSpring({
-    top: waterHeight == 101? '82%' : `${waterHeight}%`,
+    top: `${waterHeight}vh`,
   })
 
   const addWaterData = () => {
@@ -102,12 +98,12 @@ export default function App(){
       GLOBAL.timelineData.splice(GLOBAL.timelineDataIndex,0,newD)
       GLOBAL.timelineDataIndex += 1
       GLOBAL.currentIntake += amount
-      let ratio = GLOBAL.currentIntake/GLOBAL.todaysGoal * 80
+      let waterAmount = 80 - (GLOBAL.currentIntake/GLOBAL.todaysGoal * 54)
       if (GLOBAL.waterHeight == -101) {
-         GLOBAL.waterHeight = ratio - 80
-        } else {
-          GLOBAL.waterHeight = (80 - ratio) <= 0? 0 : 80 - ratio
-        }
+         GLOBAL.waterHeight = waterAmount
+      } else {
+        GLOBAL.waterHeight = waterAmount <= 26? 26 : waterAmount
+      }
     }
     setWaterHeight(GLOBAL.waterHeight)
     setPercent(GLOBAL.currentIntake/GLOBAL.todaysGoal * 100)
@@ -145,9 +141,7 @@ export default function App(){
       case "Tornado":
         return (<Tornado daytime = { daytime }/>)
       case "Clear":
-        return (
-        <Sun daytime = { daytime } />
-      )
+        return (<Sun daytime = { daytime } />)
       default:
         return (<Cloud />)
     }  
@@ -158,7 +152,6 @@ export default function App(){
     <div id='bg' style={{
       backgroundImage: daytime ? "url(/main/bg.jpg)" : "url(/main/bgNight.jpg)",
       height: '100vh',
-      minHeight: 'WebkitFillAvailable',
       width: '100vw',
       position: 'fixed',
       overflow: 'hidden',
@@ -166,12 +159,11 @@ export default function App(){
       <Nav /> 
 
       <div className='currentWeatherMain' style={{
-        position: 'relative',
+        position: 'fixed',
         height: '14vh',
         aspectRatio: 1,
         top: '1rem',
         marginLeft: '1rem',
-        marginBottom: '1rem',
       }}>
         <Link to={ "/weather" }>
         {currentData&&(
@@ -182,12 +174,13 @@ export default function App(){
       </div>
 
       <div className='todaysGoal' style={{
-        position: 'relative',
+        position: 'fixed',
+        top: '16vh',
         fontWeight: '600',
         fontSize: '1.2rem',
         color: 'white',
         height: 'auto',
-        width: '50vw',
+        width: '30vw',
         padding: '1rem',
         WebkitTextStrokeColor: daytime? GLOBAL.strokeColor : "#5e99d0",
       }}>
@@ -195,29 +188,33 @@ export default function App(){
         { GLOBAL.todaysGoal }ml
       </div>
 
-      <div className='ground'></div>
+      <div className='ground' style={{
+        display: waterHeight == 101 ? 'block' : 'none',
+      }}></div>
  
-      <div className='waterWrapper' style={{
-        position: 'fixed',
-        width: '100%',
-        height:'75%',
-        minHeight: 'WebkitFillAvailable',
-      }}>
-        <animated.img src='/main/water.png' width= '200%' className= "water" style={ addWater }/>
-        <animated.span style={ addWater } className= "waterIntake" >
-          { GLOBAL.currentIntake }ml <br/>
-          { Math.round(percent) }%
-        </animated.span>
-
-        <animated.div className="dewy" style={ onWater }>
-        <img src='/dewy/dewy.png' width= '100%' style={{
-          display: waterHeight == 101 ? 'block' : 'none'
-        }}/>
-        <img src='/dewy/dewyWater.png' width= '100%' className="dewyOnWater" style={{
-          display: waterHeight != 101 ? 'block' : 'none'
-        }}/>
-        </animated.div>
+      <div style={{ display: daytime? 'block' : 'none' }}>
+        <animated.img src='/main/water.png' width= '200%' className= "water narrow" style={ addWater }/>
+        <animated.img src='/main/waterWide.png' width= '200%' className= "water wide" style={ addWater }/>
       </div>
+      <div style={{ display: daytime? 'none' : 'block' }}>
+        <animated.img src='/main/waterNight.png' width= '200%' className= "water narrow" style={ addWater }/>
+        <animated.img src='/main/waterWideNight.png' width= '200%' className= "water wide" style={ addWater }/>
+      </div>
+
+      <animated.span style={ addWater } className= "waterIntake" >
+        { GLOBAL.currentIntake }ml <br/>
+        { Math.round(percent) }%
+      </animated.span>
+
+      <img src='/dewy/dewy.png' className="dewy" width= '100%' style={{
+        display: waterHeight == 101 ? 'block' : 'none',
+        bottom: '-2rem'
+      }}/>
+      <animated.div className="dewy" style={ addWater }>
+      <img src='/dewy/dewyWater.png' width= '100%' className="dewyOnWater" style={{
+        display: waterHeight != 101 ? 'block' : 'none'
+      }}/>
+      </animated.div>
 
       <div className='setWater' style={{
         zIndex: 1000,
@@ -236,8 +233,7 @@ export default function App(){
         <div className='empty'></div>
         <div className='bubble' onClick={ addWaterData }>
           <FontAwesomeIcon icon={faPlus} className='navIcon' />
-        </div>
-        
+        </div>   
         <Link to='/Cups'>
         <div className='bubble'>
           <img src={ src } style={{ height: '100%'}}/>

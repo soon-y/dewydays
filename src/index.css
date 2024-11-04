@@ -3,7 +3,7 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: "Quicksand", sans-serif;
+  font-family: "Nunito", sans-serif;
   font-weight: 500;
   font-style: normal;
   --background: #8fdfff;
@@ -12,7 +12,7 @@
   --backgroundDunkel: #5bcefc;
   --backgroundDunkeler: #0898da;
   --hover: #56c5fd;
-  --fontFamily: "Quicksand", sans-serif;
+  --fontFamily: "Nunito", sans-serif;
   --fontMain: "Cherry Bomb One", system-ui;
   --iconGap: 0.6rem;
   --strokeColor: rgba(87, 190, 238, 1);
@@ -58,12 +58,19 @@
 }
 
 .water {
-  position: relative;
+  position: fixed;
   animation-name: water;
-  animation-duration: 20s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
   transform-origin: center 0;
+}
+
+.narrow {
+  animation-duration: 30s;
+}
+
+.wide {
+  animation-duration: 60s;
 }
 
 @keyframes water {
@@ -87,16 +94,17 @@
 }
 
 .dewy {
+  position: fixed;
   width: 6rem;
   height: 10rem;
-  position: absolute;
+  position: fixed;
   left: 50%;
-  transform: translate(-50%, -80%);
+  transform: translate(-50%, -76%);
 }
 
 .dewyOnWater {
   animation-name: dewy;
-  animation-duration: 4s;
+  animation-duration: 5s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
   transform-origin: center 0;
@@ -104,15 +112,15 @@
 
 @keyframes dewy {
   0% {
-    transform: translateY(4%);
+    transform: translateY(-8%);
   }
 
   50% {
-    transform: translateY(-4%);
+    transform: translateY(0);
   }
 
   100% {
-    transform: translateY(4%);
+    transform: translateY(-8%);
   }
 }
 
@@ -632,10 +640,9 @@ p.alarmText {
   width: 70%;
   height: 80%;
   position: fixed;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -53%);
   left: 50%;
   top: 50%;
-  padding: 10%;
 }
 
 .current {
@@ -647,7 +654,7 @@ p.alarmText {
 
 .currentWeather {
   margin: 0;
-  height: 80%;
+  height: 87%;
   aspect-ratio: 1;
 }
 
@@ -686,12 +693,11 @@ p.alarmText {
 
 .clockBg {
   margin: auto;
-  width: 30rem;
   height: auto;
   aspect-ratio: 1;
   border-radius: 50%;
   position: absolute;
-  top: 4.7rem;
+  top: 4rem;
   left: 50%;
   transform: translateX(-50%);
 }
@@ -700,23 +706,24 @@ p.alarmText {
   position: absolute;
   transform-origin: 0 center;
   transform: translateX(-50%);
+  z-index: 1;
+  background-color: rgb(0, 0, 0);
+  opacity: 0;
 }
 
 .bigTick {
   width: 1rem;
   height: 2.5rem;
-  background-color: rgb(0, 0, 0);
-  opacity: 0;
+  z-index: 2;
 }
 
 .smallTick {
-  width: 0.6rem;
-  height: 1.2rem;
+  width: 0.7rem;
+  height: 2rem;
 }
 
 .Uhr12 {
   left: 50%;
-  background-color: #96d8f7;
 }
 
 .min01 {
@@ -747,7 +754,6 @@ p.alarmText {
   left: 74%;
   top: 6.8%;
   rotate: 30deg;
-  background-color: #92d5f5;
 }
 
 .min06 {
@@ -778,7 +784,6 @@ p.alarmText {
   left: 92%;
   top: 24%;
   rotate: 60deg;
-  background-color: #8bd1f1;
 }
 
 .min11 {
@@ -801,7 +806,7 @@ p.alarmText {
 
 .min14 {
   left: 98%;
-  top: 43%;
+  top: 42%;
   rotate: 84deg;
 }
 
@@ -809,8 +814,7 @@ p.alarmText {
   right: 0;
   top: 50%;
   rotate: 90deg;
-  background-color: #81cbec;
-  transform: translateX(-140%);
+  transform: translateX(-180%);
 }
 
 .min16 {
@@ -841,7 +845,6 @@ p.alarmText {
   left: 92%;
   bottom: 24%;
   rotate: 120deg;
-  background-color: #79c6e9;
 }
 
 .min21 {
@@ -872,7 +875,6 @@ p.alarmText {
   left: 74%;
   bottom: 6%;
   rotate: 150deg;
-  background-color: #71c2e5;
 }
 
 .min26 {
@@ -902,7 +904,6 @@ p.alarmText {
 .Uhr06 {
   left: 50%;
   bottom: 0;
-  background-color: #6fc0e4;
 }
 
 .min31 {
@@ -933,7 +934,6 @@ p.alarmText {
   left: 26%;
   bottom: 6%;
   rotate: 210deg;
-  background-color: #71c2e5;
 }
 
 .min36 {
@@ -964,7 +964,6 @@ p.alarmText {
   left: 8%;
   bottom: 24%;
   rotate: 240deg;
-  background-color: #79c6e9;
 }
 
 .min41 {
@@ -993,9 +992,7 @@ p.alarmText {
 
 .Uhr09 {
   top: 50%;
-  transform: translate(-50%, -50%);
   rotate: 90deg;
-  background-color: #81cbec;
   transform: translate(-140%, -50%);
 }
 
@@ -1027,7 +1024,6 @@ p.alarmText {
   left: 8%;
   top: 24%;
   rotate: 300deg;
-  background-color: #8bd1f1;
 }
 
 .min51 {
@@ -1058,7 +1054,6 @@ p.alarmText {
   left: 26%;
   top: 6%;
   rotate: 330deg;
-  background-color: #92d5f5;
 }
 
 .min56 {
@@ -1091,7 +1086,7 @@ p.alarmText {
 
 .weatherInfo {
   color: white;
-  margin: 1rem auto;
+  margin: 0.5rem auto 1rem auto;
   line-height: 1.1rem;
 }
 
@@ -1198,6 +1193,13 @@ p.alarmText {
     width: 20vw;
   }
 
+  .wide {
+    display: none;
+  }
+
+  .narrow {
+    display: block;
+  }
 }
 
 @media screen and (min-aspect-ratio: 0.7) {
@@ -1252,7 +1254,6 @@ p.alarmText {
   .clockBg {
     width: calc(60vw - 2rem);
   }
-
 }
 
 @media screen and (min-aspect-ratio: 1) {
@@ -1278,5 +1279,13 @@ p.alarmText {
   .cupArray,
   .cupSelectionBox {
     width: 11.11vw;
+  }
+
+  .wide {
+    display: block;
+  }
+
+  .narrow {
+    display: none;
   }
 }

@@ -17,7 +17,7 @@ const GLOBAL = {
   backgroundDunkel: '#5bcefc',
   backgroundDunkeler: '#0898da',
   hover: '#56c5fd',
-  fontFamily: "Quicksand",
+  fontFamily: "Nunito",
   fontMain: "Cherry Bomb One",
   iconGap: 0.6,
   strokeColor: 'rgba(87, 190, 238, 1)',
