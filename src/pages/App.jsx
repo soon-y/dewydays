@@ -35,7 +35,7 @@ export default function App(){
     navigator.geolocation.getCurrentPosition(success, fail)
     let waterAmount = 80 - (GLOBAL.currentIntake/GLOBAL.todaysGoal * 54)
     if (GLOBAL.waterHeight != 101) {
-      GLOBAL.waterHeight = waterAmount <= 26? 26 : waterAmount
+      GLOBAL.waterHeight = waterAmount <= 26? 27 : waterAmount
     }
     setWaterHeight(GLOBAL.waterHeight)
     setPercent(GLOBAL.currentIntake/GLOBAL.todaysGoal * 100)
@@ -102,7 +102,7 @@ export default function App(){
       if (GLOBAL.waterHeight == -101) {
          GLOBAL.waterHeight = waterAmount
       } else {
-        GLOBAL.waterHeight = waterAmount <= 26? 26 : waterAmount
+        GLOBAL.waterHeight = waterAmount <= 26? 27 : waterAmount
       }
     }
     setWaterHeight(GLOBAL.waterHeight)
