@@ -159,6 +159,11 @@
   cursor: pointer;
   z-index: 100;
   border-radius: 50%;
+  box-shadow: 1px 1px 8px rgba(31, 116, 155, 0.5);
+}
+
+.bubble:hover {
+  background-color: transparent;
 }
 
 .navPos {
