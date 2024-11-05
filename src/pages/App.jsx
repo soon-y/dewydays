@@ -38,6 +38,7 @@ export default function App(){
     let waterAmount = 80 - (GLOBAL.currentIntake/GLOBAL.todaysGoal * 54)
     if (GLOBAL.waterHeight != 101) {
       GLOBAL.waterHeight = waterAmount <= 26? 27 : waterAmount
+      dewy.current.style.display = 'block'
     }
     setWaterHeight(GLOBAL.waterHeight)
     setPercent(GLOBAL.currentIntake/GLOBAL.todaysGoal * 100)
@@ -69,10 +70,10 @@ export default function App(){
       const day = now > sunrise && now < sunset ? true : false
       setDaytime(day)
     })
-    .catch(err => {
-      setError(err)
-      console.error(err)
-    })
+
+    if (!response.ok) {
+      throw new Error("error");
+    }
   }
 
   const addWater = useSpring({
