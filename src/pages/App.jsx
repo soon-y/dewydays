@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Suspense } from 'react'
+import React, { useEffect, useState, Suspense, useRef } from 'react'
 import '../index.css'
 import Nav from '../component/Nav.jsx'
 import { Link } from 'react-router-dom'
@@ -23,6 +23,8 @@ export default function App(){
   const [amount, setAmount] = useState(GLOBAL.cupAmount[GLOBAL.cupNum])
   const [percent, setPercent] = useState(GLOBAL.waterPercent)
   const [daytime, setDaytime] = useState(true)
+  const dewy = useRef()
+  const dewyMansae = useRef()
   let src = 'cups/' + GLOBAL.cupNum + '.png'
   const marks = [
     {
@@ -54,12 +56,10 @@ export default function App(){
 
   let now, sunrise, sunset
 
-  const getWeatherData = (lat,lon) => {
-    // Setting the fetch options
+  const getWeatherData = async (lat,lon) => {
     const options = { method: 'GET', headers: { accept: 'application/json' } }
-
-    // Fetching current weather data
-    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${GLOBAL.API_KEY}&units=metric`, options)
+    const response = await fetch
+    (`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${GLOBAL.API_KEY}&units=metric`, options)
     .then(response => response.json())
     .then(data => {
       setcurrentData(data)
@@ -87,13 +87,21 @@ export default function App(){
     let hr = d.getHours()
     let min = d.getMinutes()
 
+    dewy.current.style.display = 'none'
+    dewyMansae.current.style.display = 'block'
+    setTimeout(()=> {
+      dewyMansae.current.style.display = 'none'
+      dewy.current.style.display = 'block'
+    }, 400)
+
     if(amount !=  0) {
       let newD = { 
         amount: amount, 
         cup: GLOBAL.cupNum, 
         date: day +" "+ GLOBAL.months[month] +" "+ year.slice(2,4), 
         hour: hr<10? "0" + hr + ":" : hr + ":",
-        min: min<10? "0" + min : min
+        min: min<10? "0" + min : min,
+        goal: GLOBAL.todaysGoal
       }
       GLOBAL.timelineData.splice(GLOBAL.timelineDataIndex,0,newD)
       GLOBAL.timelineDataIndex += 1
@@ -193,26 +201,33 @@ export default function App(){
       }}></div>
  
       <div style={{ display: daytime? 'block' : 'none' }}>
-        <animated.img src='/main/water.png' width= '200%' className= "water narrow" style={ addWater }/>
-        <animated.img src='/main/waterWide.png' width= '200%' className= "water wide" style={ addWater }/>
+        <animated.img src='/main/water.png' className= "water narrow" style={ addWater }/>
+        <animated.img src='/main/waterWide.png' className= "water wide" style={ addWater }/>
       </div>
       <div style={{ display: daytime? 'none' : 'block' }}>
-        <animated.img src='/main/waterNight.png' width= '200%' className= "water narrow" style={ addWater }/>
-        <animated.img src='/main/waterWideNight.png' width= '200%' className= "water wide" style={ addWater }/>
+        <animated.img src='/main/waterNight.png' className= "water narrow" style={ addWater }/>
+        <animated.img src='/main/waterWideNight.png' className= "water wide" style={ addWater }/>
       </div>
 
+      <Link to='/timeline'>
       <animated.span style={ addWater } className= "waterIntake" >
         { GLOBAL.currentIntake }ml <br/>
         { Math.round(percent) }%
       </animated.span>
+      </Link>
 
       <img src='/dewy/dewy.png' className="dewy" width= '100%' style={{
         display: waterHeight == 101 ? 'block' : 'none',
         bottom: '-2rem'
       }}/>
       <animated.div className="dewy" style={ addWater }>
-      <img src='/dewy/dewyWater.png' width= '100%' className="dewyOnWater" style={{
-        display: waterHeight != 101 ? 'block' : 'none'
+      <img src='/dewy/dewyWater.png' width= '100%' ref = { dewy } className="dewyOnWater" style={{
+        display: 'none'
+      }}/>
+      </animated.div>
+      <animated.div className="dewy" style={ addWater }>
+      <img src='/dewy/dewyMansae.png' width= '100%' ref = { dewyMansae } className="dewyOnWater" style={{
+        display: 'none'
       }}/>
       </animated.div>
 
@@ -296,6 +311,6 @@ const WaterSlider = styled(Slider)({
 
 function Loading() {
   console.log("loading")
-  return <h2>🌀 Loading...</h2>;
+  return <img src='main/loading.png' width='100%' />
 }
 

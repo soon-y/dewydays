@@ -67,6 +67,7 @@
 }
 
 .water {
+  width: 200%;
   position: fixed;
   animation-name: water;
   animation-iteration-count: infinite;
