@@ -9,37 +9,43 @@ export default function Timeline(){
   const head = "Timeline"
   let headComp = useRef([]);
   const [total, setTotal] = useState([])
+  const [goal, setGoal] = useState([])
 
   useEffect(() => {
     let date = null
     let totalAmount = 0
-    let array = []
+    let arrayTotal = []
+    let arrayGoal = []
     let num = 0
     for (const i in GLOBAL.timelineData) {
       if (GLOBAL.timelineData[i].date == date){
         headComp.current[i].style.display = 'none'
         totalAmount = GLOBAL.timelineData[i].amount + totalAmount
-        array.push(totalAmount)
+        arrayTotal.push(totalAmount)
+        arrayGoal.push(GLOBAL.timelineData[i].goal)
         num++
 
         if((i == GLOBAL.timelineData.length -1)) {
-          let max = Math.max(...array)
           for(let j = 0; j <= num; j++){
-            total.push(max)
+            total.push(arrayTotal[num])
+            goal.push(arrayGoal[num])
             setTotal([...total])
+            setGoal([...goal])
           }
         }
       } else {
-        if(array.length > 0) {
-          let max = Math.max(...array)
+        if(arrayTotal.length > 0) {
           for(let j = 0; j <= num; j++){
-            total.push(max)
+            total.push(arrayTotal[num])
+            goal.push(arrayGoal[num])
           }
-          array = []
+          arrayTotal = []
+          arrayGoal = []
           num=0
         }
-        if(i == 0) {
-          array.push(GLOBAL.timelineData[i].amount)
+        if( arrayTotal.length == 0) {
+          arrayTotal.push(GLOBAL.timelineData[i].amount)
+          arrayGoal.push(GLOBAL.timelineData[i].goal)
         }
         totalAmount = GLOBAL.timelineData[i].amount
         date = GLOBAL.timelineData[i].date 
@@ -64,23 +70,24 @@ export default function Timeline(){
       {GLOBAL.timelineData.map((el,index) => (
       <div key={ index }>
         <div ref={(element) => headComp.current[index] = element} style={{
-          width: "60%", 
+          width: 'auto', 
           height: '2.4rem',
           lineHeight: '2.4rem',
           display: 'block',
           backgroundColor: GLOBAL.backgroundDunkeler,
           color: '#fff',
           borderRadius: '10px',
-          padding: '0 20px',
+          padding: '0 1.5rem 0 1rem',
           marginLeft: '1rem',
           marginRight: '1rem',
           marginTop: '1.4rem',        
         }}>
-          <span style={{
-            float: 'left', 
-            fontWeight: '800',
-          }}> 
-            {total[index]}ml &nbsp;&nbsp;
+          <span style={{fontWeight: '800',}}> 
+          {Math.round(total[index]/goal[index] * 100)}%&nbsp;&nbsp;
+          {total[index]}ml&nbsp;
+          </span>
+          <span style={{fontWeight: '600',}}> 
+            / {goal[index]}ml
           </span>
           <span style={{
               float: 'right', 
@@ -114,7 +121,7 @@ export default function Timeline(){
           }} />
           <span style={{
             fontWeight: '700',
-            marginLeft: '0.6rem',
+            marginLeft: '1rem',
           }}>  
           {el.amount}ml
           </span>
