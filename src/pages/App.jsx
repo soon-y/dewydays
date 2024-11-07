@@ -189,7 +189,7 @@ export default function App(){
         fontSize: '1.2rem',
         color: 'white',
         height: 'auto',
-        width: '30vw',
+        width: '70vw',
         padding: '1rem',
         WebkitTextStrokeColor: daytime? GLOBAL.strokeColor : "#5e99d0",
       }}>

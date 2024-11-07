@@ -109,7 +109,7 @@
   height: 10rem;
   position: fixed;
   left: 50%;
-  transform: translate(-50%, -76%);
+  transform: translate(-50%, -74%);
 }
 
 .dewyOnWater {
@@ -182,7 +182,7 @@
 .navIcon {
   position: relative;
   top: 50%;
-  transform: translate(0%, -60%);
+  transform: translate(0%, -50%);
   font-size: 1.2rem;
   color: rgba(255, 255, 255);
   filter: drop-shadow(1px 1px 2px rgb(122, 158, 186));
@@ -288,7 +288,7 @@ p {
 }
 
 /*****       alarm       *****/
-p.alarmText {
+.alarmText {
   font-family: var(--fontMain);
   margin-bottom: 0.4rem;
   padding-top: 1.2rem;
