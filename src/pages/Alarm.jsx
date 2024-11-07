@@ -122,6 +122,10 @@ export default function Alarm(){
     timeScrollMin.current.scrollTop = min * 32
   }, [move])
 
+  useEffect(() => {
+    filter()
+  }, [filterMon, filterTue, filterWed, filterThu, filterFri, filterSat, filterSun, index, move, value]);
+
   const saveRoutine = () =>{
     GLOBAL.repeatMon = repeatMon
     GLOBAL.repeatTue = repeatTue
@@ -145,12 +149,12 @@ export default function Alarm(){
     GLOBAL.alarmData.splice(val,1)
   }
 
-  useEffect(() => {
+  function filter() {
     const d = new Date()
     const hour = d.getHours()
     const min = d.getMinutes()
 
-    if(alarmComp.current.length != 0){
+    if(alarmComp.current.length != 0 && value == 1){
       GLOBAL.filterMon = filterMon
       GLOBAL.filterTue = filterTue
       GLOBAL.filterWed = filterWed
@@ -211,7 +215,8 @@ export default function Alarm(){
         }
       }
     }}
-    if (!filterMon && !filterTue && !filterWed && !filterThu && !filterFri && !filterSat && !filterSun)
+
+    if (!filterMon && !filterTue && !filterWed && !filterThu && !filterFri && !filterSat && !filterSun && value == 1)
     for (const i in alarmDataFiltered) {
       if (alarmDataFiltered[i].tags.length == 0){
         alarmComp.current[i].style.display = 'block'
@@ -222,7 +227,7 @@ export default function Alarm(){
         }
       }
     }
-  }, [filterMon, filterTue, filterWed, filterThu, filterFri, filterSat, filterSun, index, move]);
+  }
 
   return(
     <>
@@ -274,7 +279,7 @@ export default function Alarm(){
           </StyledTabs>
 
           <TabPanel value={value} index={0} dir={theme.direction} disabled= {!active}>
-            <p className='alarmText'> Repeat every </p>
+            <div className='alarmText'> Repeat every </div>
             <ToggleButtonGroup
               exclusive
               aria-label="day selection"
@@ -299,7 +304,7 @@ export default function Alarm(){
             </Toggle>
             </ToggleButtonGroup>
 
-            <p data-text="Time range" className='alarmText'> Time range </p>
+            <div data-text="Time range" className='alarmText'> Time range </div>
 
             <CustomSlider
               sx={{ marginTop: '3.6rem'}}
@@ -312,7 +317,7 @@ export default function Alarm(){
               onChange={(event, val) => setTimeRange(val)} 
             />
 
-            <p className='alarmText'> Notify me every </p>
+            <div className='alarmText'> Notify me every </div>
 
             <NumberInput 
               aria-label={ "alarm" }
@@ -486,7 +491,7 @@ function TabPanel(props) {
           backgroundColor: GLOBAL.backgroundDunkel,
           borderRadius: index == 0? '0 1rem 1rem 1rem' : '1rem 0 1rem 1rem',
           }}>
-          <Typography>{children}</Typography>
+          {children}
         </Box>
       )}
     </div>

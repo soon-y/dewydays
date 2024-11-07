@@ -37,7 +37,7 @@ const GLOBAL = {
   cupAmount: [190,350,600,1000],
 
   tabNum: 0,
-  notification: false,
+  notification: true,
   repeatMon: false,
   repeatTue: false,
   repeatWed: false,
