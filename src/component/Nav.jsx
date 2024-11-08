@@ -22,8 +22,8 @@ export default function Nav(){
         from: { opacity: 0, scale : 0 },
         to:{ opacity: 1, scale : 1 },
         config: {
-          tension: 300, 
-          mass: 3, 
+          tension: 400, 
+          mass: 2, 
         }  
       })
     } else {
