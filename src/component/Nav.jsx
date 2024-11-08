@@ -16,32 +16,39 @@ export default function Nav(){
   const checking = () => {
     setChecked(state => !state)
     setAngle(a => a + 180);
+
+    if (checked) {
+      api.start({
+        from: { opacity: 0, scale : 0 },
+        to:{ opacity: 1, scale : 1 },
+        config: {
+          tension: 300, 
+          mass: 3, 
+        }  
+      })
+    } else {
+      api.start({
+        from: { opacity: 1, scale : 1  },
+        to:{ opacity: 0, scale : 2 },
+        config: {
+          tension: 300, 
+          mass: 1, 
+        }  
+      })
+    }
   }
+
+  const [trail, api] = useTrail(links.length, () => ({}))
  
   const rotate = useSpring({
     transform: `rotate(${angle}deg)`,
   })
 
-  const trail = useTrail(icons.length, {
-    tension: 300, friction: 160,
-    from: { opacity: 0, scale : checked ? 0 : 1 },
-    to:[{ opacity: checked? 1 : 0, scale : checked ? 1 : 1.5 },
-        { scale : checked ? 1 : 1.5},
-        { scale : checked ? 1 : 1.5},
-        { scale : checked ? 1 : 1.5},
-        { scale : checked ? 1 : 0},
-        { scale : checked ? 1 : 0},
-        { scale : checked ? 1 : 0},
-    ],
-  });
-
   return(
     <>
-      <div className='bubble navPos' onClick={ checking } style={{
-        zIndex:  1000
-      }}>
+      <div className='bubble navPos' onClick={ checking } style={{ zIndex:  1000 }}>
         <animated.div style={ rotate } className='navMenu' >
-        <FontAwesomeIcon icon={faChevronUp} className='navIcon' />
+          <FontAwesomeIcon icon={faChevronUp} className='navIcon' />
         </animated.div>
       </div>    
      
