@@ -112,25 +112,25 @@
   transform: translate(-50%, -74%);
 }
 
-.dewyOnWater {
-  animation-name: dewy;
+.onWater {
+  animation-name: onWater;
   animation-duration: 5s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
   transform-origin: center 0;
 }
 
-@keyframes dewy {
+@keyframes onWater {
   0% {
-    transform: translateY(-8%);
+    transform: translate(-50%, -8%);
   }
 
   50% {
-    transform: translateY(0);
+    transform: translate(-50%, 0);
   }
 
   100% {
-    transform: translateY(-8%);
+    transform: translate(-50%, -8%);
   }
 }
 
@@ -175,7 +175,7 @@
 }
 
 .navMenu {
-  transform-origin: center 45%;
+  transform-origin: center 50%;
   height: 3rem;
 }
 

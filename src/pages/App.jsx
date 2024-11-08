@@ -219,15 +219,14 @@ export default function App(){
 
       <img src='/dewy/dewy.png' className="dewy" width= '100%' style={{
         display: waterHeight == 101 ? 'block' : 'none',
-        bottom: '-2rem'
+        bottom: '-1.5rem'
       }}/>
-      <animated.div className="dewy" style={ addWater }>
-      <img src='/dewy/dewyWater.png' width= '100%' ref = { dewy } className="dewyOnWater" style={{
+
+      <animated.div style={ addWater } className="dewy onWater">
+      <img src='/dewy/dewyWater.png' className="dewy" width= '100%' ref = { dewy } style={{
         display: 'none'
       }}/>
-      </animated.div>
-      <animated.div className="dewy" style={ addWater }>
-      <img src='/dewy/dewyMansae.png' width= '100%' ref = { dewyMansae } className="dewyOnWater" style={{
+      <img src='/dewy/dewyMansae.png' className="dewy" width= '100%' ref = { dewyMansae } style={{
         display: 'none'
       }}/>
       </animated.div>

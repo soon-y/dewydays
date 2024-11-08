@@ -18,7 +18,7 @@ export default function Nav(){
     setAngle(a => a + 180);
   }
  
-  const arrowSpring = useSpring({
+  const rotate = useSpring({
     transform: `rotate(${angle}deg)`,
   })
 
@@ -40,7 +40,7 @@ export default function Nav(){
       <div className='bubble navPos' onClick={ checking } style={{
         zIndex:  1000
       }}>
-        <animated.div style={ arrowSpring } className='navMenu' >
+        <animated.div style={ rotate } className='navMenu' >
         <FontAwesomeIcon icon={faChevronUp} className='navIcon' />
         </animated.div>
       </div>    
