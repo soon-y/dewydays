@@ -112,14 +112,13 @@ export default function Profile(){
           />        
         </div>
 
-        <div 
-          className='center'
-          style={{
+        <div className='center' style={{
             marginTop: '2rem',
             color: 'white',
-          }}>
-          <h3>
-            Today's goal&nbsp; { result + "ml" }
+        }}>
+          <h3 style={{fontWeight: '500'}}>
+            Today's goal&nbsp;
+            <span style={{fontWeight: '800'}}>{ result + "ml" }</span>
           </h3>
         </div>
 

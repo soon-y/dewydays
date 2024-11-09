@@ -59,7 +59,7 @@ const StyledInput = styled('input')(
   text-align: center;
 
   &:focus {
-    border-color: black;
+    border-color: ${ GLOBAL.strokeColor };
   }
 
   &:focus-visible {

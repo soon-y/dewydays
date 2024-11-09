@@ -191,6 +191,7 @@ export default function App(){
         height: 'auto',
         width: '70vw',
         padding: '1rem',
+        stroke: daytime? GLOBAL.strokeColor : "#5e99d0",
         WebkitTextStrokeColor: daytime? GLOBAL.strokeColor : "#5e99d0",
       }}>
         Today's goal <br />

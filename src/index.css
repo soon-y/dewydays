@@ -48,7 +48,6 @@
   user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
-
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -101,6 +100,12 @@
   font-weight: 600;
   font-size: 1.2rem;
   line-height: 1.2;
+  fill: white;
+  stroke: rgba(255, 255, 255, 0.3);
+  stroke-width: 0.2rem;
+  -webkit-text-stroke-width: 0.2rem;
+  -webkit-text-stroke-color: rgba(255, 255, 255, 0.3);
+  paint-order: stroke fill;
 }
 
 .dewy {
@@ -228,12 +233,17 @@
   top: var(--iconGap);
   left: 50%;
   transform: translateX(-50%);
+  fill: white;
+  stroke: var(--strokeColor);
+  stroke-width: var(--iconGap);
   -webkit-text-stroke-width: var(--iconGap);
   -webkit-text-stroke-color: var(--strokeColor);
   paint-order: stroke fill;
 }
 
 .todaysGoal {
+  fill: white;
+  stroke-width: 0.3rem;
   -webkit-text-stroke-width: 0.3rem;
   paint-order: stroke fill;
 }
@@ -422,7 +432,7 @@ p {
   }
 
   95% {
-    height: 110%;
+    height: 100%;
     opacity: 0;
   }
 

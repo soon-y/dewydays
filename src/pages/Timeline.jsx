@@ -10,6 +10,11 @@ export default function Timeline(){
   let headComp = useRef([]);
   const [total, setTotal] = useState([])
   const [goal, setGoal] = useState([])
+  const d = new Date()
+  const y = new Date(d)
+  y.setDate(y.getDate() - 1)
+  const checkToday = y.getDate() +" "+ GLOBAL.months[y.getMonth()] +" " + y.getFullYear().toString().slice(2,4)
+  const today = d.getDate() +" "+ GLOBAL.months[d.getMonth()] +" " + d.getFullYear().toString().slice(2,4)
 
   useEffect(() => {
     let date = null
@@ -24,7 +29,6 @@ export default function Timeline(){
         arrayTotal.push(totalAmount)
         arrayGoal.push(GLOBAL.timelineData[i].goal)
         num++
-
         if((i == GLOBAL.timelineData.length -1)) {
           for(let j = 0; j <= num; j++){
             total.push(arrayTotal[num])
@@ -35,9 +39,16 @@ export default function Timeline(){
         }
       } else {
         if(arrayTotal.length > 0) {
-          for(let j = 0; j <= num; j++){
-            total.push(arrayTotal[num])
-            goal.push(arrayGoal[num])
+          if( (GLOBAL.timelineData[i].date == checkToday) && (GLOBAL.timelineData[i].goal != GLOBAL.todaysGoal) ){
+            for(let j = 0; j <= num; j++){
+              goal.push(GLOBAL.todaysGoal)
+              total.push(arrayTotal[num])
+            }
+          } else {
+            for(let j = 0; j <= num; j++){
+              goal.push(arrayGoal[num])
+              total.push(arrayTotal[num])
+            }
           }
           arrayTotal = []
           arrayGoal = []
@@ -70,30 +81,36 @@ export default function Timeline(){
       {GLOBAL.timelineData.map((el,index) => (
       <div key={ index }>
         <div ref={(element) => headComp.current[index] = element} style={{
-          width: 'auto', 
-          height: '2.4rem',
-          lineHeight: '2.4rem',
+          width: '60%', 
+          height: 'auto',
+          lineHeight: '1.3rem',
           display: 'block',
           backgroundColor: GLOBAL.backgroundDunkeler,
           color: '#fff',
           borderRadius: '10px',
-          padding: '0 1.5rem 0 1rem',
+          padding: '0.6rem 1rem',
           marginLeft: '1rem',
           marginRight: '1rem',
-          marginTop: '1.4rem',        
+          marginTop: '1.4rem',    
         }}>
           <span style={{fontWeight: '800',}}> 
-          {Math.round(total[index]/goal[index] * 100)}%&nbsp;&nbsp;
-          {total[index]}ml&nbsp;
-          </span>
-          <span style={{fontWeight: '600',}}> 
-            / {goal[index]}ml
+          {Math.round(total[index]/goal[index] * 100)}% 
           </span>
           <span style={{
               float: 'right', 
               fontWeight: '500'
           }}> 
-            {el.date}
+            {el.date == today? 'Today' : el.date}
+          </span>
+          <br />
+          <span style={{fontWeight: '800',}}> 
+          {total[index]}ml&nbsp;
+          </span>
+          <span style={{
+              float: 'right', 
+              fontWeight: '500'
+          }}> 
+            {goal[index]}ml
           </span>
         </div>
 
