@@ -17,7 +17,7 @@ export default function Nav(){
     setChecked(state => !state)
     setAngle(a => a + 180);
 
-    if (checked) {
+    if (!checked) {
       api.start({
         from: { opacity: 0, scale : 0 },
         to:{ opacity: 1, scale : 1 },

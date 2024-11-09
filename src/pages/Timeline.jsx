@@ -83,32 +83,32 @@ export default function Timeline(){
         <div ref={(element) => headComp.current[index] = element} style={{
           width: '60%', 
           height: 'auto',
-          lineHeight: '1.3rem',
+          lineHeight: '1.1rem',
           display: 'block',
           backgroundColor: GLOBAL.backgroundDunkeler,
           color: '#fff',
           borderRadius: '10px',
-          padding: '0.6rem 1rem',
+          padding: '0.6rem 1rem 0.4rem 1rem',
           marginLeft: '1rem',
           marginRight: '1rem',
           marginTop: '1.4rem',    
         }}>
           <span style={{fontWeight: '800',}}> 
-          {Math.round(total[index]/goal[index] * 100)}% 
+          {total[index]}ml
           </span>
           <span style={{
               float: 'right', 
-              fontWeight: '500'
+              fontWeight: '800'
           }}> 
             {el.date == today? 'Today' : el.date}
           </span>
           <br />
-          <span style={{fontWeight: '800',}}> 
-          {total[index]}ml&nbsp;
+          <span style={{fontSize: '0.8rem'}}> 
+          {Math.round(total[index]/goal[index] * 100)}% &nbsp;
           </span>
           <span style={{
               float: 'right', 
-              fontWeight: '500'
+              fontSize: '0.8rem'
           }}> 
             {goal[index]}ml
           </span>
@@ -138,7 +138,7 @@ export default function Timeline(){
           }} />
           <span style={{
             fontWeight: '700',
-            marginLeft: '1rem',
+            marginLeft: '0.6rem',
           }}>  
           {el.amount}ml
           </span>
