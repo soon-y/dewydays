@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, Suspense } from 'react'
 import { GLOBAL } from '../Global'
 import '../index.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faXmark,faSmog,faTornado,faCloud,faSun,faCloudBolt,faSnowflake,faCloudShowersHeavy,faCloudRain, } from '@fortawesome/free-solid-svg-icons'
+import { faXmark,faCloudShowersHeavy,faCloudSun,faSmog,faCloud,faSun,faCloudBolt,faSnowflake,faCloudRain, } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
 import Sun from '../component_weather/Sun'
 import Cloud from '../component_weather/Cloud'
@@ -12,6 +12,7 @@ import Drizzle from '../component_weather/Drizzle'
 import Thunder from '../component_weather/Thunder'
 import Smog from '../component_weather/Smog'
 import Tornado from '../component_weather/Tornado'
+import SunCloud from '../component_weather/SunCloud'
 
 export default function Weather(){ 
   const head = "Weather"
@@ -22,141 +23,211 @@ export default function Weather(){
   let hour = d.getHours()
   let pointer = useRef()
   const [clock, setClock] = useState(hour)
-  const [currentData, setcurrentData] = useState(null)
-  const [forecastData, setforecastData] = useState(null)
+  const [dailyData, setDailyData] = useState(null)
+  const [hourlyData, setHourlyData] = useState(null)
   const [forecastDataFiltered, setforecastDataFiltered] = useState(null)
-  const [airData, setairData] = useState(null)
+  const [airData, setAirData] = useState(null)
+  const [index, setIndex] = useState(hour)
 
   useEffect(() => {
-    getWeatherData(GLOBAL.latitude, GLOBAL.longitude)
+    getWeatherData(GLOBAL.latitude, GLOBAL.longitude, GLOBAL.timezone)
   },[])
 
   useEffect(() => {
     pointer.current.style.transform = `rotate(${clock * 30}deg)`
+
+    let uhr = hour >= 12? hour - 12 : hour
+
+    if(hour >= 12){
+      setIndex(Math.ceil(clock+12))
+      if(clock < uhr){
+        setIndex(Math.ceil(clock+24))
+      }
+    } else {
+      setIndex(Math.ceil(clock))
+      if(clock >= 0 && clock < uhr){
+        setIndex(Math.ceil(clock+12))
+      }
+    }
   }, [clock])
 
-  const getWeatherData = (lat,lon) => {
+  const getWeatherData = (lat,lon,time) => {
     // Setting the fetch options
     const options = { method: 'GET', headers: { accept: 'application/json' } }
 
-    // Fetching current weather data
-    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${GLOBAL.API_KEY}&units=metric`, options)
-    .then(response => response.json())
-    .then(data => {
-      setcurrentData(data)
-    })
-    .catch(err => {
-      setError(err)
-      console.error(err)
-    })
-
-    // Fetching 5 day / 3 hour forecast data
-    fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${GLOBAL.API_KEY}&units=metric`, options)
-    .then(response => response.json())
-    .then(data => {
-      filterData(data)
-      setforecastData(data)
-    })
-    .catch(err => {
-      setError(err)
-      console.error(err)
-    })
-
     // Fetching current air pollution data
-    fetch(`https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${GLOBAL.API_KEY}&units=metric`, options)
+    fetch(`https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${lat}&longitude=${lon}&hourly=european_aqi_pm2_5,european_aqi_pm10&timezone=${time}`, options)
     .then(response => response.json())
     .then(data => {
-      setairData(data)
+      setAirData(data.hourly)
     })
     .catch(err => {
-      setError(err)
+      console.error(err)
+    })
+
+    // Fetching hourly data
+    fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=apparent_temperature,precipitation_probability,weather_code,uv_index,is_day&forecast_days=3&timezone=${time}`, options)
+    .then(response => response.json())
+    .then(data => {
+      setHourlyData(data.hourly)
+    })
+    .catch(err => {
+      console.error(err)
+    })
+
+    // Fetching daily data
+    fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weather_code,apparent_temperature_max,apparent_temperature_min&timezone=${time}`, options)
+    .then(response => response.json())
+    .then(data => {
+      setDailyData(data)
+      filterData(data.daily)
+    })
+    .catch(err => {
       console.error(err)
     })
   }
 
   const filterData = (data) => {
     let forecastDataFiltered = []
-    let num = 0
-    for (let i = 0; i < data.cnt/8; i++) {
-      let array = []
-      let icon
-        for (let j = 0; j < data.cnt/5; j++) {
-        array.push(data.list[num].main.temp)
-        icon = data.list[num].weather[0].main
-        num++
-        }
-      let high = Math.trunc(Math.max(...array))
-      let low = Math.trunc(Math.min(...array))
+
+    for (let i = 1; i <= 6; i++) {
+      let icon = data.weather_code[i]
+      let high = Math.round(data.apparent_temperature_max[i])
+      let low = Math.round(data.apparent_temperature_min[i])
       switch(icon) {
-        case "Clouds":
-          icon = faCloud
-          break
-        case "Thunderstorm":
-           icon = faCloudBolt
-           break
-        case "Drizzle":
-          icon = faCloudRain
-          break
-        case "Rain":
-          icon = faCloudShowersHeavy
-          break
-        case "Snow":
-          icon = faSnowflake
-          break
-        case "Clear":
+        case 0:
           icon = faSun
           break
-        case "Mist":
+        case 1:
+          icon = faSun
+          break
+        case 2:
+          icon = faCloudSun
+          break
+        case 3:
+          icon = faCloud
+          break
+        case 45:
           icon = faSmog
           break
-        case "Smoke":
-            icon = faSmog
-            break
-        case "Haze":
+        case 48:
           icon = faSmog
           break
-        case "Dust":
-          icon = faSmog
+        case 51: 
+          icon = faCloudRain   
           break
-        case "Fog":
-          icon = faSmog
+        case 53: 
+          icon = faCloudRain   
+          break   
+        case 55: 
+          icon = faCloudRain   
           break
-        case "Sand":
-          icon = faSmog
+        case 56: 
+          icon = faCloudRain   
           break
-        case "Ash":
-          icon = faSmog
+        case 57: 
+          icon = faCloudRain   
           break
-        case "Squall":
-          icon = faCloudShowersHeavy
+        case 61: 
+          icon = faCloudRain   
           break
-        case "Tornado":
-          icon = faTornado
+        case 63: 
+          icon = faCloudRain   
+          break   
+        case 65: 
+          icon = faCloudRain   
+          break
+        case 66: 
+          icon = faCloudRain   
+          break
+        case 67: 
+          icon = faCloudRain  
+          break
+        case 71: 
+          icon = faSnowflake   
+          break
+        case 73: 
+          icon = faSnowflake   
+          break   
+        case 75: 
+          icon = faSnowflake   
+          break
+        case 77: 
+          icon = faSnowflake  
+          break      
+        case 80: 
+          icon = faCloudShowersHeavy   
+          break
+        case 81: 
+          icon = faCloudShowersHeavy   
+          break   
+        case 82: 
+          icon = faCloudShowersHeavy   
+          break
+        case 85: 
+          icon = faSnowflake   
+          break
+        case 86: 
+          icon = faSnowflake  
+          break
+        case 95: 
+          icon = faCloudBolt   
+          break   
+        case 96: 
+          icon = faCloudBolt   
+          break
+        case 99: 
+          icon = faCloudBolt   
           break
       }  
-      let d = { "id" : i, "days" : day + i + 1, "low": low, "high": high, "icon": icon }
+      let d = { "id" : i, "days" : day + i, "low": low, "high": high, "icon": icon }
       forecastDataFiltered.push(d)
-      // 6th data copied from 5th one
-      if(i == data.cnt/8-1){
-        let d = { "id" : i + 1, "days" : day + i + 2, "low": low, "high": high, "icon": icon }
-        forecastDataFiltered.push(d)
-      }
     }
     setforecastDataFiltered(forecastDataFiltered)
+  }
+
+  const uvIndex = (data) => {
+    let state
+    if (data < 3) {
+      state = "Low"
+    } else if (data >= 3 && data < 6){
+      state = "Moderate"
+    } else if (data >= 6 && data < 8){
+      state = "High"
+    } else if (data >= 8 && data < 11){
+      state = "Very High"
+    } else {
+      state = "Extreme"
+    }
+    return (
+      <>
+        <span>
+          {data}
+        </span>
+        <span style={{ 
+          marginLeft: '0.5rem',
+          fontWeight: 700,
+          color: data >= 6? '#d61a17' : 'white',
+          }}>{state}
+        </span>
+      </>
+    )
   }
 
   const airQuality10 = (data) => {
     let state
     if (data < 20) {
       state = "Good"
-    } else if (data >= 20 && data < 50){
+    } else if (data >= 20 && data < 40){
       state = "Fair"
-    } else if (data >= 50 && data < 100){
+    } else if (data >= 40 && data < 50){
       state = "Moderate"
-    } else if (data >= 100 && data < 200){
+    } else if (data >= 50 && data < 100){
       state = "Poor"
-    } else {
+    } else if (data >= 100 && data < 150){
       state = "Very Poor"
+    } else {
+      state = "Extremely Poor"
     }
     return (
       <>
@@ -166,7 +237,7 @@ export default function Weather(){
         <span style={{ 
           marginLeft: '0.5rem',
           fontWeight: 700,
-          color: data >= 100? '#d61a17' : 'white',
+          color: data >= 50? '#d61a17' : 'white',
           }}>{state}
         </span>
       </>
@@ -177,14 +248,16 @@ export default function Weather(){
     let state
     if (data < 10) {
       state = "Good"
-    } else if (data >= 10 && data < 25){
+    } else if (data >= 10 && data < 20){
       state = "Fair"
-    } else if (data >= 25 && data < 50){
+    } else if (data >= 20 && data < 25){
       state = "Moderate"
-    } else if (data >= 50 && data < 75){
+    } else if (data >= 25 && data < 50){
       state = "Poor"
-    } else {
+    } else if (data >= 50 && data < 75){
       state = "Very Poor"
+    } else {
+      state = "Extremely Poor"
     }
     return (
     <>
@@ -194,7 +267,7 @@ export default function Weather(){
       <span style={{ 
         marginLeft: '0.5rem',
         fontWeight: 700,
-        color: data >= 50? '#d61a17' : 'white',
+        color: data >= 25? '#d61a17' : 'white',
         }}>{state}
       </span>
     </>
@@ -219,85 +292,65 @@ export default function Weather(){
   }
 
   const currentIcon = (data) => {
-    let now = Date.now() / 1000 
-    now = data.base == "stations" ? now : data.dt
-    let sunrise = currentData.sys.sunrise 
-    let sunset = currentData.sys.sunset 
-    let daytime = now > sunrise && now < sunset ? true : false
-    
-    switch(data.weather[0].main) {
-      case "Clouds":
+    const daytime = data.is_day[index]
+    switch(data.weather_code[index]) {
+      case 0:
+        return (<Sun daytime = { daytime } />)
+      case 1:
+        return (<Sun daytime = { daytime } />)
+      case 2:
+        return (<SunCloud daytime = { daytime } />)
+      case 3:
         return (<Cloud daytime = { daytime }/>)
-      case "Thunderstorm":
-        return (<Thunder daytime = { daytime }/>)
-      case "Drizzle":
+      case 45:
+        return (<Smog daytime = { daytime }/>)
+      case 48:
+        return (<Smog daytime = { daytime }/>)
+      case 51: 
         return (<Drizzle daytime = { daytime }/>)
-      case "Rain":
+      case 53: 
+        return (<Drizzle daytime = { daytime }/>)
+      case 55: 
+        return (<Drizzle daytime = { daytime }/>)
+      case 56: 
+        return (<Drizzle daytime = { daytime }/>)
+      case 57: 
+        return (<Drizzle daytime = { daytime }/>)
+      case 61: 
         return (<Rain daytime = { daytime }/>)
-      case "Snow":
+      case 63: 
+        return (<Rain daytime = { daytime }/>)
+      case 65: 
+        return (<Rain daytime = { daytime }/>)
+      case 66: 
+        return (<Rain daytime = { daytime }/>)
+      case 67: 
+        return (<Rain daytime = { daytime }/>)
+      case 71: 
         return (<Snow daytime = { daytime }/>)
-      case "Mist":
-        return (<Smog daytime = { daytime }/>)
-      case "Smoke":
-        return (<Smog daytime = { daytime }/>)
-      case "Haze":
-        return (<Smog daytime = { daytime }/>)
-      case "Dust":
-        return (<Smog daytime = { daytime }/>)
-      case "Fog":
-        return (<Smog daytime = { daytime }/>)
-      case "Sand":
-        return (<Smog daytime = { daytime }/>)
-      case "Ash":
-        return (<Smog daytime = { daytime }/>)
-      case "Squall":
+      case 73: 
+        return (<Snow daytime = { daytime }/>)
+      case 75: 
+        return (<Snow daytime = { daytime }/>)
+      case 77: 
+        return (<Snow daytime = { daytime }/>)   
+      case 80: 
         return (<Rain daytime = { daytime }/>)
-      case "Tornado":
-        return (<Tornado daytime = { daytime }/>)
-      case "Clear":
-        return (
-        <Sun daytime = { daytime } />
-      )
-      default:
-        return (<Cloud />)
-    }  
-  }
-
-  const dataFilter  = (dataC, dataF) => {
-    let uhr = hour >= 12? hour - 12 : hour
-    let clk = clock >= 12? clock - 12 : clock
-    let nextUhr = []
-    let now = Date.now() / 1000 + dataC.timezone
-    let j
-
-    for (let i = 1; i < 12; i++) {  
-      if ((uhr + i)% 3 == 0){
-        let n = uhr + i > 11 ? uhr + i - 12 : uhr + i
-        nextUhr.push(n)    
-      }
-    }
-    if (nextUhr.length == 3){
-      nextUhr.push(uhr)
-    }
- 
-    if (dataF.list[0].dt > now) {
-      j = 0
-    } else {
-      j = 1
-    }
-
-    if (uhr <= clk && (nextUhr[0] == 0 ? clk < 12 : clk < nextUhr[0])){
-      return dataC
-    } else if (nextUhr[0] <= clk && (nextUhr[1] == 0 ? clk < 12 : clk < nextUhr[1])){
-      return dataF.list[j]
-    } else if (nextUhr[1] <= clk && (nextUhr[2] == 0 ? clk < 12 : clk < nextUhr[2])){
-      return dataF.list[j+1]
-    } else if (nextUhr[2] <= clk && (nextUhr[3] == 0 ? clk < 12 : clk < nextUhr[3])){
-      return dataF.list[j+2]
-    } else {
-      return dataF.list[j+3]
-    }
-
+      case 81: 
+        return (<Rain daytime = { daytime }/>)  
+      case 82: 
+        return (<Rain daytime = { daytime }/>)
+      case 85: 
+        return (<Snow daytime = { daytime }/>)
+      case 86: 
+        return (<Snow daytime = { daytime }/>)
+      case 95: 
+        return (<Thunder daytime = { daytime }/>)  
+      case 96: 
+        return (<Thunder daytime = { daytime }/>)
+      case 99: 
+        return (<Thunder daytime = { daytime }/>)
+    } 
   }
 
   return(
@@ -317,9 +370,7 @@ export default function Weather(){
           margin: '0 0 0.5rem 0',
         }}>
         <p>{ GLOBAL.days[day] } { date } { GLOBAL.months[month] } </p>
-        {currentData&&(
-        <p style={{ textTransform: 'uppercase' }}>{ currentData.name }</p>
-        )}
+        <p style={{ textTransform: 'uppercase' }}>{ GLOBAL.suburb } </p>
         </div>
 
         <div className='clock' style={{ 
@@ -330,11 +381,11 @@ export default function Weather(){
             backgroundSize: 'contain',
           }}>
           <div className='clockBg'>
-            {currentData&&forecastData&&(
+            {hourlyData&&(
             <div className='currentInfo'>
               <div className='current currentTime center'>{ AMPM() }</div>
-              <div className='current currentWeather'>{ currentIcon(dataFilter(currentData, forecastData)) }</div>
-              <div className='current currentTemp center'>{ Math.trunc(dataFilter(currentData, forecastData).main.temp) }°</div>              
+              <div className='current currentWeather'>{ currentIcon(hourlyData) }</div>
+              <div className='current currentTemp center'>{ hourlyData.apparent_temperature[index] }°</div>
             </div>)}
           </div>
           <div className='clockPointer' ref={ pointer }></div>
@@ -402,24 +453,24 @@ export default function Weather(){
           </div>
         </div>
 
-        {airData&&currentData&&forecastData&&(
+        {airData&&hourlyData&&(
         <table className='weatherInfo'>
           <tbody>
           <tr>
-            <th>Wind</th> 
-            <td>{ dataFilter(currentData, forecastData).wind.speed }m/s</td>
+            <th>UV Index</th> 
+            <td>{ uvIndex(hourlyData.uv_index[index]) }</td>
           </tr>
           <tr>
-            <th>Humidity</th>
-            <td>{ dataFilter(currentData, forecastData).main.humidity }%</td>
+            <th>Chance of Rain</th>
+            <td>{ hourlyData.precipitation_probability[index] }%</td>
           </tr>
           <tr>
             <th>PM 10</th>
-            <td>{airQuality10(Math.round(airData.list[0].components.pm10))}</td>
+            <td>{airQuality10(Math.round(airData.european_aqi_pm10[index]))}</td>
           </tr>
           <tr>
             <th>PM2.5</th>
-            <td>{airQuality25(Math.round(airData.list[0].components.pm2_5))}</td>
+            <td>{airQuality25(Math.round(airData.european_aqi_pm2_5[index]))}</td>
           </tr>
           </tbody>
         </table>)}

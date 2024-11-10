@@ -13,7 +13,7 @@ export default function Smog({daytime}){
 
       <img src="/weather/smog.png" alt="smog" className="smogT" style={{
         position: "absolute",
-        top: '64%',
+        top: '60%',
         left: '50%',
         width: '80%',
         margin: 'auto',
@@ -23,7 +23,7 @@ export default function Smog({daytime}){
 
       <img src="/weather/smog.png" alt="smog" className="smogB" style={{
         position: "absolute",
-        top: '82%',
+        top: '78%',
         left: '50%',
         width: '80%',
         margin: 'auto',
@@ -31,7 +31,7 @@ export default function Smog({daytime}){
         display: daytime? 'block' : 'none'
       }} />
 
-<img src="/weather/cloudNight.png" alt="cloud" className="cloud" style={{
+      <img src="/weather/cloudNight.png" alt="cloud" className="cloud" style={{
         position: "absolute",
         left: '50%',
         transform: 'translate(-50%, 0%)',
@@ -43,7 +43,7 @@ export default function Smog({daytime}){
 
       <img src="/weather/smogNight.png" alt="smog" className="smogT" style={{
         position: "absolute",
-        top: '64%',
+        top: '60%',
         left: '50%',
         width: '80%',
         margin: 'auto',
@@ -53,7 +53,7 @@ export default function Smog({daytime}){
 
       <img src="/weather/smogNight.png" alt="smog" className="smogB" style={{
         position: "absolute",
-        top: '82%',
+        top: '78%',
         left: '50%',
         width: '80%',
         margin: 'auto',

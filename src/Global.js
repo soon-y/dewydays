@@ -66,7 +66,8 @@ const GLOBAL = {
 
   latitude:  53.55,
   longitude: 10,
-  API_KEY: '5e7132d57dd1b1491c308810e615e7ca',
+  timezone: "Europe%2FBerlin",
+  suburb: 'Hamburg',
 
   timelineDataIndex: 0,
   timelineData: [

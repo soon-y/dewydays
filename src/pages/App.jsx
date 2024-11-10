@@ -11,6 +11,7 @@ import Drizzle from '../component_weather/Drizzle'
 import Thunder from '../component_weather/Thunder'
 import Smog from '../component_weather/Smog'
 import Tornado from '../component_weather/Tornado'
+import SunCloud from '../component_weather/SunCloud'
 import { animated, useSpring } from '@react-spring/web'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
@@ -18,11 +19,11 @@ import { Slider } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 export default function App(){ 
+  const [daytime, setDaytime] = useState(1)
   const [currentData, setcurrentData] = useState(null)
   const [waterHeight, setWaterHeight] = useState(GLOBAL.waterHeight)
   const [amount, setAmount] = useState(GLOBAL.cupAmount[GLOBAL.cupNum])
   const [percent, setPercent] = useState(GLOBAL.waterPercent)
-  const [daytime, setDaytime] = useState(true)
   const dewy = useRef()
   const dewyMansae = useRef()
   let src = 'cups/' + GLOBAL.cupNum + '.png'
@@ -48,32 +49,42 @@ export default function App(){
   const success = (position) => {
     GLOBAL.latitude =  position.coords.latitude
     GLOBAL.longitude = position.coords.longitude
-    getWeatherData(GLOBAL.latitude, GLOBAL.longitude)
+
+    const requestOptions = {
+      method: 'GET',
+    };
+    
+    fetch(`https://api.geoapify.com/v1/geocode/reverse?lat=${GLOBAL.latitude}&lon=${GLOBAL.longitude}&apiKey=38a752707cfe42d3a39af25db2e3e18e`, requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        GLOBAL.suburb = result.features[0].properties.suburb
+        GLOBAL.timezone = result.features[0].properties.timezone.name
+        GLOBAL.timezone = GLOBAL.timezone.replace("/", "%2F")
+        getWeatherData(GLOBAL.latitude, GLOBAL.longitude, GLOBAL.timezone)
+        })
+      .catch(error => console.log('error', error));
   }
 
   const fail = () => {
-    getWeatherData(GLOBAL.latitude, GLOBAL.longitude)
+    getWeatherData(GLOBAL.latitude, GLOBAL.longitude, GLOBAL.timezone)
   }
 
-  let now, sunrise, sunset
+  // let resource = fetchData(
+  //   `https://api.pirateweather.net/forecast/${GLOBAL.API_KEY}/${GLOBAL.latitude},${GLOBAL.longitude}?&units=si`
+  // )
+  // let currentData = resource.read()
 
-  const getWeatherData = async (lat,lon) => {
+  // console.log(currentData)
+
+  const getWeatherData = async (lat,lon, time) => {
     const options = { method: 'GET', headers: { accept: 'application/json' } }
     const response = await fetch
-    (`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${GLOBAL.API_KEY}&units=metric`, options)
+    (`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=is_day,weather_code&timezone=${time}`, options)
     .then(response => response.json())
     .then(data => {
       setcurrentData(data)
-      now = Date.now() / 1000 
-      sunrise = data.sys.sunrise 
-      sunset = data.sys.sunset 
-      const day = now > sunrise && now < sunset ? true : false
-      setDaytime(day)
+      setDaytime(data.current.is_day)
     })
-
-    if (!response.ok) {
-      throw new Error("error");
-    }
   }
 
   const addWater = useSpring({
@@ -119,45 +130,69 @@ export default function App(){
     GLOBAL.waterPercent = percent
   }
 
-  const currentIcon = (data) => {    
-    switch(data.weather[0].main) {
-      case "Clouds":
-        return (<Cloud daytime = { daytime }/>)
-      case "Thunderstorm":
-        return (<Thunder daytime = { daytime }/>)
-      case "Drizzle":
-        return (<Drizzle daytime = { daytime }/>)
-      case "Rain":
-        return (<Rain daytime = { daytime }/>)
-      case "Snow":
-        return (<Snow daytime = { daytime }/>)
-      case "Mist":
-        return (<Smog daytime = { daytime }/>)
-      case "Smoke":
-        return (<Smog daytime = { daytime }/>)
-      case "Haze":
-        return (<Smog daytime = { daytime }/>)
-      case "Dust":
-        return (<Smog daytime = { daytime }/>)
-      case "Fog":
-        return (<Smog daytime = { daytime }/>)
-      case "Sand":
-        return (<Smog daytime = { daytime }/>)
-      case "Ash":
-        return (<Smog daytime = { daytime }/>)
-      case "Squall":
-        return (<Rain daytime = { daytime }/>)
-      case "Tornado":
-        return (<Tornado daytime = { daytime }/>)
-      case "Clear":
-        return (<Sun daytime = { daytime } />)
-      default:
-        return (<Cloud />)
-    }  
+  const currentIcon = (data) => {  
+    switch(data.current.weather_code) {
+      case 0:
+        return (<Sun daytime = { data.current.is_day } />)
+      case 1:
+        return (<Sun daytime = { data.current.is_day } />)
+      case 2:
+        return (<SunCloud daytime = { data.current.is_day } />)
+      case 3:
+        return (<Cloud daytime = { data.current.is_day }/>)
+      case 45:
+        return (<Smog daytime = { data.current.is_day }/>)
+      case 48:
+        return (<Smog daytime = { data.current.is_day }/>)
+      case 51: 
+        return (<Drizzle daytime = { data.current.is_day }/>)
+      case 53: 
+        return (<Drizzle daytime = { data.current.is_day }/>)
+      case 55: 
+        return (<Drizzle daytime = { data.current.is_day }/>)
+      case 56: 
+        return (<Drizzle daytime = { data.current.is_day }/>)
+      case 57: 
+        return (<Drizzle daytime = { data.current.is_day }/>)
+      case 61: 
+        return (<Rain daytime = { data.current.is_day }/>)
+      case 63: 
+        return (<Rain daytime = { data.current.is_day }/>)
+      case 65: 
+        return (<Rain daytime = { data.current.is_day }/>)
+      case 66: 
+        return (<Rain daytime = { data.current.is_day }/>)
+      case 67: 
+        return (<Rain daytime = { data.current.is_day }/>)
+      case 71: 
+        return (<Snow daytime = { data.current.is_day }/>)
+      case 73: 
+        return (<Snow daytime = { data.current.is_day }/>)
+      case 75: 
+        return (<Snow daytime = { data.current.is_day }/>)
+      case 77: 
+        return (<Snow daytime = { data.current.is_day }/>)   
+      case 80: 
+        return (<Rain daytime = { data.current.is_day }/>)
+      case 81: 
+        return (<Rain daytime = { data.current.is_day }/>)  
+      case 82: 
+        return (<Rain daytime = { data.current.is_day }/>)
+      case 85: 
+        return (<Snow daytime = { data.current.is_day }/>)
+      case 86: 
+        return (<Snow daytime = { data.current.is_day }/>)
+      case 95: 
+        return (<Thunder daytime = { data.current.is_day }/>)  
+      case 96: 
+        return (<Thunder daytime = { data.current.is_day }/>)
+      case 99: 
+        return (<Thunder daytime = { data.current.is_day }/>)
+    } 
   }
 
   return(
-    <Suspense fallback={<Loading />}>
+    <>
     <div id='bg' style={{
       backgroundImage: daytime ? "url(/main/bg.jpg)" : "url(/main/bgNight.jpg)",
       height: '100vh',
@@ -257,7 +292,7 @@ export default function App(){
         </Link>
       </div>
     </div>
-    </Suspense>
+    </>
   )
 }
 
@@ -308,10 +343,3 @@ const WaterSlider = styled(Slider)({
     },
   },
 });
-
-
-function Loading() {
-  console.log("loading")
-  return <img src='main/loading.png' width='100%' />
-}
-
