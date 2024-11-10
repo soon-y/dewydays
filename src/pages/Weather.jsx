@@ -37,16 +37,19 @@ export default function Weather(){
     pointer.current.style.transform = `rotate(${clock * 30}deg)`
 
     let uhr = hour >= 12? hour - 12 : hour
+    let clk = clock >= 12? clock - 12 : clock
 
-    if(hour >= 12){
-      setIndex(Math.ceil(clock+12))
-      if(clock < uhr){
-        setIndex(Math.ceil(clock+24))
-      }
-    } else {
-      setIndex(Math.ceil(clock))
-      if(clock >= 0 && clock < uhr){
+    if(hourlyData){
+      if(hour >= 12){
         setIndex(Math.ceil(clock+12))
+        if(clk < uhr){
+          setIndex(Math.ceil(clock+24))
+        }
+      } else {
+        setIndex(Math.ceil(clock))
+        if(clk >= 0 && clk < uhr){
+          setIndex(Math.ceil(clock+12))
+        }
       }
     }
   }, [clock])
@@ -70,6 +73,7 @@ export default function Weather(){
     .then(response => response.json())
     .then(data => {
       setHourlyData(data.hourly)
+      console.log(data)
     })
     .catch(err => {
       console.error(err)
