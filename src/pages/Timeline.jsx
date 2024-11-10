@@ -81,17 +81,17 @@ export default function Timeline(){
       {GLOBAL.timelineData.map((el,index) => (
       <div key={ index }>
         <div ref={(element) => headComp.current[index] = element} style={{
-          width: '60%', 
+          width: 'auto', 
           height: 'auto',
           lineHeight: '1.1rem',
           display: 'block',
           backgroundColor: GLOBAL.backgroundDunkeler,
           color: '#fff',
           borderRadius: '10px',
-          padding: '0.6rem 1rem 0.4rem 1rem',
+          padding: '0.6rem 1.4rem 0.4rem 1.2rem',
           marginLeft: '1rem',
           marginRight: '1rem',
-          marginTop: '1.4rem',    
+          marginTop: '1.5rem',    
         }}>
           <span style={{fontWeight: '800',}}> 
           {total[index]}ml
