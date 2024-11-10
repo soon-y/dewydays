@@ -698,11 +698,12 @@ p {
 .currentInfo {
   display: block;
   width: 70%;
-  height: 80%;
+  height: 74%;
   position: fixed;
   transform: translate(-50%, -53%);
   left: 50%;
   top: 50%;
+
 }
 
 .current {
@@ -713,7 +714,7 @@ p {
 }
 
 .currentWeather {
-  margin: 4% 0;
+  margin: 3% 0;
   height: 80%;
   aspect-ratio: 1;
 }
