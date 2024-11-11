@@ -41,14 +41,14 @@ export default function Weather(){
 
     if(hourlyData){
       if(hour >= 12){
-        setIndex(Math.ceil(clock+12))
+        setIndex(Math.floor(clock+12))
         if(clk < uhr){
-          setIndex(Math.ceil(clock+24))
+          setIndex(Math.floor(clock+24))
         }
       } else {
-        setIndex(Math.ceil(clock))
+        setIndex(Math.floor(clock))
         if(clk >= 0 && clk < uhr){
-          setIndex(Math.ceil(clock+12))
+          setIndex(Math.floor(clock+12))
         }
       }
     }
@@ -73,7 +73,6 @@ export default function Weather(){
     .then(response => response.json())
     .then(data => {
       setHourlyData(data.hourly)
-      console.log(data)
     })
     .catch(err => {
       console.error(err)
@@ -280,18 +279,20 @@ export default function Weather(){
 
   const AMPM = () => {
     let uhr = hour >= 12? hour - 12 : hour
+    let clk = Math.floor(clock) === 0 ? 12 : Math.floor(clock)
+
     if (hour == 0) {
-      return "AM"
+      return `${clk} AM`
     } else if (hour == 12){
-      return "PM"
+      return `${clk} PM`
     } else if (hour < 12 && clock >= uhr){
-      return "AM"
+      return `${clk} AM`
     } else if (hour < 12 && clock < uhr){
-      return "PM"
+      return `${clk} PM`
     } else if (hour >= 12 && clock < uhr){
-      return "AM"
+      return `${clk} AM`
     } else if (hour >= 12 && clock >= uhr){
-      return "PM"
+      return `${clk} PM`
     } 
   }
 

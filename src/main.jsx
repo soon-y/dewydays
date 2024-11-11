@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense, lazy } from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 import { BrowserRouter, Route, Routes  } from 'react-router-dom'
@@ -9,8 +9,8 @@ import Alarm from './pages/Alarm.jsx'
 import App from './pages/App.jsx'
 import Cups from './pages/Cups.jsx'
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+ReactDOM.createRoot(document.getElementById('root')).render(  
+  <>
     <BrowserRouter>
       <Routes>
         <Route path='/' element = {  <App /> } />
@@ -21,7 +21,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path='/cups' element = { <Cups /> } />
       </Routes>
     </BrowserRouter>
-  </React.StrictMode>,
+  </>,
 )
 
 

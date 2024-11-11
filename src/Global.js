@@ -32,6 +32,8 @@ const GLOBAL = {
   currentIntake: 0,
   waterHeight: 101,
   waterPercent: 0,
+  daytime: '1',
+  weatherCode: 3,
 
   cupNum: 1,
   cupAmount: [190,350,600,1000],

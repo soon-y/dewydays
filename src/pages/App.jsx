@@ -19,7 +19,8 @@ import { Slider } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 export default function App(){ 
-  const [daytime, setDaytime] = useState(1)
+  const [daytime, setDaytime] = useState(GLOBAL.daytime)
+  const [weatherCode, setWeatehrCode] = useState(GLOBAL.weatherCode)
   const [currentData, setcurrentData] = useState(null)
   const [waterHeight, setWaterHeight] = useState(GLOBAL.waterHeight)
   const [amount, setAmount] = useState(GLOBAL.cupAmount[GLOBAL.cupNum])
@@ -84,6 +85,9 @@ export default function App(){
     .then(data => {
       setcurrentData(data)
       setDaytime(data.current.is_day)
+      GLOBAL.daytime = data.current.is_day
+      setWeatehrCode(data.current.weather_code)
+      GLOBAL.weatherCode = data.current.weather_code
     })
   }
 
@@ -130,64 +134,64 @@ export default function App(){
     GLOBAL.waterPercent = percent
   }
 
-  const currentIcon = (data) => {  
-    switch(data.current.weather_code) {
+  const currentIcon = () => {
+    switch(weatherCode) {
       case 0:
-        return (<Sun daytime = { data.current.is_day } />)
+        return (<Sun daytime = { GLOBAL.daytime } />)
       case 1:
-        return (<Sun daytime = { data.current.is_day } />)
+        return (<Sun daytime = { GLOBAL.daytime } />)
       case 2:
-        return (<SunCloud daytime = { data.current.is_day } />)
+        return (<SunCloud daytime = { GLOBAL.daytime } />)
       case 3:
-        return (<Cloud daytime = { data.current.is_day }/>)
+        return (<Cloud daytime = { GLOBAL.daytime }/>)
       case 45:
-        return (<Smog daytime = { data.current.is_day }/>)
+        return (<Smog daytime = { GLOBAL.daytime }/>)
       case 48:
-        return (<Smog daytime = { data.current.is_day }/>)
+        return (<Smog daytime = { GLOBAL.daytime }/>)
       case 51: 
-        return (<Drizzle daytime = { data.current.is_day }/>)
+        return (<Drizzle daytime = { GLOBAL.daytime }/>)
       case 53: 
-        return (<Drizzle daytime = { data.current.is_day }/>)
+        return (<Drizzle daytime = { GLOBAL.daytime }/>)
       case 55: 
-        return (<Drizzle daytime = { data.current.is_day }/>)
+        return (<Drizzle daytime = { GLOBAL.daytime }/>)
       case 56: 
-        return (<Drizzle daytime = { data.current.is_day }/>)
+        return (<Drizzle daytime = { GLOBAL.daytime }/>)
       case 57: 
-        return (<Drizzle daytime = { data.current.is_day }/>)
+        return (<Drizzle daytime = { GLOBAL.daytime }/>)
       case 61: 
-        return (<Rain daytime = { data.current.is_day }/>)
+        return (<Rain daytime = { GLOBAL.daytime }/>)
       case 63: 
-        return (<Rain daytime = { data.current.is_day }/>)
+        return (<Rain daytime = { GLOBAL.daytime }/>)
       case 65: 
-        return (<Rain daytime = { data.current.is_day }/>)
+        return (<Rain daytime = { GLOBAL.daytime }/>)
       case 66: 
-        return (<Rain daytime = { data.current.is_day }/>)
+        return (<Rain daytime = { GLOBAL.daytime }/>)
       case 67: 
-        return (<Rain daytime = { data.current.is_day }/>)
+        return (<Rain daytime = { GLOBAL.daytime }/>)
       case 71: 
-        return (<Snow daytime = { data.current.is_day }/>)
+        return (<Snow daytime = { GLOBAL.daytime }/>)
       case 73: 
-        return (<Snow daytime = { data.current.is_day }/>)
+        return (<Snow daytime = { GLOBAL.daytime }/>)
       case 75: 
-        return (<Snow daytime = { data.current.is_day }/>)
+        return (<Snow daytime = { GLOBAL.daytime }/>)
       case 77: 
-        return (<Snow daytime = { data.current.is_day }/>)   
+        return (<Snow daytime = { GLOBAL.daytime }/>)   
       case 80: 
-        return (<Rain daytime = { data.current.is_day }/>)
+        return (<Rain daytime = { GLOBAL.daytime }/>)
       case 81: 
-        return (<Rain daytime = { data.current.is_day }/>)  
+        return (<Rain daytime = { GLOBAL.daytime }/>)  
       case 82: 
-        return (<Rain daytime = { data.current.is_day }/>)
+        return (<Rain daytime = { GLOBAL.daytime }/>)
       case 85: 
-        return (<Snow daytime = { data.current.is_day }/>)
+        return (<Snow daytime = { GLOBAL.daytime }/>)
       case 86: 
-        return (<Snow daytime = { data.current.is_day }/>)
+        return (<Snow daytime = { GLOBAL.daytime }/>)
       case 95: 
-        return (<Thunder daytime = { data.current.is_day }/>)  
+        return (<Thunder daytime = { GLOBAL.daytime }/>)  
       case 96: 
-        return (<Thunder daytime = { data.current.is_day }/>)
+        return (<Thunder daytime = { GLOBAL.daytime }/>)
       case 99: 
-        return (<Thunder daytime = { data.current.is_day }/>)
+        return (<Thunder daytime = { GLOBAL.daytime }/>)
     } 
   }
 
@@ -210,10 +214,9 @@ export default function App(){
         marginLeft: '1rem',
       }}>
         <Link to={ "/weather" }>
-        {currentData&&(
         <div>
-          { currentIcon(currentData) }
-        </div>)}
+          { currentIcon() }
+        </div>
         </Link>
       </div>
 
