@@ -279,20 +279,19 @@ export default function Weather(){
 
   const AMPM = () => {
     let uhr = hour >= 12? hour - 12 : hour
-    let clk = Math.floor(clock) === 0 ? 12 : Math.floor(clock)
 
     if (hour == 0) {
-      return `${clk} AM`
+      return `AM`
     } else if (hour == 12){
-      return `${clk} PM`
+      return `PM`
     } else if (hour < 12 && clock >= uhr){
-      return `${clk} AM`
+      return `AM`
     } else if (hour < 12 && clock < uhr){
-      return `${clk} PM`
+      return `PM`
     } else if (hour >= 12 && clock < uhr){
-      return `${clk} AM`
+      return `AM`
     } else if (hour >= 12 && clock >= uhr){
-      return `${clk} PM`
+      return `PM`
     } 
   }
 
@@ -388,7 +387,7 @@ export default function Weather(){
           <div className='clockBg'>
             {hourlyData&&(
             <div className='currentInfo'>
-              <div className='current currentTime center'>{ AMPM() }</div>
+              <div className='current currentTime center'>{ (clock >= 12? Math.floor(clock - 12) : Math.floor(clock)) +' '+ AMPM() }</div>
               <div className='current currentWeather'>{ currentIcon(hourlyData) }</div>
               <div className='current currentTemp center'>{ hourlyData.apparent_temperature[index] }°</div>
             </div>)}
