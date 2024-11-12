@@ -408,6 +408,23 @@ p {
 }
 
 /*****       weather       *****/
+.moon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: auto;
+  height: 65%;
+}
+
+.moonCloud {
+  position: absolute;
+  top: 40%;
+  left: 40%;
+  transform: translate(-50%, -50%);
+  height: 50%;
+}
+
 .moonlight {
   animation-name: light;
   animation-duration: 3s;

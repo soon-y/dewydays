@@ -34,6 +34,10 @@ export default function App(){
       label: GLOBAL.cupAmount[GLOBAL.cupNum] + 'ml',
     },
   ]
+  const today = new Date()
+  const y = today.getFullYear()
+  const m = today.getMonth()
+  const d = today.getDate()
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(success, fail)
@@ -45,8 +49,9 @@ export default function App(){
     setWaterHeight(GLOBAL.waterHeight)
     setPercent(GLOBAL.currentIntake/GLOBAL.todaysGoal * 100)
     GLOBAL.waterPercent = percent
+    GLOBAL.moonPhase = moon_phase(y, m+1, d)
   },[])
-  
+
   const success = (position) => {
     GLOBAL.latitude =  position.coords.latitude
     GLOBAL.longitude = position.coords.longitude
@@ -54,11 +59,10 @@ export default function App(){
     const requestOptions = {
       method: 'GET',
     };
-    
-    fetch(`https://api.geoapify.com/v1/geocode/reverse?lat=${GLOBAL.latitude}&lon=${GLOBAL.longitude}&apiKey=38a752707cfe42d3a39af25db2e3e18e`, requestOptions)
+    fetch(`https://api.geoapify.com/v1/geocode/reverse?lat=${GLOBAL.latitude}&lon=${GLOBAL.longitude}&apiKey=${import.meta.env.VITE_API_geoapify}`, requestOptions)
       .then(response => response.json())
       .then(result => {
-        GLOBAL.suburb = result.features[0].properties.suburb
+        GLOBAL.suburb = typeof(result.features[0].properties.suburb) === "undefined" ? result.features[0].properties.city : result.features[0].properties.suburb
         GLOBAL.timezone = result.features[0].properties.timezone.name
         GLOBAL.timezone = GLOBAL.timezone.replace("/", "%2F")
         getWeatherData(GLOBAL.latitude, GLOBAL.longitude, GLOBAL.timezone)
@@ -70,19 +74,13 @@ export default function App(){
     getWeatherData(GLOBAL.latitude, GLOBAL.longitude, GLOBAL.timezone)
   }
 
-  // let resource = fetchData(
-  //   `https://api.pirateweather.net/forecast/${GLOBAL.API_KEY}/${GLOBAL.latitude},${GLOBAL.longitude}?&units=si`
-  // )
-  // let currentData = resource.read()
-
-  // console.log(currentData)
-
   const getWeatherData = async (lat,lon, time) => {
     const options = { method: 'GET', headers: { accept: 'application/json' } }
     const response = await fetch
     (`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=is_day,weather_code&timezone=${time}`, options)
     .then(response => response.json())
     .then(data => {
+    
       setcurrentData(data)
       setDaytime(data.current.is_day)
       GLOBAL.daytime = data.current.is_day
@@ -137,11 +135,11 @@ export default function App(){
   const currentIcon = () => {
     switch(weatherCode) {
       case 0:
-        return (<Sun daytime = { GLOBAL.daytime } />)
+        return (<Sun daytime = { GLOBAL.daytime } phase = { GLOBAL.moonPhase } />)
       case 1:
-        return (<Sun daytime = { GLOBAL.daytime } />)
+        return (<Sun daytime = { GLOBAL.daytime } phase = { GLOBAL.moonPhase } />)
       case 2:
-        return (<SunCloud daytime = { GLOBAL.daytime } />)
+        return (<SunCloud daytime = { GLOBAL.daytime } phase = { GLOBAL.moonPhase } />)
       case 3:
         return (<Cloud daytime = { GLOBAL.daytime }/>)
       case 45:
@@ -193,6 +191,25 @@ export default function App(){
       case 99: 
         return (<Thunder daytime = { GLOBAL.daytime }/>)
     } 
+  }
+
+  function moon_phase(year, month, day){
+    let c,e,jd,b = 0;
+    if (month < 3){
+      year--
+      month += 12
+    }
+    ++month
+    c = 365.25 * year
+    e = 30.6 * month
+    jd = c + e + day - 694039.09;	//total days elapsed
+    jd /= 29.5305882	//divide by the moon cycle
+    b = Math.floor(jd)
+    jd -= b		
+    b = Math.round(jd * 8);	//scale fraction from 0-8 and round
+  
+    if (b >= 8 ){ b = 0;}
+    return b
   }
 
   return(
@@ -256,13 +273,13 @@ export default function App(){
       </animated.span>
       </Link>
 
-      <img src='/dewy/dewy.png' className="dewy" width= '100%' style={{
+      <img src='/dewy/dewy.gif' className="dewy" width= '100%' ref = { dewy } style={{
         display: waterHeight == 101 ? 'block' : 'none',
         bottom: '-1.5rem'
       }}/>
 
       <animated.div style={ addWater } className="dewy onWater">
-      <img src='/dewy/dewyWater.png' className="dewy" width= '100%' ref = { dewy } style={{
+      <img src='/dewy/dewyWater.gif' className="dewy" width= '100%' ref = { dewy } style={{
         display: 'none'
       }}/>
       <img src='/dewy/dewyMansae.png' className="dewy" width= '100%' ref = { dewyMansae } style={{

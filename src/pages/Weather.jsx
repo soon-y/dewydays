@@ -23,6 +23,7 @@ export default function Weather(){
   let hour = d.getHours()
   let pointer = useRef()
   const [clock, setClock] = useState(hour)
+  const [time, setTime] = useState(hour > 12? hour - 12 : hour)
   const [dailyData, setDailyData] = useState(null)
   const [hourlyData, setHourlyData] = useState(null)
   const [forecastDataFiltered, setforecastDataFiltered] = useState(null)
@@ -38,6 +39,7 @@ export default function Weather(){
 
     let uhr = hour >= 12? hour - 12 : hour
     let clk = clock >= 12? clock - 12 : clock
+    setTime(clk < 1? 12 : Math.floor(clk))
 
     if(hourlyData){
       if(hour >= 12){
@@ -299,11 +301,11 @@ export default function Weather(){
     const daytime = data.is_day[index]
     switch(data.weather_code[index]) {
       case 0:
-        return (<Sun daytime = { daytime } />)
+        return (<Sun daytime = { daytime } phase = { GLOBAL.moonPhase } />)
       case 1:
-        return (<Sun daytime = { daytime } />)
+        return (<Sun daytime = { daytime } phase = { GLOBAL.moonPhase } />)
       case 2:
-        return (<SunCloud daytime = { daytime } />)
+        return (<SunCloud daytime = { daytime } phase = { GLOBAL.moonPhase } />)
       case 3:
         return (<Cloud daytime = { daytime }/>)
       case 45:
@@ -387,7 +389,7 @@ export default function Weather(){
           <div className='clockBg'>
             {hourlyData&&(
             <div className='currentInfo'>
-              <div className='current currentTime center'>{ (clock >= 12? Math.floor(clock - 12) : Math.floor(clock)) +' '+ AMPM() }</div>
+              <div className='current currentTime center'>{ time +' '+ AMPM() }</div>
               <div className='current currentWeather'>{ currentIcon(hourlyData) }</div>
               <div className='current currentTemp center'>{ hourlyData.apparent_temperature[index] }°</div>
             </div>)}

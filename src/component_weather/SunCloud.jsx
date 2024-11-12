@@ -1,19 +1,13 @@
-export default function SunCloud({daytime}){
+export default function SunCloud({daytime, phase}){
+  let day = daytime== 1 ? true : false
+
   return(
     <>
       <img src="/weather/sunMane.png" alt="sun" className="sunMane" style={{
         position: "absolute",
         height: '80%',
         margin: 'auto',
-        display: daytime? 'block' : 'none'
-      }} />
-      <img src="/weather/moonlight.png" alt="moon" className="moonlightCloud" style={{
-        position: "absolute",
-        top: '40%',
-        left: '40%',
-        transform: 'translate(-50%, -50%)',
-        margin: 'auto',
-        display: daytime? 'none' : 'block'
+        display: day? 'block' : 'none'
       }} />
       <img src="/weather/sunFace.png" alt="sun" style={{
         position: "absolute",
@@ -21,6 +15,39 @@ export default function SunCloud({daytime}){
         left: '40%',
         transform: 'translate(-50%, -50%)',
         height: '50%',
+        display: day? 'block' : 'none'
+      }} />
+      <img src="/weather/moonlight.png" alt="moon" className="moonlightCloud" style={{
+        position: "absolute",
+        top: '40%',
+        left: '40%',
+        transform: 'translate(-50%, -50%)',
+        margin: 'auto',
+        display: !day && (phase==4)? 'block' : 'none'
+      }} />
+      <img src="/weather/moonFace.png" alt="moon" className="moonCloud" style={{
+        display: !day && (phase==4)? 'block' : 'none'
+      }} />
+      <img src="/weather/moon1.png" alt="moon" className="moonCloud" style={{
+        display: !day && (phase==1)? 'block' : 'none'
+      }} />
+      <img src="/weather/moon2.png" alt="moon" className="moonCloud" style={{
+        display: !day && (phase==2)? 'block' : 'none'
+      }} />
+      <img src="/weather/moon3.png" alt="moon" className="moonCloud" style={{
+        display: !day && (phase==3)? 'block' : 'none'
+      }} />
+      <img src="/weather/moon5.png" alt="moon" className="moonCloud" style={{
+        display: !day && (phase==5)? 'block' : 'none'
+      }} />
+      <img src="/weather/moon6.png" alt="moon" className="moonCloud" style={{
+        display: !day && (phase==6)? 'block' : 'none'
+      }} />
+      <img src="/weather/moon7.png" alt="moon" className="moonCloud" style={{
+        display: !day && (phase==7)? 'block' : 'none'
+      }} />
+      <img src="/weather/moon0.png" alt="moon" className="moonCloud" style={{
+        display: !day && (phase==0)? 'block' : 'none'
       }} />
 
       <img src="/weather/cloud.png" alt="cloud" className="cloud" style={{
@@ -30,7 +57,7 @@ export default function SunCloud({daytime}){
         transform: 'translate(-50%, 0)',
         width: '85%',
         margin: 'auto',
-        display: daytime? 'block' : 'none'
+        display: day? 'block' : 'none'
       }} />
 
       <img src="/weather/cloudNight.png" alt="cloud" className="cloud" style={{
@@ -40,7 +67,7 @@ export default function SunCloud({daytime}){
         transform: 'translate(-50%, 0)',
         width: '85%',
         margin: 'auto',
-        display: daytime? 'none' : 'block'
+        display: day? 'none' : 'block'
       }} />
     </>
   )

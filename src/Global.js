@@ -70,6 +70,7 @@ const GLOBAL = {
   longitude: 10,
   timezone: "Europe%2FBerlin",
   suburb: 'Hamburg',
+  moonPhase: 4,
 
   timelineDataIndex: 0,
   timelineData: [
