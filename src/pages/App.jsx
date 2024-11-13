@@ -307,7 +307,11 @@ export default function App(){
         </div>   
         <Link to='/Cups'>
         <div className='bubble'>
-          <img src={ src } style={{ height: '100%'}}/>
+          <img src={ src } style={{
+            height: '100%', 
+            padding: '0 0.7rem',
+            borderRadius: '50%'
+            }}/>
         </div>
         </Link>
       </div>
