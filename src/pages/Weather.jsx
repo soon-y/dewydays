@@ -84,7 +84,7 @@ export default function Weather(){
     fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weather_code,apparent_temperature_max,apparent_temperature_min&timezone=${time}`, options)
     .then(response => response.json())
     .then(data => {
-      setDailyData(data)
+      setDailyData(data.daily)
       filterData(data.daily)
     })
     .catch(err => {
@@ -459,9 +459,16 @@ export default function Weather(){
           </div>
         </div>
 
-        {airData&&hourlyData&&(
+        {dailyData&&airData&&hourlyData&&(
         <table className='weatherInfo'>
           <tbody>
+          <tr>
+            <th>Min/Max Temp</th> 
+            <td> 
+              <span style={{ color: GLOBAL.backgroundHell}}>{ dailyData.apparent_temperature_min[0] }° </span>
+              <span>{ dailyData.apparent_temperature_max[0] }°</span>         
+              </td>
+          </tr>
           <tr>
             <th>UV Index</th> 
             <td>{ uvIndex(hourlyData.uv_index[index]) }</td>
