@@ -123,9 +123,9 @@ export default function Profile(){
         </div>
 
         <div className='btn center'>
-            <Link to='/'>
-              <button onClick={ setTodaysGoal }>SAVE</button>
-            </Link>
+          <Link to='/'>
+            <button onClick={ setTodaysGoal }>SAVE</button>
+          </Link>
         </div>
       </div>
     </>
