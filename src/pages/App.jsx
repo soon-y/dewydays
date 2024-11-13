@@ -59,7 +59,7 @@ export default function App(){
     const requestOptions = {
       method: 'GET',
     };
-    fetch(`https://api.geoapify.com/v1/geocode/reverse?lat=${GLOBAL.latitude}&lon=${GLOBAL.longitude}&apiKey=${import.meta.env.VITE_API_geoapify}`, requestOptions)
+    fetch(`https://api.geoapify.com/v1/geocode/reverse?lat=${GLOBAL.latitude}&lon=${GLOBAL.longitude}&apiKey=38a752707cfe42d3a39af25db2e3e18e`, requestOptions)
       .then(response => response.json())
       .then(result => {
         GLOBAL.suburb = typeof(result.features[0].properties.suburb) === "undefined" ? result.features[0].properties.city : result.features[0].properties.suburb
