@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, Suspense } from 'react'
+import { useDrag } from '@use-gesture/react'
 import { GLOBAL } from '../Global'
 import '../index.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
