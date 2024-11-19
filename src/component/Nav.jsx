@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import '../index.css'
 import { animated, useSpring, useTrail } from '@react-spring/web'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronUp,faUser,faSun,faBell,faChartSimple } from '@fortawesome/free-solid-svg-icons'
+import { faChevronUp } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
 import { GLOBAL } from '../Global'
 
@@ -10,7 +10,6 @@ export default function Nav(){
 
   const [checked, setChecked] = useState(true);
   const [angle, setAngle] = useState(0);
-  const icons = [ faUser, faChartSimple, faSun, faBell]
   const links = ['profile', 'timeline', 'weather', 'alarm']
 
   const checking = () => {
@@ -62,7 +61,7 @@ export default function Nav(){
             top: (3 + GLOBAL.iconGap) + i * 3 + i * GLOBAL.iconGap + 'rem'
           }}
           >
-        <FontAwesomeIcon icon={ icons[i] } className='navIcon' />
+        <img src={ 'menu/' + links[i] +'.png' } className='navIcon navIconImg' />
       </animated.div>
       </Link>       
       ))}      
