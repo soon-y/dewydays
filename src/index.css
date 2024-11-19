@@ -169,7 +169,7 @@ a:hover {
   cursor: pointer;
   z-index: 100;
   border-radius: 50%;
-  box-shadow: 1px 1px 8px rgba(31, 116, 155, 0.5);
+  box-shadow: 1px 1px 8px rgba(5, 142, 205, 0.5);
 }
 
 .bubble:hover {
@@ -196,6 +196,11 @@ a:hover {
   color: rgba(255, 255, 255);
   filter: drop-shadow(1px 1px 2px rgb(122, 158, 186));
 }
+
+.navIconImg {
+  height: 1.4rem;
+}
+
 
 .close {
   top: 0;
@@ -298,9 +303,10 @@ p {
   color: white;
   font-size: 1.2rem;
   cursor: pointer;
-  padding: 0.9rem 2rem;
+  padding: 0.8rem 1.9rem 1rem 1.9rem;
   border-radius: 2rem;
   line-height: 1;
+
 }
 
 /*****       alarm       *****/
