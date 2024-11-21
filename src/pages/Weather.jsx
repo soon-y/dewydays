@@ -406,7 +406,7 @@ export default function Weather(){
     setActive(false)
     setClock(Math.floor(clock))
     pointer.current.style.transitionDuration = '500ms'
-    content.current.style.touchAction = 'auto'
+    content.current.style.touchAction = 'pan-y'
   }
 
   return(
@@ -460,6 +460,54 @@ export default function Weather(){
         {dailyData&&airData&&hourlyData&&(
         <table className='weatherInfo'>
           <tbody>
+          <tr>
+            <th>Min/Max Temp</th> 
+            <td> 
+              <span style={{ color: GLOBAL.backgroundHell}}>{ dailyData.apparent_temperature_min[0] }° </span>
+              <span>{ dailyData.apparent_temperature_max[0] }°</span>         
+              </td>
+          </tr>
+          <tr>
+            <th>UV Index</th> 
+            <td>{ uvIndex(hourlyData.uv_index[index]) }</td>
+          </tr>
+          <tr>
+            <th>Chance of Rain</th>
+            <td>{ hourlyData.precipitation_probability[index] }%</td>
+          </tr>
+          <tr>
+            <th>PM 10</th>
+            <td>{airQuality10(Math.round(airData.european_aqi_pm10[index]))}</td>
+          </tr>
+          <tr>
+            <th>PM2.5</th>
+            <td>{airQuality25(Math.round(airData.european_aqi_pm2_5[index]))}</td>
+          </tr>
+
+          <tr>
+            <th>Min/Max Temp</th> 
+            <td> 
+              <span style={{ color: GLOBAL.backgroundHell}}>{ dailyData.apparent_temperature_min[0] }° </span>
+              <span>{ dailyData.apparent_temperature_max[0] }°</span>         
+              </td>
+          </tr>
+          <tr>
+            <th>UV Index</th> 
+            <td>{ uvIndex(hourlyData.uv_index[index]) }</td>
+          </tr>
+          <tr>
+            <th>Chance of Rain</th>
+            <td>{ hourlyData.precipitation_probability[index] }%</td>
+          </tr>
+          <tr>
+            <th>PM 10</th>
+            <td>{airQuality10(Math.round(airData.european_aqi_pm10[index]))}</td>
+          </tr>
+          <tr>
+            <th>PM2.5</th>
+            <td>{airQuality25(Math.round(airData.european_aqi_pm2_5[index]))}</td>
+          </tr>
+
           <tr>
             <th>Min/Max Temp</th> 
             <td> 
