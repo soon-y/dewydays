@@ -280,6 +280,7 @@ p {
   width: 100vw;
   padding-bottom: 2rem;
   margin: 0;
+  touch-action: none;
 }
 
 .margin-bottom {
