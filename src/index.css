@@ -283,6 +283,17 @@ p {
   touch-action: pan-y;
 }
 
+.is-dragging {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  top: 4.2rem;
+  width: 100vw;
+  padding-bottom: 2rem;
+  margin: 0;
+  touch-action: none;
+}
+
 .margin-bottom {
   margin-bottom: 1rem;
 }
@@ -1265,6 +1276,13 @@ p {
     padding-right: 1vw;
   }
 
+  .is-dragging {
+    width: 98vw;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    touch-action: none;
+  }
+
   .selection {
     width: 98vw;
   }
@@ -1299,6 +1317,13 @@ p {
     padding-right: 10vw;
   }
 
+  .is-dragging {
+    width: 80vw;
+    padding-left: 10vw;
+    padding-right: 10vw;
+    touch-action: none;
+  }
+
   .selection {
     width: 80vw;
   }
@@ -1321,6 +1346,13 @@ p {
     padding-right: 15vw;
   }
 
+  .is-dragging {
+    width: 70vw;
+    padding-left: 15vw;
+    padding-right: 15vw;
+    touch-action: none;
+  }
+
   .selection {
     width: 70vw;
   }
@@ -1337,6 +1369,13 @@ p {
     padding-right: 20vw;
   }
 
+  .is-dragging {
+    width: 60vw;
+    padding-left: 20vw;
+    padding-right: 20vw;
+    touch-action: none;
+  }
+
   .selection {
     width: 60vw;
   }
@@ -1351,6 +1390,13 @@ p {
     width: 32rem;
     padding-left: 25vw;
     padding-right: 25vw;
+  }
+
+  .is-dragging {
+    width: 32rem;
+    padding-left: 25vw;
+    padding-right: 25vw;
+    touch-action: none;
   }
 
   .selection {

@@ -23,7 +23,6 @@ export default function Weather(){
   let hour = d.getHours()
   const pointer = useRef()
   const clockBg = useRef()
-  const content = useRef()
   const [clock, setClock] = useState(hour)
   const [active, setActive] = useState(false)
   const [time, setTime] = useState(hour > 12? hour - 12 : hour)
@@ -57,7 +56,7 @@ export default function Weather(){
         }
       }
     }
-  }, [clock])
+  }, [clock, active])
 
   const getWeatherData = (lat,lon,time) => {
     // Setting the fetch options
@@ -368,9 +367,8 @@ export default function Weather(){
            ( navigator.msMaxTouchPoints > 0 );
   }
 
-  function drag(e) {
+  const drag = (e)=> {
     if(active){
-      content.current.style.touchAction='none'
       pointer.current.style.transitionDuration = '0ms'
       let mx, my
 
@@ -397,16 +395,10 @@ export default function Weather(){
     }
   }
 
-  function dragStart(){
-    setActive(true)
-    content.current.style.touchAction='none'
-  }
-
   function dragEnd() {
     setActive(false)
     setClock(Math.floor(clock))
     pointer.current.style.transitionDuration = '500ms'
-    content.current.style.touchAction = 'pan-y'
   }
 
   return(
@@ -420,7 +412,7 @@ export default function Weather(){
       </div>
       </Link>
 
-      <div className='content' ref={content}>
+      <div className={active? 'is-dragging' : 'content'}>
         <div className="center info" style={{
           color:'white',
           margin: '0 0 0.5rem 0',
@@ -431,9 +423,9 @@ export default function Weather(){
 
         <div className='clock' 
         ref={ clockBg } 
-        onMouseMove={ (e)=> drag(e) }
+        onMouseMove={ drag }
         onMouseUp= { () => dragEnd() }
-        onTouchMove={ (e)=> drag(e) }
+        onTouchMove={ drag }
         onTouchEnd= { () => dragEnd() }
         style={{ 
             backgroundImage: 'url(/weather/clock.png)',
@@ -453,8 +445,8 @@ export default function Weather(){
           <div className='clockBg ' style={{ zIndex: 100 }} >
           </div>
           <div className='clockPointer' ref={ pointer } 
-          onMouseDown={ ()=> dragStart() }
-          onTouchStart={ ()=> dragStart() }></div>
+          onMouseDown={ ()=> setActive(true) }
+          onTouchStart={ ()=> setActive(true) }></div>
         </div>
 
         {dailyData&&airData&&hourlyData&&(
@@ -471,6 +463,58 @@ export default function Weather(){
             <th>UV Index</th> 
             <td>{ uvIndex(hourlyData.uv_index[index]) }</td>
           </tr>
+          <tr>
+            <th>Chance of Rain</th>
+            <td>{ hourlyData.precipitation_probability[index] }%</td>
+          </tr>
+          <tr>
+            <th>PM 10</th>
+            <td>{airQuality10(Math.round(airData.european_aqi_pm10[index]))}</td>
+          </tr>
+          <tr>
+            <th>PM2.5</th>
+            <td>{airQuality25(Math.round(airData.european_aqi_pm2_5[index]))}</td>
+          </tr>
+
+          <tr>
+            <th>Chance of Rain</th>
+            <td>{ hourlyData.precipitation_probability[index] }%</td>
+          </tr>
+          <tr>
+            <th>PM 10</th>
+            <td>{airQuality10(Math.round(airData.european_aqi_pm10[index]))}</td>
+          </tr>
+          <tr>
+            <th>PM2.5</th>
+            <td>{airQuality25(Math.round(airData.european_aqi_pm2_5[index]))}</td>
+          </tr>
+
+          <tr>
+            <th>Chance of Rain</th>
+            <td>{ hourlyData.precipitation_probability[index] }%</td>
+          </tr>
+          <tr>
+            <th>PM 10</th>
+            <td>{airQuality10(Math.round(airData.european_aqi_pm10[index]))}</td>
+          </tr>
+          <tr>
+            <th>PM2.5</th>
+            <td>{airQuality25(Math.round(airData.european_aqi_pm2_5[index]))}</td>
+          </tr>
+
+          <tr>
+            <th>Chance of Rain</th>
+            <td>{ hourlyData.precipitation_probability[index] }%</td>
+          </tr>
+          <tr>
+            <th>PM 10</th>
+            <td>{airQuality10(Math.round(airData.european_aqi_pm10[index]))}</td>
+          </tr>
+          <tr>
+            <th>PM2.5</th>
+            <td>{airQuality25(Math.round(airData.european_aqi_pm2_5[index]))}</td>
+          </tr>
+
           <tr>
             <th>Chance of Rain</th>
             <td>{ hourlyData.precipitation_probability[index] }%</td>
