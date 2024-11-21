@@ -475,58 +475,6 @@ export default function Weather(){
             <th>PM2.5</th>
             <td>{airQuality25(Math.round(airData.european_aqi_pm2_5[index]))}</td>
           </tr>
-
-          <tr>
-            <th>Chance of Rain</th>
-            <td>{ hourlyData.precipitation_probability[index] }%</td>
-          </tr>
-          <tr>
-            <th>PM 10</th>
-            <td>{airQuality10(Math.round(airData.european_aqi_pm10[index]))}</td>
-          </tr>
-          <tr>
-            <th>PM2.5</th>
-            <td>{airQuality25(Math.round(airData.european_aqi_pm2_5[index]))}</td>
-          </tr>
-
-          <tr>
-            <th>Chance of Rain</th>
-            <td>{ hourlyData.precipitation_probability[index] }%</td>
-          </tr>
-          <tr>
-            <th>PM 10</th>
-            <td>{airQuality10(Math.round(airData.european_aqi_pm10[index]))}</td>
-          </tr>
-          <tr>
-            <th>PM2.5</th>
-            <td>{airQuality25(Math.round(airData.european_aqi_pm2_5[index]))}</td>
-          </tr>
-
-          <tr>
-            <th>Chance of Rain</th>
-            <td>{ hourlyData.precipitation_probability[index] }%</td>
-          </tr>
-          <tr>
-            <th>PM 10</th>
-            <td>{airQuality10(Math.round(airData.european_aqi_pm10[index]))}</td>
-          </tr>
-          <tr>
-            <th>PM2.5</th>
-            <td>{airQuality25(Math.round(airData.european_aqi_pm2_5[index]))}</td>
-          </tr>
-
-          <tr>
-            <th>Chance of Rain</th>
-            <td>{ hourlyData.precipitation_probability[index] }%</td>
-          </tr>
-          <tr>
-            <th>PM 10</th>
-            <td>{airQuality10(Math.round(airData.european_aqi_pm10[index]))}</td>
-          </tr>
-          <tr>
-            <th>PM2.5</th>
-            <td>{airQuality25(Math.round(airData.european_aqi_pm2_5[index]))}</td>
-          </tr>
           </tbody>
         </table>)}
 
