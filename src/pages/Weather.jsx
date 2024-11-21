@@ -13,7 +13,7 @@ import Thunder from '../component_weather/Thunder'
 import Smog from '../component_weather/Smog'
 import Tornado from '../component_weather/Tornado'
 import SunCloud from '../component_weather/SunCloud'
-import { isMobile } from 'react-device-detect';
+import { isDesktop } from 'react-device-detect';
 
 export default function Weather(){ 
   const head = "Weather"
@@ -367,12 +367,12 @@ export default function Weather(){
       pointer.current.style.transitionDuration = '0ms'
       let mx, my
 
-      if(isMobile){
-        mx = e.touches[0].clientX
-        my = e.touches[0].clientY
-      }else{
+      if(isDesktop){
         mx = e.clientX
         my = e.clientY
+      }else{
+        mx = e.touches[0].clientX
+        my = e.touches[0].clientY
       }
       let w = clockBg.current.offsetLeft + clockBg.current.offsetWidth/2
       let h = clockBg.current.offsetTop + clockBg.current.offsetWidth/2 + 4.2*16
