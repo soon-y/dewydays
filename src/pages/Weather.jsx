@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, Suspense } from 'react'
 import { GLOBAL } from '../Global'
 import '../index.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faXmark,faCloudShowersHeavy,faCloudSun,faSmog,faCloud,faSun,faCloudBolt,faSnowflake,faCloudRain, } from '@fortawesome/free-solid-svg-icons'
+import { faXmark,faCloudShowersHeavy,faCloudSun,faSmog,faCloud,faSun,faCloudBolt,faSnowflake,faCloudRain } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
 import Sun from '../component_weather/Sun'
 import Cloud from '../component_weather/Cloud'
@@ -13,7 +13,6 @@ import Thunder from '../component_weather/Thunder'
 import Smog from '../component_weather/Smog'
 import Tornado from '../component_weather/Tornado'
 import SunCloud from '../component_weather/SunCloud'
-import { isDesktop } from 'react-device-detect';
 
 export default function Weather(){ 
   const head = "Weather"
@@ -24,6 +23,7 @@ export default function Weather(){
   let hour = d.getHours()
   const pointer = useRef()
   const clockBg = useRef()
+  const content = useRef()
   const [clock, setClock] = useState(hour)
   const [active, setActive] = useState(false)
   const [time, setTime] = useState(hour > 12? hour - 12 : hour)
@@ -362,18 +362,26 @@ export default function Weather(){
     } 
   }
 
+  function is_touch_enabled() {
+    return ( 'ontouchstart' in window ) || 
+           ( navigator.maxTouchPoints > 0 ) || 
+           ( navigator.msMaxTouchPoints > 0 );
+  }
+
   function drag(e) {
     if(active){
+      content.current.style.touchAction='none'
       pointer.current.style.transitionDuration = '0ms'
       let mx, my
 
-      if(isDesktop){
-        mx = e.clientX
-        my = e.clientY
-      }else{
+      if(is_touch_enabled()){
         mx = e.touches[0].clientX
         my = e.touches[0].clientY
+      }else{
+        mx = e.clientX
+        my = e.clientY
       }
+
       let w = clockBg.current.offsetLeft + clockBg.current.offsetWidth/2
       let h = clockBg.current.offsetTop + clockBg.current.offsetWidth/2 + 4.2*16
       let adjacent = mx - w
@@ -389,10 +397,16 @@ export default function Weather(){
     }
   }
 
+  function dragStart(){
+    setActive(true)
+    content.current.style.touchAction='none'
+  }
+
   function dragEnd() {
     setActive(false)
     setClock(Math.floor(clock))
     pointer.current.style.transitionDuration = '500ms'
+    content.current.style.touchAction = 'auto'
   }
 
   return(
@@ -406,7 +420,7 @@ export default function Weather(){
       </div>
       </Link>
 
-      <div className='content'>
+      <div className='content' ref={content}>
         <div className="center info" style={{
           color:'white',
           margin: '0 0 0.5rem 0',
@@ -439,8 +453,8 @@ export default function Weather(){
           <div className='clockBg ' style={{ zIndex: 100 }} >
           </div>
           <div className='clockPointer' ref={ pointer } 
-          onMouseDown={ (e)=> setActive(true) }
-          onTouchStart={ (e)=> setActive(true) }></div>
+          onMouseDown={ ()=> dragStart() }
+          onTouchStart={ ()=> dragStart() }></div>
         </div>
 
         {dailyData&&airData&&hourlyData&&(
