@@ -4,15 +4,10 @@ import '../index.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark,faCloudShowersHeavy,faCloudSun,faSmog,faCloud,faSun,faCloudBolt,faSnowflake,faCloudRain } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
-import Sun from '../component_weather/Sun'
+import MoonOpc from '../component_weather/MoonOpc'
 import Cloud from '../component_weather/Cloud'
-import Rain from '../component_weather/Rain'
-import Snow from '../component_weather/Snow'
-import Drizzle from '../component_weather/Drizzle'
-import Thunder from '../component_weather/Thunder'
-import Smog from '../component_weather/Smog'
-import Tornado from '../component_weather/Tornado'
-import SunCloud from '../component_weather/SunCloud'
+import CloudPlus from '../component_weather/CloudPlus'
+import MoonOpcCloud from '../component_weather/MoonOpcCloud.jsx'
 
 export default function Weather(){ 
   const head = "Weather"
@@ -303,61 +298,61 @@ export default function Weather(){
     const daytime = data.is_day[index]
     switch(data.weather_code[index]) {
       case 0:
-        return (<Sun daytime = { daytime } phase = { GLOBAL.moonPhase } />)
+        return (<MoonOpc daytime = { daytime } phase = { GLOBAL.moonPhase } />)
       case 1:
-        return (<Sun daytime = { daytime } phase = { GLOBAL.moonPhase } />)
+        return (<MoonOpc daytime = { daytime } phase = { GLOBAL.moonPhase } />)
       case 2:
-        return (<SunCloud daytime = { daytime } phase = { GLOBAL.moonPhase } />)
+        return (<MoonOpcCloud daytime = { daytime } phase = { GLOBAL.moonPhase } />)
       case 3:
         return (<Cloud daytime = { daytime }/>)
       case 45:
-        return (<Smog daytime = { daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'smog' }/>)
       case 48:
-        return (<Smog daytime = { daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'smog' }/>)
       case 51: 
-        return (<Drizzle daytime = { daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'drizzle' }/>)
       case 53: 
-        return (<Drizzle daytime = { daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'drizzle' }/>)
       case 55: 
-        return (<Drizzle daytime = { daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'drizzle' }/>)
       case 56: 
-        return (<Drizzle daytime = { daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'drizzle' }/>)
       case 57: 
-        return (<Drizzle daytime = { daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'drizzle' }/>)
       case 61: 
-        return (<Rain daytime = { daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'rain' }/>)
       case 63: 
-        return (<Rain daytime = { daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'rain' }/>)
       case 65: 
-        return (<Rain daytime = { daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'rain' }/>)
       case 66: 
-        return (<Rain daytime = { daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'rain' }/>)
       case 67: 
-        return (<Rain daytime = { daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'rain' }/>)
       case 71: 
-        return (<Snow daytime = { daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'snow' }/>)
       case 73: 
-        return (<Snow daytime = { daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'snow' }/>)
       case 75: 
-        return (<Snow daytime = { daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'snow' }/>)
       case 77: 
-        return (<Snow daytime = { daytime }/>)   
+        return (<CloudPlus daytime = { daytime } plus = { 'snow' }/>)   
       case 80: 
-        return (<Rain daytime = { daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'rain' }/>)
       case 81: 
-        return (<Rain daytime = { daytime }/>)  
+        return (<CloudPlus daytime = { daytime } plus = { 'rain' }/>)  
       case 82: 
-        return (<Rain daytime = { daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'rain' }/>)
       case 85: 
-        return (<Snow daytime = { daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'snow' }/>)
       case 86: 
-        return (<Snow daytime = { daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'snow' }/>)
       case 95: 
-        return (<Thunder daytime = { daytime }/>)  
+        return (<CloudPlus daytime = { daytime } plus = { 'thunder'}/>)  
       case 96: 
-        return (<Thunder daytime = { daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'thunder'}/>)
       case 99: 
-        return (<Thunder daytime = { daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'thunder'}/>)
     } 
   }
 

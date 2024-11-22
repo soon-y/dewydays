@@ -5,12 +5,7 @@ import { Link } from 'react-router-dom'
 import { GLOBAL } from '../Global'
 import Sun from '../component_weather/Sun'
 import Cloud from '../component_weather/Cloud'
-import Rain from '../component_weather/Rain'
-import Snow from '../component_weather/Snow'
-import Drizzle from '../component_weather/Drizzle'
-import Thunder from '../component_weather/Thunder'
-import Smog from '../component_weather/Smog'
-import Tornado from '../component_weather/Tornado'
+import CloudPlus from '../component_weather/CloudPlus'
 import SunCloud from '../component_weather/SunCloud'
 import { animated, useSpring } from '@react-spring/web'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -41,6 +36,7 @@ export default function App(){
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(success, fail)
+    GLOBAL.moonPhase = moon_phase(y, m+1, d)
     let waterAmount = 80 - (GLOBAL.currentIntake/GLOBAL.todaysGoal * 54)
     if (GLOBAL.waterHeight != 101) {
       GLOBAL.waterHeight = waterAmount <= 26? 27 : waterAmount
@@ -49,7 +45,6 @@ export default function App(){
     setWaterHeight(GLOBAL.waterHeight)
     setPercent(GLOBAL.currentIntake/GLOBAL.todaysGoal * 100)
     GLOBAL.waterPercent = percent
-    GLOBAL.moonPhase = moon_phase(y, m+1, d)
   },[])
 
   const success = (position) => {
@@ -80,7 +75,6 @@ export default function App(){
     (`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=is_day,weather_code&timezone=${time}`, options)
     .then(response => response.json())
     .then(data => {
-    
       setcurrentData(data)
       setDaytime(data.current.is_day)
       GLOBAL.daytime = data.current.is_day
@@ -143,53 +137,53 @@ export default function App(){
       case 3:
         return (<Cloud daytime = { GLOBAL.daytime }/>)
       case 45:
-        return (<Smog daytime = { GLOBAL.daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'smog' }/>)
       case 48:
-        return (<Smog daytime = { GLOBAL.daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'smog' }/>)
       case 51: 
-        return (<Drizzle daytime = { GLOBAL.daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'drizzle' }/>)
       case 53: 
-        return (<Drizzle daytime = { GLOBAL.daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'drizzle' }/>)
       case 55: 
-        return (<Drizzle daytime = { GLOBAL.daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'drizzle' }/>)
       case 56: 
-        return (<Drizzle daytime = { GLOBAL.daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'drizzle' }/>)
       case 57: 
-        return (<Drizzle daytime = { GLOBAL.daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'drizzle' }/>)
       case 61: 
-        return (<Rain daytime = { GLOBAL.daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'rain' }/>)
       case 63: 
-        return (<Rain daytime = { GLOBAL.daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'rain' }/>)
       case 65: 
-        return (<Rain daytime = { GLOBAL.daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'rain' }/>)
       case 66: 
-        return (<Rain daytime = { GLOBAL.daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'rain' }/>)
       case 67: 
-        return (<Rain daytime = { GLOBAL.daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'rain' }/>)
       case 71: 
-        return (<Snow daytime = { GLOBAL.daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'snow' }/>)
       case 73: 
-        return (<Snow daytime = { GLOBAL.daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'snow' }/>)
       case 75: 
-        return (<Snow daytime = { GLOBAL.daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'snow' }/>)
       case 77: 
-        return (<Snow daytime = { GLOBAL.daytime }/>)   
+        return (<CloudPlus daytime = { daytime } plus = { 'snow' }/>)   
       case 80: 
-        return (<Rain daytime = { GLOBAL.daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'rain' }/>)
       case 81: 
-        return (<Rain daytime = { GLOBAL.daytime }/>)  
+        return (<CloudPlus daytime = { daytime } plus = { 'rain' }/>)  
       case 82: 
-        return (<Rain daytime = { GLOBAL.daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'rain' }/>)
       case 85: 
-        return (<Snow daytime = { GLOBAL.daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'snow' }/>)
       case 86: 
-        return (<Snow daytime = { GLOBAL.daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'snow' }/>)
       case 95: 
-        return (<Thunder daytime = { GLOBAL.daytime }/>)  
+        return (<CloudPlus daytime = { daytime } plus = { 'thunder'}/>)  
       case 96: 
-        return (<Thunder daytime = { GLOBAL.daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'thunder'}/>)
       case 99: 
-        return (<Thunder daytime = { GLOBAL.daytime }/>)
+        return (<CloudPlus daytime = { daytime } plus = { 'thunder'}/>)
     } 
   }
 
