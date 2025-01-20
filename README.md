@@ -1,10 +1,10 @@
 # Dewy Days
 <a href="https://dewydays.vercel.app/" target="_blank">
-<img src="public/appIcon.jpg" alt="App Screenshot" width="100" style="border-radius: 20px;"/><br>
+<img src="public/appIcon.png" alt="App Screenshot" width="100" /><br>
 </a> 
 
 ## Introduction
-Dewy Days is a water traker application that I designed for my graduation project in 2015, and it is the prototype.
+Dewy Days is a water traker application that I designed for my graduation project in 2015, and the prototype is built in 2024.
 
 ## Features
 * Interactive UI and character reaction when water is added
