@@ -1,8 +1,26 @@
-# React + Vite
+# Dewy Days
+<a href="https://dewydays.vercel.app/" target="_blank">
+<img src="public/appIcon.jpg" alt="App Screenshot" width="100" style="border-radius: 20px;"/><br>
+</a> 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Introduction
+Dewy Days is a water traker application that I designed for my graduation project in 2015, and it is the prototype.
 
-Currently, two official plugins are available:
+## Features
+* Interactive UI and character reaction when water is added
+* Real-time weather updates provided from [Open Meteo API](https://open-meteo.com/)
+* Setting the capacity of your water container such as cups, bottles, etc
+* Addition water intake easily by adjusting the slider to the amount
+* The daily goal offered based on your weight, activity level and the weather 
+* Setting a water reminder to create your own routines
+* Intuitive water tracking
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Built with
+![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![JavaScript](https://img.shields.io/badge/JavaScript-FFD700?style=for-the-badge&logo=javascript&logoColor=white)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
+* UI components from [MUI](https://mui.com/material-ui/getting-started/)
+* Icons from [FontAwesome](https://fontawesome.com/)
