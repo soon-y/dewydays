@@ -395,7 +395,7 @@ export default function Alarm(){
           transform: 'translate(-50%, -50%)'
         }}>
         <h1 className='head' style={{ 
-          transform: 'translate(-50%, -150%)'
+          transform: 'translate(-50%, -200%)'
           }}> Add Alarm </h1>
           <ToggleButtonGroup
               exclusive
@@ -438,7 +438,7 @@ export default function Alarm(){
               height: '2rem',
               position: 'absolute',
               top: '50%',
-              transform: 'translateY(-50%)',
+              transform: 'translateY(-130%)',
             }}><p style={{
               fontWeight: '900',
               color: 'white',

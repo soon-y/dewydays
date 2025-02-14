@@ -16,7 +16,10 @@ export default function Cups(){
   const [cupAmount3, setAmount3] = useState(GLOBAL.cupAmount[3]);
   const slideNum = [25, -25, -75, -125]
   const slideCup = useSpring({
-    transform: `translateX(${slideNum[cupNum]}vw)`
+    transform: `translateX(${slideNum[cupNum]}vw)`,
+    margin: 'auto',
+    height: '70vh',
+    marginTop: '1rem',
   })
   let cupAmountScroll = useRef()
   let startNum = 0
@@ -97,7 +100,7 @@ export default function Cups(){
         <img className={cupNum == 2? 'selected' : 'notSelected'} src='/cups/2.png' onClick={() => setCup(2)} />
         <img className={cupNum == 3? 'selected' : 'notSelected'} src='/cups/3.png' onClick={() => setCup(3)} />
       </animated.div>
-
+      
       <div className='cupAmountBg' style={{
         position:'relative',
         top: '3rem',

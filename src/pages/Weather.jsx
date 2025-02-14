@@ -387,6 +387,7 @@ export default function Weather(){
         angle = Math.floor(270 - angle)/30
       }
       setClock(angle)
+      document.body.style.cursor = 'grabbing'
     }
   }
 
@@ -394,6 +395,7 @@ export default function Weather(){
     setActive(false)
     setClock(Math.floor(clock))
     pointer.current.style.transitionDuration = '500ms'
+    document.body.style.cursor = 'default'
   }
 
   return(
@@ -407,7 +409,7 @@ export default function Weather(){
       </div>
       </Link>
 
-      <div className={active? 'is-dragging' : 'content'}>
+      <div className={'content'}>
         <div className="center info" style={{
           color:'white',
           margin: '0 0 0.5rem 0',

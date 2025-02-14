@@ -221,8 +221,8 @@ export default function App(){
         position: 'fixed',
         height: '14vh',
         aspectRatio: 1,
-        top: '1rem',
-        marginLeft: '1rem',
+        top: '1.5rem',
+        marginLeft: '1.5rem',
       }}>
         <Link to={ "/weather" }>
         <div>
@@ -239,7 +239,7 @@ export default function App(){
         color: 'white',
         height: 'auto',
         width: '70vw',
-        padding: '1rem',
+        padding: '1rem 2rem',
         stroke: daytime? GLOBAL.strokeColor : "#5e99d0",
         WebkitTextStrokeColor: daytime? GLOBAL.strokeColor : "#5e99d0",
       }}>
@@ -269,7 +269,7 @@ export default function App(){
 
       <img src='/dewy/dewy.gif' className="dewy" width= '100%' ref = { dewy } style={{
         display: waterHeight == 101 ? 'block' : 'none',
-        bottom: '-1.5rem'
+        bottom: '-0.5rem'
       }}/>
 
       <animated.div style={ addWater } className="dewy onWater">
