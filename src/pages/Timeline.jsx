@@ -76,7 +76,7 @@ export default function Timeline(){
       </div>
       </Link>
 
-      <div className='content' style={{top:'6rem'}}>
+      <div className='content' style={{top:'5rem'}}>
       
       {GLOBAL.timelineData.map((el,index) => (
       <div key={ index }>
