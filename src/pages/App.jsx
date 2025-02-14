@@ -269,7 +269,7 @@ export default function App(){
 
       <img src='/dewy/dewy.gif' className="dewy" width= '100%' ref = { dewy } style={{
         display: waterHeight == 101 ? 'block' : 'none',
-        bottom: '-0.5rem'
+        bottom: '-1rem'
       }}/>
 
       <animated.div style={ addWater } className="dewy onWater">
